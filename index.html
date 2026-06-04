@@ -984,12 +984,6 @@
       border-right: none;
     }
 
-    .segmented input:checked + span {
-      background: #f3ede8;
-      color: #4e4842;
-      font-weight: 500;
-    }
-
     .segmented label span {
       width: 100%;
       height: 100%;
@@ -997,6 +991,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    .segmented input:checked + span {
+      background: #f3ede8;
+      color: #4e4842;
+      font-weight: 500;
     }
 
     .form-input,
@@ -1656,7 +1656,7 @@
     const WEDDING_DATE = new Date("2026-09-12T13:30:00+09:00");
     const FIRST_MET_DATE = new Date("2018-10-06T00:00:00+09:00");
 
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxk728vDWGUxjJtoEGOexwgIuX8V5YLw8brnpXCp8Slwe7AY70oGKxKsXWLjbmaBATO/exec";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxOQ-z01MHKXccYYkYqD6jH3D7eZV4VcL_GPE6BFKku2mljWYBmbiaZVQNdUvJNnbs1/exec";
 
     window.addEventListener("load", () => {
       const hero = document.getElementById("hero");
