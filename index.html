@@ -1278,7 +1278,9 @@
             참석 여부 전달을 부탁드립니다.
           </p>
 
-          <a class="btn-submit" href="#" id="attendanceBtn">참석 여부 전달</a>
+          <a class="btn-submit" href="https://script.google.com/macros/s/AKfycbxk728vDWGUxjJtoEGOexwgIuX8V5YLw8brnpXCp8Slwe7AY70oGKxKsXWLjbmaBATO/exec" id="attendanceBtn" target="_blank" rel="noopener">
+            참석 여부 전달
+          </a>
         </div>
       </section>
 
@@ -1313,7 +1315,8 @@
     const WEDDING_DATE = new Date("2026-09-12T13:30:00+09:00");
     const FIRST_MET_DATE = new Date("2018-10-06T00:00:00+09:00");
 
-    const ATTENDANCE_FORM_URL = "#";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxk728vDWGUxjJtoEGOexwgIuX8V5YLw8brnpXCp8Slwe7AY70oGKxKsXWLjbmaBATO/exec";
+    const ATTENDANCE_FORM_URL = GOOGLE_SCRIPT_URL;
 
     window.addEventListener("load", () => {
       const hero = document.getElementById("hero");
@@ -1457,11 +1460,9 @@
     });
 
     document.getElementById("attendanceBtn").addEventListener("click", (e) => {
-      if (ATTENDANCE_FORM_URL === "#") {
+      if (!ATTENDANCE_FORM_URL || ATTENDANCE_FORM_URL === "#") {
         e.preventDefault();
-        alert("참석 여부 폼 링크를 연결해 주세요.");
-      } else {
-        e.currentTarget.href = ATTENDANCE_FORM_URL;
+        alert("참석 여부 링크를 연결해 주세요.");
       }
     });
 
