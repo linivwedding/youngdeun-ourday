@@ -12,8 +12,20 @@
   <meta property="og:url" content="https://urimchoi96.github.io/youngdeun-ourday/" />
 
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Allura&family=Noto+Sans+KR:wght@300;400;500&display=swap');
+
     * {
       box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #c9bcc2;
+      --paper: #f7eeee;
+      --paper-light: #fbf5f3;
+      --text: #2f2a28;
+      --soft-text: #b4a0a4;
+      --accent: #ddb8c0;
+      --shadow: rgba(74, 53, 53, 0.15);
     }
 
     html {
@@ -23,9 +35,9 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: "Pretendard", "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #b9aab1;
-      color: #2f2a28;
+      font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
       word-break: keep-all;
     }
 
@@ -54,7 +66,7 @@
       max-width: 480px;
       margin: 0 auto;
       min-height: 100vh;
-      background: #faeeee;
+      background: var(--paper);
       overflow: hidden;
       box-shadow: 0 0 45px rgba(54, 38, 38, 0.16);
     }
@@ -63,23 +75,18 @@
       position: relative;
       padding: 82px 26px;
       text-align: center;
-      background: #faeeee;
+      background: var(--paper);
     }
 
     .section.no-padding {
       padding: 0;
     }
 
-    .section.compact {
-      padding-top: 64px;
-      padding-bottom: 64px;
-    }
-
     .section-title {
       margin: 0 0 36px;
       font-size: 24px;
       font-weight: 300;
-      color: #b4a0a4;
+      color: var(--soft-text);
       letter-spacing: -0.4px;
       line-height: 1.45;
     }
@@ -89,7 +96,7 @@
       font-size: 17px;
       line-height: 2.05;
       font-weight: 300;
-      color: #2f2a28;
+      color: var(--text);
       letter-spacing: -0.4px;
     }
 
@@ -121,117 +128,201 @@
       animation-play-state: paused;
     }
 
-    /* 1. Welcome */
-    .intro {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 80px 24px;
-      background:
-        radial-gradient(circle at center, rgba(255,255,255,0.78) 0%, rgba(250,238,238,0.92) 58%, #faeeee 100%);
-    }
-
-    .intro-inner {
+    /* =========================
+       MAIN 3-STEP HERO
+    ========================= */
+    .hero-sequence {
+      position: relative;
       width: 100%;
-      text-align: center;
-    }
-
-    .intro-ko {
-      margin: 0 0 130px;
-      font-size: 27px;
-      font-weight: 300;
-      line-height: 1.35;
-      letter-spacing: -1px;
-      color: #151515;
-    }
-
-    .script-text {
-      position: relative;
+      max-width: 480px;
+      min-height: 100svh;
       margin: 0 auto;
-      max-width: 360px;
-      font-family: "Brush Script MT", "Segoe Script", cursive;
-      font-size: 56px;
-      line-height: 0.92;
-      font-weight: 400;
-      color: transparent;
-      background: linear-gradient(110deg, #171717 0%, #1f1f1f 38%, #b79c96 72%, #8b746f 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      transform: rotate(-4deg);
-      letter-spacing: -1px;
+      overflow: hidden;
+      background: var(--bg);
     }
 
-    .script-text span {
-      display: block;
-      margin-top: 22px;
-      font-size: 50px;
-      transform: translateX(-20px);
-    }
-
-    .script-draw {
-      opacity: 0;
-      transform: translateY(18px) rotate(-4deg);
-      animation: scriptIn 1.35s ease 0.45s forwards;
-    }
-
-    /* 2. Main Photo */
-    .full-photo {
-      position: relative;
-      height: 92vh;
-      min-height: 650px;
-      background: #ddd center/cover no-repeat;
-      background-image: url("images/main.jpg");
-    }
-
-    .full-photo::after {
-      content: "";
+    .hero-step {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.08), rgba(0,0,0,0.02) 55%, rgba(0,0,0,0.18));
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 18px 14px 120px;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.02);
+      transition:
+        opacity 0.9s ease,
+        transform 1.15s ease;
+    }
+
+    .hero-step.is-active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+      z-index: 2;
+    }
+
+    .hero-step.is-leaving {
+      opacity: 0;
+      transform: scale(1.03);
+      z-index: 1;
+    }
+
+    .hero-inner {
+      width: 100%;
+      background: var(--paper);
+      min-height: calc(100svh - 150px);
+    }
+
+    .hero-intro-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 140px 24px 80px;
+      text-align: center;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.72) 0%, rgba(247,238,238,0.95) 60%, var(--paper) 100%);
+    }
+
+    .hero-intro-copy {
+      font-size: 32px;
+      line-height: 1.28;
+      letter-spacing: -1.2px;
+      font-weight: 400;
+      color: #151515;
+      margin-bottom: 150px;
+    }
+
+    .hero-script {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       pointer-events: none;
     }
 
-    /* 3. Polaroid */
-    .polaroid-section {
-      padding: 76px 24px 94px;
-      background:
-        radial-gradient(circle at center, rgba(255,255,255,0.72) 0%, rgba(250,238,238,0.92) 58%, #faeeee 100%);
-    }
-
-    .polaroid {
+    .hero-script-intro {
       width: 100%;
-      max-width: 380px;
-      margin: 0 auto;
-      padding: 26px 24px 88px;
-      background: #fff;
-      box-shadow: 0 8px 18px rgba(60, 45, 45, 0.22);
+      max-width: 370px;
+      transform: rotate(-3deg);
     }
 
-    .polaroid img {
+    .hero-script-polaroid {
       width: 100%;
-      display: block;
-      aspect-ratio: 1 / 1.05;
-      object-fit: cover;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-    }
-
-    .polaroid-copy {
-      margin-top: -8px;
-      font-family: "Brush Script MT", "Segoe Script", cursive;
-      font-size: 45px;
-      line-height: 0.9;
-      color: #b99ba2;
+      max-width: 310px;
+      margin: -8px auto 0;
       transform: rotate(-5deg);
     }
 
-    .polaroid-copy span {
-      display: block;
-      margin-top: 15px;
-      font-size: 47px;
+    .write-line {
+      position: relative;
+      display: inline-block;
+      width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      font-family: "Allura", cursive;
+      font-weight: 400;
+      line-height: 0.9;
+      opacity: 0;
+      filter: blur(1px);
+      animation-name: handwriting;
+      animation-duration: 1.55s;
+      animation-fill-mode: forwards;
+      animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 
-    /* 4. Invitation */
+    .hero-script-intro .write-line:nth-child(1) {
+      font-size: 92px;
+      color: #131313;
+    }
+
+    .hero-script-intro .write-line:nth-child(2) {
+      margin-top: 18px;
+      margin-left: -4px;
+      font-size: 82px;
+      background: linear-gradient(90deg, #171717 0%, #2a2525 25%, #a98f88 68%, #9a8079 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-script-polaroid .write-line:nth-child(1) {
+      font-size: 74px;
+      color: #b79ca2;
+    }
+
+    .hero-script-polaroid .write-line:nth-child(2) {
+      margin-top: 12px;
+      font-size: 78px;
+      color: #c1a5ab;
+    }
+
+    .write-delay-1 {
+      animation-delay: 0.35s;
+    }
+
+    .write-delay-2 {
+      animation-delay: 1.15s;
+    }
+
+    .hero-photo-panel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 46px 0 34px;
+      background: transparent;
+    }
+
+    .hero-main-photo {
+      width: calc(100% - 28px);
+      height: auto;
+      min-height: calc(100svh - 220px);
+      display: block;
+      object-fit: cover;
+      object-position: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+    }
+
+    .hero-step-polaroid {
+      transform: scale(1.15);
+    }
+
+    .hero-step-polaroid.is-active {
+      transform: scale(1);
+    }
+
+    .hero-polaroid-panel {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 52px 18px 70px;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.62) 0%, rgba(247,238,238,0.95) 62%, var(--paper) 100%);
+    }
+
+    .hero-polaroid-card {
+      width: 100%;
+      max-width: 420px;
+      background: #fbfbfb;
+      padding: 26px 26px 64px;
+      box-shadow: 0 6px 18px var(--shadow);
+    }
+
+    .hero-polaroid-photo-wrap {
+      width: 100%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    .hero-polaroid-photo {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* =========================
+       CONTENT SECTIONS
+    ========================= */
     .invitation {
       padding-top: 92px;
       padding-bottom: 92px;
@@ -242,7 +333,6 @@
       font-size: 22px;
     }
 
-    /* 5. Wedding Info */
     .wedding-info {
       padding-top: 70px;
       padding-bottom: 48px;
@@ -257,7 +347,7 @@
       font-size: 18px;
       line-height: 1.9;
       font-weight: 300;
-      color: #2f2a28;
+      color: var(--text);
     }
 
     .info-place {
@@ -267,7 +357,6 @@
       font-weight: 300;
     }
 
-    /* 6. Calendar */
     .calendar-section {
       padding-top: 40px;
       padding-bottom: 82px;
@@ -277,7 +366,7 @@
       margin-bottom: 38px;
       font-size: 24px;
       font-weight: 300;
-      color: #b4a0a4;
+      color: var(--soft-text);
     }
 
     .calendar-grid {
@@ -309,11 +398,10 @@
       margin: -5px auto 0;
       border-radius: 50%;
       background: #d7b5bd;
-      color: #2f2a28;
+      color: var(--text);
       box-shadow: 0 6px 14px rgba(120, 82, 95, 0.22);
     }
 
-    /* 7. D-Day */
     .dday-section {
       position: relative;
       height: 72vh;
@@ -359,7 +447,6 @@
       font-weight: 300;
     }
 
-    /* 8. Location */
     .location-section {
       padding-top: 78px;
       padding-bottom: 0;
@@ -369,7 +456,7 @@
       margin: 0 0 48px;
       font-size: 24px;
       font-weight: 300;
-      color: #b4a0a4;
+      color: var(--soft-text);
     }
 
     .venue-name {
@@ -402,7 +489,7 @@
     .nav-buttons {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      background: #faeeee;
+      background: var(--paper);
       border-top: 1px solid rgba(160,140,145,0.22);
       border-bottom: 1px solid rgba(160,140,145,0.22);
     }
@@ -412,14 +499,13 @@
       font-size: 15px;
       font-weight: 400;
       border-right: 1px solid rgba(160,140,145,0.22);
-      color: #2f2a28;
+      color: var(--text);
     }
 
     .nav-buttons a:last-child {
       border-right: 0;
     }
 
-    /* 9. Traffic */
     .traffic-section {
       padding-top: 66px;
       padding-bottom: 76px;
@@ -438,12 +524,12 @@
       margin: 0 0 28px;
       font-size: 24px;
       font-weight: 300;
-      color: #b4a0a4;
+      color: var(--soft-text);
     }
 
     .traffic-title .emoji {
       margin-right: 8px;
-      color: #2f2a28;
+      color: var(--text);
     }
 
     .traffic-text {
@@ -451,10 +537,9 @@
       font-size: 18px;
       line-height: 2;
       font-weight: 300;
-      color: #2f2a28;
+      color: var(--text);
     }
 
-    /* 10. Profile */
     .profile-section {
       padding-top: 88px;
       padding-bottom: 84px;
@@ -483,11 +568,11 @@
       margin: 0 0 24px;
       font-size: 17px;
       font-weight: 300;
-      color: #b4a0a4;
+      color: var(--soft-text);
     }
 
     .profile-name strong {
-      color: #2f2a28;
+      color: var(--text);
       font-weight: 400;
       margin-left: 5px;
     }
@@ -496,7 +581,7 @@
       margin: 0 0 30px;
       font-size: 20px;
       font-weight: 300;
-      color: #2f2a28;
+      color: var(--text);
     }
 
     .profile-desc {
@@ -517,10 +602,9 @@
       font-size: 15px;
       font-weight: 300;
       line-height: 1.8;
-      color: #2f2a28;
+      color: var(--text);
     }
 
-    /* 11. Gallery */
     .gallery-section {
       padding-top: 92px;
       padding-left: 0;
@@ -550,10 +634,9 @@
       margin-top: 82px;
       font-size: 19px;
       font-weight: 300;
-      color: #2f2a28;
+      color: var(--text);
     }
 
-    /* 12. Together Timeline */
     .together-section {
       padding-top: 82px;
       padding-bottom: 88px;
@@ -563,7 +646,7 @@
       margin: 0 0 22px;
       font-size: 20px;
       font-weight: 300;
-      color: #2f2a28;
+      color: var(--text);
     }
 
     .together-time {
@@ -571,14 +654,14 @@
       font-size: 18px;
       line-height: 1.8;
       font-weight: 300;
-      color: #2f2a28;
+      color: var(--text);
     }
 
     .timeline-title {
       margin: 0 0 64px;
       font-size: 24px;
       font-weight: 300;
-      color: #b4a0a4;
+      color: var(--soft-text);
     }
 
     .timeline {
@@ -618,7 +701,7 @@
       border-radius: 50%;
       background: #b9a0a7;
       transform: translate(-50%, -50%);
-      box-shadow: 0 0 0 7px rgba(250,238,238,0.9);
+      box-shadow: 0 0 0 7px rgba(247,238,238,0.9);
       z-index: 2;
     }
 
@@ -635,7 +718,7 @@
       font-size: 17px;
       line-height: 1.85;
       font-weight: 300;
-      color: #2f2a28;
+      color: var(--text);
     }
 
     .timeline-copy strong {
@@ -655,7 +738,6 @@
       grid-row: 1;
     }
 
-    /* 13. Parking */
     .parking-section {
       padding-top: 64px;
       padding-bottom: 88px;
@@ -689,7 +771,7 @@
       font-size: 18px;
       line-height: 2;
       font-weight: 300;
-      color: #2f2a28;
+      color: var(--text);
     }
 
     .shuttle-badge {
@@ -701,7 +783,6 @@
       font-weight: 300;
     }
 
-    /* 14. Account */
     .account-section {
       padding-top: 86px;
       padding-bottom: 88px;
@@ -763,7 +844,7 @@
       border-top: 1px solid rgba(180,160,164,0.25);
       font-size: 15px;
       line-height: 1.8;
-      color: #2f2a28;
+      color: var(--text);
     }
 
     .account-item strong {
@@ -775,14 +856,13 @@
     .copy-btn {
       margin-top: 10px;
       border: 1px solid rgba(180,160,164,0.6);
-      background: #faeeee;
+      background: var(--paper);
       border-radius: 999px;
       padding: 8px 13px;
       font-size: 12px;
       color: #6a5d5f;
     }
 
-    /* 15. RSVP */
     .rsvp-section {
       padding-top: 86px;
       padding-bottom: 96px;
@@ -800,8 +880,8 @@
       border: 0;
       border-radius: 5px;
       padding: 18px 18px;
-      background: #ddb8c0;
-      color: #2f2a28;
+      background: var(--accent);
+      color: var(--text);
       font-size: 18px;
       font-weight: 300;
       box-shadow: 0 8px 16px rgba(80,55,55,0.12);
@@ -811,18 +891,17 @@
       transform: scale(0.98);
     }
 
-    /* 16. Closing */
     .closing-photo-section {
       position: relative;
       padding: 0;
-      background: #faeeee;
+      background: var(--paper);
     }
 
     .closing-message {
       padding: 70px 24px 42px;
       font-size: 18px;
       font-weight: 300;
-      color: #2f2a28;
+      color: var(--text);
       text-align: center;
     }
 
@@ -834,7 +913,7 @@
     .footer {
       padding: 54px 24px 90px;
       text-align: center;
-      background: #faeeee;
+      background: var(--paper);
       color: #6f6265;
       font-size: 13px;
       line-height: 1.8;
@@ -845,7 +924,7 @@
       margin-bottom: 20px;
       font-family: Georgia, serif;
       font-size: 22px;
-      color: #2f2a28;
+      color: var(--text);
     }
 
     .brand span {
@@ -922,7 +1001,7 @@
       max-width: 480px;
       max-height: 88vh;
       overflow-y: auto;
-      background: #faeeee;
+      background: var(--paper);
       border-radius: 28px 28px 0 0;
       padding: 28px 24px 32px;
       animation: modalUp 0.35s ease both;
@@ -971,7 +1050,7 @@
       border-radius: 14px;
       padding: 13px 14px;
       background: rgba(255,255,255,0.78);
-      color: #2f2a28;
+      color: var(--text);
       font-size: 14px;
       outline: none;
     }
@@ -1008,18 +1087,27 @@
       color: #fff;
     }
 
+    @keyframes handwriting {
+      0% {
+        width: 0;
+        opacity: 0;
+        filter: blur(2px);
+      }
+      12% {
+        opacity: 1;
+      }
+      100% {
+        width: 100%;
+        opacity: 1;
+        filter: blur(0);
+      }
+    }
+
     @keyframes drawChar {
       to {
         opacity: 1;
         transform: translateY(0);
         filter: blur(0);
-      }
-    }
-
-    @keyframes scriptIn {
-      to {
-        opacity: 1;
-        transform: translateY(0) rotate(-4deg);
       }
     }
 
@@ -1034,22 +1122,46 @@
       }
     }
 
+    @media (max-width: 430px) {
+      .hero-step {
+        padding: 14px 14px 132px;
+      }
+
+      .hero-intro-panel {
+        padding: 120px 18px 72px;
+      }
+
+      .hero-intro-copy {
+        font-size: 27px;
+        margin-bottom: 130px;
+      }
+
+      .hero-script-intro .write-line:nth-child(1) {
+        font-size: 74px;
+      }
+
+      .hero-script-intro .write-line:nth-child(2) {
+        font-size: 66px;
+        margin-top: 16px;
+      }
+
+      .hero-script-polaroid .write-line:nth-child(1) {
+        font-size: 60px;
+      }
+
+      .hero-script-polaroid .write-line:nth-child(2) {
+        font-size: 64px;
+      }
+
+      .hero-polaroid-card {
+        padding: 22px 22px 54px;
+      }
+    }
+
     @media (max-width: 360px) {
       .section {
         padding-left: 22px;
         padding-right: 22px;
-      }
-
-      .intro-ko {
-        font-size: 24px;
-      }
-
-      .script-text {
-        font-size: 50px;
-      }
-
-      .script-text span {
-        font-size: 44px;
       }
 
       .calendar-grid {
@@ -1076,38 +1188,45 @@
 <body>
   <main class="page">
 
-    <!-- 1. Welcome -->
-    <section class="intro" id="top">
-      <div class="intro-inner">
-        <h1 class="intro-ko reveal draw-text">
-          하객 반응 달라지는<br />
-          모바일 청첩장
-        </h1>
+    <!-- 1. Main Sequence -->
+    <section class="hero-sequence" id="top">
+      <div class="hero-step hero-step-intro is-active" id="heroIntro">
+        <div class="hero-inner hero-intro-panel">
+          <div class="hero-intro-copy">
+            하객 반응 달라지는<br />
+            모바일 청첩장
+          </div>
 
-        <div class="script-text script-draw">
-          Welcome
-          <span>to our Weddi</span>
+          <div class="hero-script hero-script-intro">
+            <span class="write-line write-delay-1">Welcome</span>
+            <span class="write-line write-delay-2">To our Wedding</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-step hero-step-photo" id="heroPhoto">
+        <div class="hero-inner hero-photo-panel">
+          <img src="images/main.jpg" alt="메인 웨딩 사진" class="hero-main-photo" />
+        </div>
+      </div>
+
+      <div class="hero-step hero-step-polaroid" id="heroPolaroid">
+        <div class="hero-inner hero-polaroid-panel">
+          <div class="hero-polaroid-card">
+            <div class="hero-polaroid-photo-wrap">
+              <img src="images/main.jpg" alt="폴라로이드 웨딩 사진" class="hero-polaroid-photo" />
+            </div>
+
+            <div class="hero-script hero-script-polaroid">
+              <span class="write-line write-delay-1">We're getting</span>
+              <span class="write-line write-delay-2">Married!</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 2. Main Photo Full -->
-    <section class="section no-padding">
-      <div class="full-photo reveal"></div>
-    </section>
-
-    <!-- 3. Polaroid -->
-    <section class="polaroid-section">
-      <div class="polaroid reveal">
-        <img src="images/main.jpg" alt="웨딩 사진" />
-        <div class="polaroid-copy">
-          We're getting
-          <span>Married!!</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. Invitation Text -->
+    <!-- 2. Invitation Text -->
     <section class="section invitation" id="invitation">
       <div class="reveal">
         <h2 class="section-title draw-text">저희의 시작에 초대합니다</h2>
@@ -1126,7 +1245,7 @@
       </div>
     </section>
 
-    <!-- 5. Wedding Info -->
+    <!-- 3. Wedding Info -->
     <section class="section wedding-info" id="info">
       <div class="reveal">
         <h2 class="section-title draw-text">예식 안내</h2>
@@ -1141,7 +1260,7 @@
       </div>
     </section>
 
-    <!-- 6. Calendar -->
+    <!-- 4. Calendar -->
     <section class="section calendar-section">
       <div class="reveal">
         <div class="calendar-month">10월</div>
@@ -1164,7 +1283,7 @@
       </div>
     </section>
 
-    <!-- 7. D-Day -->
+    <!-- 5. D-Day -->
     <section class="dday-section">
       <div class="dday-content reveal">
         <div class="dday-small">wedding day</div>
@@ -1173,7 +1292,7 @@
       </div>
     </section>
 
-    <!-- 8. Location -->
+    <!-- 6. Location -->
     <section class="section location-section" id="location">
       <div class="reveal">
         <h2 class="location-title draw-text">오시는 길</h2>
@@ -1199,7 +1318,7 @@
       </div>
     </section>
 
-    <!-- 9. Traffic -->
+    <!-- 7. Traffic -->
     <section class="section traffic-section">
       <div class="reveal">
         <div class="traffic-item">
@@ -1230,7 +1349,7 @@
       </div>
     </section>
 
-    <!-- 10. Couple Profile -->
+    <!-- 8. Couple Profile -->
     <section class="section profile-section">
       <div class="reveal">
         <div class="profile-grid">
@@ -1271,7 +1390,7 @@
       </div>
     </section>
 
-    <!-- 11. Gallery -->
+    <!-- 9. Gallery -->
     <section class="section gallery-section" id="gallery">
       <div class="reveal">
         <h2 class="section-title draw-text">갤러리</h2>
@@ -1292,7 +1411,7 @@
       </div>
     </section>
 
-    <!-- 12. Together Timeline -->
+    <!-- 10. Together Timeline -->
     <section class="section together-section" id="together">
       <div class="reveal">
         <p class="together-subtitle">함께한 시간</p>
@@ -1349,7 +1468,7 @@
       </div>
     </section>
 
-    <!-- 13. Parking -->
+    <!-- 11. Parking -->
     <section class="section parking-section" id="parking">
       <div class="reveal">
         <div class="simple-tabs">
@@ -1371,7 +1490,7 @@
       </div>
     </section>
 
-    <!-- 14. Account -->
+    <!-- 12. Account -->
     <section class="section account-section" id="account">
       <div class="reveal">
         <h2 class="section-title draw-text">마음 전하실 곳</h2>
@@ -1423,7 +1542,7 @@
       </div>
     </section>
 
-    <!-- 15. RSVP -->
+    <!-- 13. RSVP -->
     <section class="section rsvp-section" id="rsvp">
       <div class="reveal">
         <h2 class="section-title draw-text">참석 여부 전달</h2>
@@ -1440,7 +1559,7 @@
       </div>
     </section>
 
-    <!-- 16. Closing -->
+    <!-- 14. Closing -->
     <section class="closing-photo-section">
       <div class="closing-message reveal">
         행복하게 잘 살겠습니다.
@@ -1537,6 +1656,34 @@
   </div>
 
   <script>
+    window.addEventListener("load", function () {
+      const intro = document.getElementById("heroIntro");
+      const photo = document.getElementById("heroPhoto");
+      const polaroid = document.getElementById("heroPolaroid");
+
+      if (intro && photo && polaroid) {
+        intro.classList.add("is-active");
+
+        setTimeout(() => {
+          intro.classList.add("is-leaving");
+        }, 3300);
+
+        setTimeout(() => {
+          intro.classList.remove("is-active");
+          photo.classList.add("is-active");
+        }, 4100);
+
+        setTimeout(() => {
+          photo.classList.add("is-leaving");
+          polaroid.classList.add("is-active");
+        }, 6200);
+
+        setTimeout(() => {
+          photo.classList.remove("is-active");
+        }, 7000);
+      }
+    });
+
     const revealElements = document.querySelectorAll(".reveal, .draw-text");
 
     const observer = new IntersectionObserver((entries) => {
