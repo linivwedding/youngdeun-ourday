@@ -7,7 +7,7 @@
   <title>영은이와 든이의 결혼식</title>
 
   <meta property="og:title" content="영은이와 든이의 결혼식" />
-  <meta property="og:description" content="소중한 분들을 초대합니다." />
+  <meta property="og:description" content="2026년 9월 12일 토요일, 소중한 분들을 초대합니다." />
   <meta property="og:image" content="https://urimchoi96.github.io/youngdeun-ourday/images/og.jpg" />
   <meta property="og:url" content="https://urimchoi96.github.io/youngdeun-ourday/" />
 
@@ -21,7 +21,6 @@
     :root {
       --bg: #c9bcc2;
       --paper: #f7eeee;
-      --paper-light: #fbf5f3;
       --text: #252222;
       --soft-text: #b4a0a4;
       --accent: #ddb8c0;
@@ -81,7 +80,6 @@
 
     .section-title {
       margin: 0 0 36px;
-      font-family: "Gowun Dodum", "Noto Sans KR", sans-serif;
       font-size: 24px;
       font-weight: 300;
       color: var(--soft-text);
@@ -91,7 +89,6 @@
 
     .text {
       margin: 0;
-      font-family: "Gowun Dodum", "Noto Sans KR", sans-serif;
       font-size: 17px;
       line-height: 2.05;
       font-weight: 300;
@@ -151,9 +148,7 @@
       opacity: 0;
       pointer-events: none;
       transform: scale(1.02);
-      transition:
-        opacity 0.9s ease,
-        transform 1.15s ease;
+      transition: opacity 0.9s ease, transform 1.15s ease;
     }
 
     .hero-step.is-active {
@@ -186,7 +181,6 @@
     }
 
     .hero-intro-copy {
-      font-family: "Gowun Dodum", "Noto Sans KR", sans-serif;
       font-size: 30px;
       line-height: 1.35;
       letter-spacing: -0.8px;
@@ -322,22 +316,12 @@
     }
 
     /* =========================
-       CONTENT
+       SECTION ORDER
     ========================= */
 
-    .invitation {
-      padding-top: 92px;
-      padding-bottom: 92px;
-    }
-
-    .invitation .section-title {
-      margin-bottom: 50px;
-      font-size: 22px;
-    }
-
     .wedding-info {
-      padding-top: 70px;
-      padding-bottom: 48px;
+      padding-top: 76px;
+      padding-bottom: 46px;
     }
 
     .wedding-info .section-title {
@@ -360,8 +344,8 @@
     }
 
     .calendar-section {
-      padding-top: 40px;
-      padding-bottom: 82px;
+      padding-top: 36px;
+      padding-bottom: 88px;
     }
 
     .calendar-month {
@@ -404,48 +388,14 @@
       box-shadow: 0 6px 14px rgba(120, 82, 95, 0.22);
     }
 
-    .dday-section {
-      position: relative;
-      height: 72vh;
-      min-height: 560px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      padding: 0 24px 72px;
-      color: #fff;
-      text-align: center;
-      background: #222 center/cover no-repeat;
-      background-image: url("images/dday.jpg");
+    .invitation {
+      padding-top: 92px;
+      padding-bottom: 92px;
     }
 
-    .dday-section::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.28);
-    }
-
-    .dday-content {
-      position: relative;
-      z-index: 2;
-    }
-
-    .dday-small {
-      font-size: 28px;
-      font-weight: 300;
-      margin-bottom: 22px;
-    }
-
-    .dday-big {
-      font-size: 46px;
-      font-weight: 300;
-      margin-bottom: 22px;
-      letter-spacing: 1px;
-    }
-
-    .dday-date {
-      font-size: 20px;
-      font-weight: 300;
+    .invitation .section-title {
+      margin-bottom: 50px;
+      font-size: 22px;
     }
 
     .location-section {
@@ -606,38 +556,6 @@
       color: var(--text);
     }
 
-    .gallery-section {
-      padding-top: 92px;
-      padding-left: 0;
-      padding-right: 0;
-      padding-bottom: 72px;
-    }
-
-    .gallery-section .section-title {
-      margin-bottom: 56px;
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      width: 100%;
-    }
-
-    .gallery-grid img {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      display: block;
-    }
-
-    .gallery-caption {
-      margin-top: 82px;
-      font-size: 19px;
-      font-weight: 300;
-      color: var(--text);
-    }
-
     .together-section {
       padding-top: 82px;
       padding-bottom: 88px;
@@ -737,6 +655,38 @@
     .timeline-item.reverse .timeline-photo {
       grid-column: 2;
       grid-row: 1;
+    }
+
+    .gallery-section {
+      padding-top: 92px;
+      padding-left: 0;
+      padding-right: 0;
+      padding-bottom: 72px;
+    }
+
+    .gallery-section .section-title {
+      margin-bottom: 56px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      width: 100%;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-caption {
+      margin-top: 82px;
+      font-size: 19px;
+      font-weight: 300;
+      color: var(--text);
     }
 
     .parking-section {
@@ -1189,10 +1139,14 @@
 <body>
   <main class="page">
 
+    <!-- 1. 메인 섹션 -->
     <section class="hero-sequence" id="top">
       <div class="hero-step hero-step-intro is-active" id="heroIntro">
         <div class="hero-inner hero-intro-panel">
-
+          <div class="hero-intro-copy">
+            하객 반응 달라지는<br />
+            모바일 청첩장
+          </div>
 
           <div class="hero-script hero-script-intro">
             <span class="write-line write-delay-1">Welcome</span>
@@ -1223,6 +1177,44 @@
       </div>
     </section>
 
+    <!-- 2. 예식 안내 + 달력 -->
+    <section class="section wedding-info" id="info">
+      <div class="reveal">
+        <h2 class="section-title draw-text">예식 안내</h2>
+
+        <p class="info-date">
+          2026년 9월 12일 토요일 오후 1시 30분
+        </p>
+
+        <p class="info-place">
+          롯데호텔 서울 2층 크리스탈볼룸
+        </p>
+      </div>
+    </section>
+
+    <section class="section calendar-section">
+      <div class="reveal">
+        <div class="calendar-month">9월</div>
+
+        <div class="calendar-grid">
+          <div class="day-name">일</div>
+          <div class="day-name">월</div>
+          <div class="day-name">화</div>
+          <div class="day-name">수</div>
+          <div class="day-name">목</div>
+          <div class="day-name">금</div>
+          <div class="day-name">토</div>
+
+          <div></div><div></div><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div>
+          <div>6</div><div>7</div><div>8</div><div>9</div><div>10</div><div>11</div><div class="wedding-day">12</div>
+          <div>13</div><div>14</div><div>15</div><div>16</div><div>17</div><div>18</div><div>19</div>
+          <div>20</div><div>21</div><div>22</div><div>23</div><div>24</div><div>25</div><div>26</div>
+          <div>27</div><div>28</div><div>29</div><div>30</div><div></div><div></div><div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 초대 문구 -->
     <section class="section invitation" id="invitation">
       <div class="reveal">
         <h2 class="section-title draw-text">저희의 시작에 초대합니다</h2>
@@ -1241,70 +1233,27 @@
       </div>
     </section>
 
-    <section class="section wedding-info" id="info">
-      <div class="reveal">
-        <h2 class="section-title draw-text">예식 안내</h2>
-
-        <p class="info-date">
-          2026년 10월 10일 토요일 오후 1시 30분
-        </p>
-
-        <p class="info-place">
-          더살롱드웨딩홀 1층 레터홀
-        </p>
-      </div>
-    </section>
-
-    <section class="section calendar-section">
-      <div class="reveal">
-        <div class="calendar-month">10월</div>
-
-        <div class="calendar-grid">
-          <div class="day-name">일</div>
-          <div class="day-name">월</div>
-          <div class="day-name">화</div>
-          <div class="day-name">수</div>
-          <div class="day-name">목</div>
-          <div class="day-name">금</div>
-          <div class="day-name">토</div>
-
-          <div></div><div></div><div></div><div></div><div>1</div><div>2</div><div>3</div>
-          <div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div class="wedding-day">10</div>
-          <div>11</div><div>12</div><div>13</div><div>14</div><div>15</div><div>16</div><div>17</div>
-          <div>18</div><div>19</div><div>20</div><div>21</div><div>22</div><div>23</div><div>24</div>
-          <div>25</div><div>26</div><div>27</div><div>28</div><div>29</div><div>30</div><div>31</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="dday-section">
-      <div class="dday-content reveal">
-        <div class="dday-small">wedding day</div>
-        <div class="dday-big" id="ddayText">D-000</div>
-        <div class="dday-date">2026년 10월 10일</div>
-      </div>
-    </section>
-
+    <!-- 4. 오시는 길 + 대중교통 -->
     <section class="section location-section" id="location">
       <div class="reveal">
         <h2 class="location-title draw-text">오시는 길</h2>
 
         <div class="venue-name">
-          더살롱드웨딩홀 ☎<br />
-          1층 레터홀
+          롯데호텔 서울 ☎<br />
+          2층 크리스탈볼룸
         </div>
 
         <div class="venue-address">
-          제주특별자치도 서귀포시 중앙로 105
+          서울 중구 을지로 30
         </div>
 
         <div class="map-box">
           <img src="images/map.jpg" alt="지도" />
 
           <div class="nav-buttons">
-            <a href="#" target="_blank">티맵</a>
-            <a href="#" target="_blank">카카오내비</a>
-            <a href="#" target="_blank">네이버지도</a>
+            <a href="https://map.naver.com/p/search/서울%20중구%20을지로%2030%20롯데호텔%20서울" target="_blank">네이버지도</a>
+            <a href="https://map.kakao.com/link/search/서울%20중구%20을지로%2030%20롯데호텔%20서울" target="_blank">카카오맵</a>
+            <a href="https://www.tmap.co.kr/search?searchKeyword=서울%20중구%20을지로%2030%20롯데호텔%20서울" target="_blank">티맵</a>
           </div>
         </div>
       </div>
@@ -1313,33 +1262,36 @@
     <section class="section traffic-section">
       <div class="reveal">
         <div class="traffic-item">
-          <h3 class="traffic-title"><span class="emoji">🚌</span>버스</h3>
+          <h3 class="traffic-title"><span class="emoji">🚆</span>지하철</h3>
           <p class="traffic-text">
-            000번, 000번, 000번<br />
-            살롱드레터 정류소 하차 후 도보 3분
+            지하철 2호선 을지로입구역<br />
+            8번 출구 인근<br /><br />
+            롯데호텔 서울 2층<br />
+            크리스탈볼룸으로 오시면 됩니다.
           </p>
         </div>
 
         <div class="traffic-item">
-          <h3 class="traffic-title"><span class="emoji">🚆</span>지하철</h3>
+          <h3 class="traffic-title"><span class="emoji">🚌</span>버스</h3>
           <p class="traffic-text">
-            1호선: 살롱드레터 역 1번 출구 하차<br />
-            2호선: 살롱드레터 역 2번 출구 하차<br /><br />
-            출구 나와서 우측 신호등 건너<br />
-            셔틀버스 탑승 또는 도보 5분
+            을지로입구역, 롯데백화점 본점,<br />
+            명동 인근 정류장 하차 후<br />
+            도보로 이동하실 수 있습니다.
           </p>
         </div>
 
         <div class="traffic-item">
           <h3 class="traffic-title"><span class="emoji">🚗</span>자차</h3>
           <p class="traffic-text">
-            살롱드레터 주차장 검색<br />
-            살롱드레터 웨딩홀 검색
+            내비게이션에<br />
+            롯데호텔 서울 또는<br />
+            서울 중구 을지로 30을 검색해 주세요.
           </p>
         </div>
       </div>
     </section>
 
+    <!-- 5. 신랑 신부 정보 -->
     <section class="section profile-section">
       <div class="reveal">
         <div class="profile-grid">
@@ -1380,6 +1332,63 @@
       </div>
     </section>
 
+    <!-- 6. 함께한 시간 + 우리의 시간 -->
+    <section class="section together-section" id="together">
+      <div class="reveal">
+        <p class="together-subtitle">함께한 시간</p>
+        <p class="together-time" id="togetherTime">"0년 0개월 0일 0시간 0분 0초"</p>
+
+        <h2 class="timeline-title draw-text">우리의 시간</h2>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <img class="timeline-photo" src="images/timeline_01.jpg" alt="첫 만남" />
+            <div class="timeline-dot"></div>
+            <div class="timeline-copy">
+              <strong>&lt;첫 만남&gt;</strong>
+              2018년 10월 6일<br />
+              저희는 처음 만나<br />
+              서로의 계절이 되었습니다.
+            </div>
+          </div>
+
+          <div class="timeline-item reverse">
+            <img class="timeline-photo" src="images/timeline_02.jpg" alt="함께한 시간" />
+            <div class="timeline-dot"></div>
+            <div class="timeline-copy">
+              <strong>&lt;함께한 시간&gt;</strong>
+              평범한 날들을<br />
+              함께 웃고 기억하며<br />
+              소중한 추억을 쌓았습니다.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <img class="timeline-photo" src="images/timeline_03.jpg" alt="약속" />
+            <div class="timeline-dot"></div>
+            <div class="timeline-copy">
+              <strong>&lt;약속&gt;</strong>
+              서로의 가장 가까운 편이 되어<br />
+              같은 방향을 바라보며<br />
+              함께 걷기로 했습니다.
+            </div>
+          </div>
+
+          <div class="timeline-item reverse">
+            <img class="timeline-photo" src="images/timeline_04.jpg" alt="wedding day" />
+            <div class="timeline-dot"></div>
+            <div class="timeline-copy">
+              <strong>&lt;wedding day&gt;</strong>
+              2026년 9월 12일<br />
+              저희 결혼합니다.<br />
+              저희의 시작을 함께해 주세요 🤍
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. 갤러리 -->
     <section class="section gallery-section" id="gallery">
       <div class="reveal">
         <h2 class="section-title draw-text">갤러리</h2>
@@ -1400,62 +1409,7 @@
       </div>
     </section>
 
-    <section class="section together-section" id="together">
-      <div class="reveal">
-        <p class="together-subtitle">함께한 시간</p>
-        <p class="together-time" id="togetherTime">"0년 0개월 0일 0시간 0분 0초"</p>
-
-        <h2 class="timeline-title draw-text">우리의 시간</h2>
-
-        <div class="timeline">
-          <div class="timeline-item">
-            <img class="timeline-photo" src="images/timeline_01.jpg" alt="첫 만남" />
-            <div class="timeline-dot"></div>
-            <div class="timeline-copy">
-              <strong>&lt;첫 만남&gt;</strong>
-              저희는<br />
-              대학교 동아리에서<br />
-              처음 만났어요.
-            </div>
-          </div>
-
-          <div class="timeline-item reverse">
-            <img class="timeline-photo" src="images/timeline_02.jpg" alt="5주년" />
-            <div class="timeline-dot"></div>
-            <div class="timeline-copy">
-              <strong>&lt;5주년&gt;</strong>
-              취업 준비로<br />
-              바쁜 시간 속에서도<br />
-              서로에게 소홀하지 않았고
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <img class="timeline-photo" src="images/timeline_03.jpg" alt="10주년" />
-            <div class="timeline-dot"></div>
-            <div class="timeline-copy">
-              <strong>&lt;10주년&gt;</strong>
-              10년째 한결같은 모습에<br />
-              평생을 함께 하기로<br />
-              약속했습니다.
-            </div>
-          </div>
-
-          <div class="timeline-item reverse">
-            <img class="timeline-photo" src="images/timeline_04.jpg" alt="wedding day" />
-            <div class="timeline-dot"></div>
-            <div class="timeline-copy">
-              <strong>&lt;wedding day&gt;</strong>
-              26.10.10일<br />
-              저희 결혼합니다!<br />
-              저희의 시작을<br />
-              함께해주세요 🤍
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
+    <!-- 8. 주차 안내 -->
     <section class="section parking-section" id="parking">
       <div class="reveal">
         <div class="simple-tabs">
@@ -1465,18 +1419,15 @@
         <img class="parking-img" src="images/parking.jpg" alt="주차장 안내 이미지" />
 
         <p class="parking-text">
-          예식장은 주차장이 협소합니다.<br />
-          주차안내 요원의 안내를 받아<br />
-          야외주차장에 주차하시고<br />
-          셔틀버스를 이용해주세요.
+          롯데호텔 서울 주차장을<br />
+          이용하실 수 있습니다.<br /><br />
+          주차 안내가 필요한 경우<br />
+          현장 안내 요원의 안내를 따라주세요.
         </p>
-
-        <div class="shuttle-badge">
-          🚌 셔틀버스 운행간격: 5분
-        </div>
       </div>
     </section>
 
+    <!-- 9. 마음 전하실 곳 -->
     <section class="section account-section" id="account">
       <div class="reveal">
         <h2 class="section-title draw-text">마음 전하실 곳</h2>
@@ -1528,6 +1479,7 @@
       </div>
     </section>
 
+    <!-- 10. 참석 여부 -->
     <section class="section rsvp-section" id="rsvp">
       <div class="reveal">
         <h2 class="section-title draw-text">참석 여부 전달</h2>
@@ -1544,6 +1496,7 @@
       </div>
     </section>
 
+    <!-- 11. 마무리 -->
     <section class="closing-photo-section">
       <div class="closing-message reveal">
         행복하게 잘 살겠습니다.
@@ -1551,6 +1504,7 @@
       <img class="closing-photo" src="images/closing.jpg" alt="마무리 웨딩 사진" />
     </section>
 
+    <!-- 12. 카피라이트 -->
     <footer class="footer">
       <div class="brand">
         Youngdeun Letter
@@ -1723,7 +1677,7 @@
     function sharePage() {
       const shareData = {
         title: "영은이와 든이의 결혼식",
-        text: "소중한 분들을 초대합니다.",
+        text: "2026년 9월 12일 토요일, 소중한 분들을 초대합니다.",
         url: "https://urimchoi96.github.io/youngdeun-ourday/"
       };
 
@@ -1758,24 +1712,8 @@
       }
     });
 
-    function setDday() {
-      const weddingDate = new Date("2026-10-10T13:30:00");
-      const today = new Date();
-      const diff = weddingDate - today;
-      const day = Math.ceil(diff / (1000 * 60 * 60 * 24));
-      const ddayText = document.getElementById("ddayText");
-
-      if (day > 0) {
-        ddayText.textContent = "D-" + day;
-      } else if (day === 0) {
-        ddayText.textContent = "D-DAY";
-      } else {
-        ddayText.textContent = "D+" + Math.abs(day);
-      }
-    }
-
     function setTogetherTime() {
-      const firstMetDate = new Date("2015-03-28T00:00:00");
+      const firstMetDate = new Date("2018-10-06T00:00:00");
       const now = new Date();
 
       let years = now.getFullYear() - firstMetDate.getFullYear();
@@ -1815,7 +1753,6 @@
       togetherTime.textContent = `"${years}년 ${months}개월 ${days}일 ${hours}시간 ${minutes}분 ${seconds}초"`;
     }
 
-    setDday();
     setTogetherTime();
     setInterval(setTogetherTime, 1000);
   </script>
