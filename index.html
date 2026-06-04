@@ -6,7 +6,6 @@
 
   <title>영은이와 든이의 결혼식</title>
 
-  <!-- 카카오톡 / 문자 공유 미리보기 설정 -->
   <meta property="og:title" content="영은이와 든이의 결혼식" />
   <meta property="og:description" content="소중한 분들을 초대합니다." />
   <meta property="og:image" content="https://urimchoi96.github.io/youngdeun-ourday/images/og.jpg" />
@@ -17,12 +16,16 @@
       box-sizing: border-box;
     }
 
-    html, body {
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
       margin: 0;
       padding: 0;
-      font-family: "Pretendard", "Noto Sans KR", sans-serif;
-      background: #f4f0ea;
-      color: #3d352f;
+      font-family: "Pretendard", "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #efe8dd;
+      color: #3f352e;
       word-break: keep-all;
     }
 
@@ -31,234 +34,361 @@
       text-decoration: none;
     }
 
+    button {
+      font-family: inherit;
+    }
+
     .wrap {
-      width: 100%;
       max-width: 480px;
       margin: 0 auto;
-      background: #fffaf4;
       min-height: 100vh;
+      background: #fffaf3;
       overflow: hidden;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 0 40px rgba(70, 50, 30, 0.08);
     }
 
     .hero {
       position: relative;
       height: 100vh;
       min-height: 680px;
-      padding: 70px 28px 48px;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 36px 24px 70px;
       text-align: center;
       background:
-        linear-gradient(rgba(255, 250, 244, 0.2), rgba(255, 250, 244, 0.9)),
+        linear-gradient(to bottom, rgba(255,250,243,0.1) 0%, rgba(255,250,243,0.4) 42%, rgba(255,250,243,0.96) 100%),
         url("images/main.jpg") center/cover no-repeat;
     }
 
-    .hero-top {
-      padding-top: 20px;
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      pointer-events: none;
     }
 
-    .label {
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      animation: heroFade 1.4s ease forwards;
+      opacity: 0;
+      transform: translateY(18px);
+    }
+
+    .eyebrow {
       font-size: 12px;
       letter-spacing: 4px;
-      color: #9b8d7e;
-      margin-bottom: 22px;
+      color: #9a8878;
+      margin-bottom: 18px;
     }
 
     .hero h1 {
       margin: 0;
-      font-size: 32px;
-      line-height: 1.45;
+      font-size: 34px;
+      line-height: 1.42;
       font-weight: 300;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.7px;
     }
 
     .hero h1 strong {
       font-weight: 500;
     }
 
-    .hero-bottom {
-      padding-bottom: 20px;
-    }
-
-    .names {
-      font-size: 20px;
-      line-height: 1.8;
-      font-weight: 400;
-      margin-bottom: 20px;
-    }
-
-    .date {
+    .hero-date {
+      margin-top: 26px;
       font-size: 15px;
       line-height: 1.8;
       color: #5c5148;
     }
 
+    .scroll-mark {
+      position: absolute;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: #9d8e80;
+      animation: floatMark 1.6s ease-in-out infinite;
+    }
+
     .section {
-      padding: 72px 28px;
+      padding: 78px 26px;
       text-align: center;
+    }
+
+    .section.soft {
+      background: #f7efe6;
     }
 
     .section-title {
-      margin: 0 0 28px;
-      font-size: 18px;
-      font-weight: 400;
-      letter-spacing: 2px;
-      color: #7e6f61;
+      margin: 0 0 30px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      color: #9a8878;
     }
 
-    .invitation-text {
+    .title-ko {
+      margin: 0 0 28px;
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #43372f;
+    }
+
+    .text {
       margin: 0;
       font-size: 15px;
       line-height: 2.05;
-      color: #4b423b;
+      color: #5a4c42;
     }
 
-    .divider {
-      width: 1px;
-      height: 44px;
-      background: #d8cfc5;
-      margin: 0 auto;
+    .reveal {
+      opacity: 0;
+      transform: translateY(34px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .guide-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .guide-card {
+      padding: 22px 20px;
+      border-radius: 20px;
+      background: #fffaf3;
+      text-align: left;
+      box-shadow: 0 14px 30px rgba(90, 70, 45, 0.07);
+    }
+
+    .guide-num {
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: #aa9786;
+      margin-bottom: 8px;
+    }
+
+    .guide-card h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+      font-weight: 500;
+      color: #40362f;
+    }
+
+    .guide-card p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.75;
+      color: #6a5b50;
     }
 
     .info-box {
-      background: #f7f1ea;
-      padding: 34px 24px;
-      border-radius: 18px;
-      text-align: center;
+      padding: 34px 22px;
+      border-radius: 26px;
+      background: #fffaf3;
+      box-shadow: 0 16px 34px rgba(90, 70, 45, 0.08);
     }
 
     .info-date {
-      font-size: 17px;
+      font-size: 18px;
       line-height: 1.8;
       margin-bottom: 22px;
-      color: #3e352f;
+      color: #3f352e;
     }
 
     .place {
       font-size: 15px;
-      line-height: 1.8;
-      color: #5d5249;
+      line-height: 1.9;
+      color: #5d5148;
     }
 
     .button-group {
-      margin-top: 26px;
+      margin-top: 28px;
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
 
-    .button {
-      display: block;
+    .btn {
       width: 100%;
-      padding: 15px 16px;
+      display: block;
+      padding: 15px 18px;
       border-radius: 999px;
+      border: 1px solid #d8c9ba;
       background: #fff;
-      border: 1px solid #d8cfc5;
+      color: #4b4038;
       font-size: 14px;
-      color: #4a4038;
+      cursor: pointer;
+      transition: transform 0.25s ease, background 0.25s ease;
     }
 
-    .button.dark {
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn.dark {
       background: #7b6b5d;
       border-color: #7b6b5d;
       color: #fff;
     }
 
-    .family-list {
+    .family {
       display: flex;
       flex-direction: column;
       gap: 12px;
       font-size: 15px;
-      line-height: 1.7;
-      color: #4b423b;
-    }
-
-    .family-row {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .family-row span {
-      color: #8a7a6b;
-    }
-
-    .account-box {
-      margin-top: 18px;
-      padding: 18px;
-      border-radius: 14px;
-      background: #f7f1ea;
-      font-size: 14px;
       line-height: 1.8;
-      color: #4d443c;
-      text-align: left;
+      color: #574b42;
     }
 
-    .account-title {
-      font-size: 15px;
-      text-align: center;
-      margin-bottom: 16px;
-      color: #7e6f61;
-    }
-
-    .account-item {
-      padding: 12px 0;
-      border-top: 1px solid #e3d9ce;
-    }
-
-    .account-item:first-of-type {
-      border-top: 0;
-    }
-
-    .copy-btn {
-      display: inline-block;
-      margin-top: 8px;
-      padding: 7px 12px;
-      border: 1px solid #d0c4b8;
-      border-radius: 999px;
-      background: #fffaf4;
-      font-size: 12px;
-      color: #6b5c50;
-      cursor: pointer;
+    .family span {
+      color: #978575;
+      margin-right: 6px;
     }
 
     .gallery {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 12px;
+      gap: 14px;
     }
 
     .gallery img {
       width: 100%;
       display: block;
-      border-radius: 18px;
+      border-radius: 22px;
+      box-shadow: 0 14px 30px rgba(70, 50, 30, 0.09);
+    }
+
+    .account-box {
+      margin-top: 28px;
+      padding: 24px 20px;
+      border-radius: 24px;
+      background: #f7efe6;
+      text-align: left;
+    }
+
+    .account-item {
+      padding: 18px 0;
+      border-top: 1px solid #e0d4c8;
+      font-size: 14px;
+      line-height: 1.8;
+      color: #4e433b;
+    }
+
+    .account-item:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .account-item strong {
+      font-size: 15px;
+      color: #3f352e;
+    }
+
+    .copy-btn {
+      margin-top: 10px;
+      padding: 8px 13px;
+      border-radius: 999px;
+      border: 1px solid #d1c2b4;
+      background: #fffaf3;
+      color: #6a5a4d;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .fixed-nav {
+      position: fixed;
+      left: 50%;
+      bottom: 16px;
+      z-index: 50;
+      width: calc(100% - 32px);
+      max-width: 448px;
+      transform: translateX(-50%);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 8px;
+      border-radius: 999px;
+      background: rgba(255, 250, 243, 0.88);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(60, 45, 30, 0.14);
+    }
+
+    .fixed-nav a,
+    .fixed-nav button {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 8px;
+      background: transparent;
+      font-size: 12px;
+      color: #5a4c42;
+      cursor: pointer;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 88px;
+      z-index: 99;
+      transform: translateX(-50%) translateY(20px);
+      opacity: 0;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: rgba(65, 54, 45, 0.92);
+      color: #fff;
+      font-size: 13px;
+      transition: all 0.35s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
 
     .footer {
-      padding: 46px 24px 60px;
-      text-align: center;
+      padding: 54px 24px 90px;
       background: #7b6b5d;
       color: #fff;
+      text-align: center;
       font-size: 13px;
       line-height: 1.8;
     }
 
-    @media (max-width: 360px) {
-      .hero {
-        min-height: 620px;
-        padding-left: 22px;
-        padding-right: 22px;
+    @keyframes heroFade {
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
+    }
 
+    @keyframes floatMark {
+      0%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      50% {
+        transform: translateX(-50%) translateY(6px);
+      }
+    }
+
+    @media (max-width: 360px) {
       .hero h1 {
-        font-size: 28px;
+        font-size: 30px;
       }
 
       .section {
-        padding: 62px 22px;
+        padding: 68px 22px;
       }
     }
   </style>
@@ -267,117 +397,129 @@
 <body>
   <main class="wrap">
 
-    <!-- 메인 화면 -->
-    <section class="hero">
-      <div class="hero-top">
-        <div class="label">WEDDING INVITATION</div>
+    <section class="hero" id="top">
+      <div class="hero-content">
+        <div class="eyebrow">WEDDING INVITATION</div>
         <h1>
-          저희 두 사람<br />
+          영은이와 든이<br />
           <strong>결혼합니다</strong>
         </h1>
-      </div>
-
-      <div class="hero-bottom">
-        <div class="names">
-          영은 · 든
-        </div>
-        <div class="date">
+        <div class="hero-date">
           2026. 00. 00 SAT 00:00<br />
           예식장 이름 / 홀 이름
         </div>
       </div>
+      <div class="scroll-mark">SCROLL</div>
     </section>
 
-    <!-- 초대 문구 -->
     <section class="section">
-      <h2 class="section-title">INVITATION</h2>
-      <p class="invitation-text">
-        서로의 가장 좋은 친구가 되어<br />
-        같은 방향을 바라보며 걸어가려 합니다.<br /><br />
-        소중한 분들을 모시고<br />
-        저희의 첫 시작을 함께 나누고 싶습니다.<br />
-        귀한 걸음으로 축복해 주세요.
-      </p>
+      <div class="reveal">
+        <h2 class="section-title">INVITATION</h2>
+        <h3 class="title-ko">소중한 분들을<br />저희의 시작에 초대합니다</h3>
+        <p class="text">
+          서로의 가장 좋은 친구가 되어<br />
+          같은 방향을 바라보며 걸어가려 합니다.<br /><br />
+          귀한 걸음으로 함께해 주시고<br />
+          따뜻한 마음으로 축복해 주세요.
+        </p>
+      </div>
     </section>
 
-    <div class="divider"></div>
+    <section class="section soft" id="guide">
+      <div class="reveal">
+        <h2 class="section-title">GUIDE</h2>
+        <h3 class="title-ko">예식 안내</h3>
 
-    <!-- 혼주 / 이름 -->
-    <section class="section">
-      <h2 class="section-title">WITH OUR FAMILIES</h2>
+        <div class="guide-list">
+          <div class="guide-card reveal">
+            <div class="guide-num">01</div>
+            <h3>예식 시간</h3>
+            <p>2026년 00월 00일 토요일 오후 00시 00분에 예식이 시작됩니다.</p>
+          </div>
 
-      <div class="family-list">
-        <div class="family-row">
-          <span>아버지 · 어머니의 아들</span>
-          <strong>든</strong>
-        </div>
-        <div class="family-row">
-          <span>아버지 · 어머니의 딸</span>
-          <strong>영은</strong>
+          <div class="guide-card reveal">
+            <div class="guide-num">02</div>
+            <h3>장소 안내</h3>
+            <p>예식장 이름 / 홀 이름<br />서울특별시 상세 주소를 입력해 주세요.</p>
+          </div>
+
+          <div class="guide-card reveal">
+            <div class="guide-num">03</div>
+            <h3>주차 안내</h3>
+            <p>예식장 주차장을 이용하실 수 있습니다. 자세한 내용은 예식장 안내에 따라 입력해 주세요.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 예식 안내 -->
-    <section class="section">
-      <h2 class="section-title">WEDDING DAY</h2>
+    <section class="section" id="info">
+      <div class="reveal">
+        <h2 class="section-title">WEDDING DAY</h2>
 
-      <div class="info-box">
-        <div class="info-date">
-          2026년 00월 00일 토요일<br />
-          오후 00시 00분
-        </div>
+        <div class="info-box">
+          <div class="info-date">
+            2026년 00월 00일 토요일<br />
+            오후 00시 00분
+          </div>
 
-        <div class="place">
-          예식장 이름<br />
-          홀 이름<br />
-          서울특별시 주소 입력
-        </div>
+          <div class="place">
+            예식장 이름<br />
+            홀 이름<br />
+            서울특별시 상세 주소
+          </div>
 
-        <div class="button-group">
-          <a class="button dark" href="#" target="_blank">지도 바로가기</a>
-          <a class="button" href="tel:01000000000">문의 전화하기</a>
+          <div class="button-group">
+            <a class="btn dark" href="#" target="_blank">지도 바로가기</a>
+            <a class="btn" href="tel:01000000000">문의 전화하기</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 갤러리 -->
-    <section class="section">
-      <h2 class="section-title">GALLERY</h2>
-
-      <div class="gallery">
-        <img src="images/gallery_01.jpg" alt="웨딩 사진 1" />
-        <img src="images/gallery_02.jpg" alt="웨딩 사진 2" />
-        <img src="images/gallery_03.jpg" alt="웨딩 사진 3" />
+    <section class="section soft">
+      <div class="reveal">
+        <h2 class="section-title">WITH OUR FAMILIES</h2>
+        <div class="family">
+          <div><span>아버지 · 어머니의 아들</span><strong>든</strong></div>
+          <div><span>아버지 · 어머니의 딸</span><strong>영은</strong></div>
+        </div>
       </div>
     </section>
 
-    <!-- 마음 전하실 곳 -->
-    <section class="section">
-      <h2 class="section-title">ACCOUNT</h2>
-
-      <p class="invitation-text">
-        참석이 어려우신 분들을 위해<br />
-        마음 전하실 곳을 안내드립니다.
-      </p>
-
-      <div class="account-box">
-        <div class="account-title">마음 전하실 곳</div>
-
-        <div class="account-item">
-          <strong>신랑측</strong><br />
-          은행명 000-0000-0000-00<br />
-          예금주 이름
-          <br />
-          <button class="copy-btn" onclick="copyAccount('000-0000-0000-00')">계좌번호 복사</button>
+    <section class="section" id="gallery">
+      <div class="reveal">
+        <h2 class="section-title">GALLERY</h2>
+        <div class="gallery">
+          <img class="reveal" src="images/gallery_01.jpg" alt="웨딩 사진 1" />
+          <img class="reveal" src="images/gallery_02.jpg" alt="웨딩 사진 2" />
+          <img class="reveal" src="images/gallery_03.jpg" alt="웨딩 사진 3" />
         </div>
+      </div>
+    </section>
 
-        <div class="account-item">
-          <strong>신부측</strong><br />
-          은행명 000-0000-0000-00<br />
-          예금주 이름
-          <br />
-          <button class="copy-btn" onclick="copyAccount('000-0000-0000-00')">계좌번호 복사</button>
+    <section class="section soft">
+      <div class="reveal">
+        <h2 class="section-title">ACCOUNT</h2>
+        <h3 class="title-ko">마음 전하실 곳</h3>
+        <p class="text">
+          참석이 어려우신 분들을 위해<br />
+          마음 전하실 곳을 안내드립니다.
+        </p>
+
+        <div class="account-box">
+          <div class="account-item">
+            <strong>신랑측</strong><br />
+            은행명 000-0000-0000-00<br />
+            예금주 이름<br />
+            <button class="copy-btn" onclick="copyAccount('000-0000-0000-00')">계좌번호 복사</button>
+          </div>
+
+          <div class="account-item">
+            <strong>신부측</strong><br />
+            은행명 000-0000-0000-00<br />
+            예금주 이름<br />
+            <button class="copy-btn" onclick="copyAccount('000-0000-0000-00')">계좌번호 복사</button>
+          </div>
         </div>
       </div>
     </section>
@@ -389,13 +531,61 @@
 
   </main>
 
+  <nav class="fixed-nav">
+    <a href="#top">처음</a>
+    <a href="#info">예식안내</a>
+    <button type="button" onclick="sharePage()">공유</button>
+  </nav>
+
+  <div class="toast" id="toast">복사되었습니다.</div>
+
   <script>
-    function copyAccount(account) {
-      navigator.clipboard.writeText(account).then(function () {
-        alert("계좌번호가 복사되었습니다.");
-      }).catch(function () {
-        alert("복사가 지원되지 않는 브라우저입니다.");
+    const revealElements = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+        }
       });
+    }, {
+      threshold: 0.18
+    });
+
+    revealElements.forEach((el) => observer.observe(el));
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 1800);
+    }
+
+    function copyAccount(account) {
+      navigator.clipboard.writeText(account).then(() => {
+        showToast("계좌번호가 복사되었습니다.");
+      }).catch(() => {
+        showToast("복사가 지원되지 않는 브라우저입니다.");
+      });
+    }
+
+    function sharePage() {
+      const shareData = {
+        title: "영은이와 든이의 결혼식",
+        text: "소중한 분들을 초대합니다.",
+        url: "https://urimchoi96.github.io/youngdeun-ourday/"
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData);
+      } else {
+        navigator.clipboard.writeText(shareData.url).then(() => {
+          showToast("청첩장 링크가 복사되었습니다.");
+        });
+      }
     }
   </script>
 </body>
