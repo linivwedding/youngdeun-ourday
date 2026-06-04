@@ -49,6 +49,10 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    body.modal-open {
+      overflow: hidden;
+    }
+
     img {
       display: block;
       width: 100%;
@@ -866,6 +870,209 @@
       box-shadow: 0 8px 18px rgba(150, 120, 95, 0.18);
     }
 
+    /* ===================== 참석 모달 폼 ===================== */
+    .rsvp-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none;
+      background: rgba(255, 255, 255, 0.86);
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .rsvp-modal.open {
+      display: flex;
+    }
+
+    .rsvp-panel {
+      width: 100%;
+      max-width: 420px;
+      height: 100svh;
+      background: #ffffff;
+      box-shadow: 0 0 26px rgba(0, 0, 0, 0.08);
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .rsvp-head {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      border-bottom: 1px solid #eeeeee;
+      font-size: 15px;
+      color: #555;
+      font-weight: 400;
+    }
+
+    .rsvp-close {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 34px;
+      height: 34px;
+      border: 0;
+      background: transparent;
+      color: #9a9a9a;
+      font-size: 30px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .rsvp-form {
+      padding: 28px 24px 46px;
+      text-align: left;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      line-height: 1.4;
+      color: #555;
+      font-weight: 400;
+    }
+
+    .required {
+      color: #d05050;
+      margin-left: 3px;
+    }
+
+    .segmented {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border: 1px solid #e6e6e6;
+      border-radius: 5px;
+      overflow: hidden;
+      box-shadow: 0 2px 7px rgba(0, 0, 0, 0.05);
+      background: #fff;
+    }
+
+    .segmented.three {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .segmented input {
+      display: none;
+    }
+
+    .segmented label {
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid #e6e6e6;
+      color: #9a9a9a;
+      font-size: 14px;
+      background: #fff;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .segmented label:last-child {
+      border-right: none;
+    }
+
+    .segmented input:checked + span {
+      background: #f3ede8;
+      color: #4e4842;
+      font-weight: 500;
+    }
+
+    .segmented label span {
+      width: 100%;
+      height: 100%;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid #e6e6e6;
+      border-radius: 5px;
+      background: #fff;
+      box-shadow: 0 2px 7px rgba(0, 0, 0, 0.05);
+      padding: 10px 12px;
+      font-size: 15px;
+      color: #333;
+      outline: none;
+    }
+
+    .form-textarea {
+      min-height: 86px;
+      resize: vertical;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: #c9b8a9;
+      box-shadow: 0 0 0 2px rgba(201, 184, 169, 0.16);
+    }
+
+    .rsvp-send {
+      width: 100%;
+      height: 48px;
+      border: 0;
+      border-radius: 6px;
+      background: #d8c8bb;
+      color: #3f3832;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 6px;
+      box-shadow: 0 4px 12px rgba(120, 100, 84, 0.16);
+    }
+
+    .rsvp-send:disabled {
+      opacity: 0.65;
+      cursor: default;
+    }
+
+    .rsvp-notice {
+      margin: 18px 0 0;
+      font-size: 12px;
+      line-height: 1.7;
+      color: #999;
+      text-align: center;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      z-index: 300;
+      transform: translateX(-50%) translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      background: rgba(45, 40, 36, 0.92);
+      color: #fff;
+      padding: 11px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
     /* ===================== 마무리 ===================== */
     .final-wrap {
       max-width: 360px;
@@ -922,6 +1129,10 @@
       .top-btn {
         right: 16px;
       }
+
+      .rsvp-panel {
+        max-width: 100%;
+      }
     }
 
     @media (max-width: 390px) {
@@ -946,6 +1157,11 @@
 
       .hero-polaroid-script {
         font-size: 2.85rem;
+      }
+
+      .rsvp-form {
+        padding-left: 20px;
+        padding-right: 20px;
       }
     }
   </style>
@@ -1278,9 +1494,9 @@
             참석 여부 전달을 부탁드립니다.
           </p>
 
-          <a class="btn-submit" href="https://script.google.com/macros/s/AKfycbxk728vDWGUxjJtoEGOexwgIuX8V5YLw8brnpXCp8Slwe7AY70oGKxKsXWLjbmaBATO/exec" id="attendanceBtn" target="_blank" rel="noopener">
+          <button class="btn-submit" type="button" id="openRsvpBtn">
             참석 여부 전달
-          </a>
+          </button>
         </div>
       </section>
 
@@ -1304,6 +1520,7 @@
 
   <button class="top-btn" id="topBtn" type="button" aria-label="맨 위로 이동">↑</button>
 
+  <!-- 갤러리 확대 -->
   <div class="lightbox" id="lightbox">
     <div class="lightbox-inner">
       <button class="lightbox-close" id="lightboxClose" type="button" aria-label="닫기">✕</button>
@@ -1311,12 +1528,135 @@
     </div>
   </div>
 
+  <!-- 참석 여부 모달 -->
+  <div class="rsvp-modal" id="rsvpModal">
+    <div class="rsvp-panel">
+      <div class="rsvp-head">
+        참석 여부 전달
+        <button class="rsvp-close" type="button" id="closeRsvpBtn" aria-label="닫기">×</button>
+      </div>
+
+      <form class="rsvp-form" id="rsvpForm">
+        <div class="form-group">
+          <label class="form-label">어느 측 하객이신가요?<span class="required">*</span></label>
+          <div class="segmented">
+            <label>
+              <input type="radio" name="side" value="신랑" required />
+              <span>신랑</span>
+            </label>
+            <label>
+              <input type="radio" name="side" value="신부" required />
+              <span>신부</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">참석여부<span class="required">*</span></label>
+          <div class="segmented">
+            <label>
+              <input type="radio" name="attendance" value="참석" required />
+              <span>참석</span>
+            </label>
+            <label>
+              <input type="radio" name="attendance" value="불참석" required />
+              <span>불참석</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">식사여부<span class="required">*</span></label>
+          <div class="segmented three">
+            <label>
+              <input type="radio" name="meal" value="O" required />
+              <span>O</span>
+            </label>
+            <label>
+              <input type="radio" name="meal" value="X" required />
+              <span>X</span>
+            </label>
+            <label>
+              <input type="radio" name="meal" value="미정" required />
+              <span>미정</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">전세버스 탑승여부<span class="required">*</span></label>
+          <div class="segmented">
+            <label>
+              <input type="radio" name="bus" value="O" required />
+              <span>O</span>
+            </label>
+            <label>
+              <input type="radio" name="bus" value="X" required />
+              <span>X</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="guestName">성함<span class="required">*</span></label>
+          <input class="form-input" id="guestName" name="name" type="text" autocomplete="name" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="guestPhone">연락처<span class="required">*</span></label>
+          <input class="form-input" id="guestPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="companionName">동행인 성함</label>
+          <input class="form-input" id="companionName" name="companionName" type="text" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="companionCount">동행인 수(본인 제외)</label>
+          <input class="form-input" id="companionCount" name="companionCount" type="number" min="0" inputmode="numeric" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">피로연 참석여부</label>
+          <div class="segmented three">
+            <label>
+              <input type="radio" name="reception" value="O" />
+              <span>O</span>
+            </label>
+            <label>
+              <input type="radio" name="reception" value="X" />
+              <span>X</span>
+            </label>
+            <label>
+              <input type="radio" name="reception" value="미정" />
+              <span>미정</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="guestMemo">전달사항</label>
+          <textarea class="form-textarea" id="guestMemo" name="memo"></textarea>
+        </div>
+
+        <button class="rsvp-send" type="submit" id="rsvpSubmitBtn">전달하기</button>
+
+        <p class="rsvp-notice">
+          제출 후 새로고침 없이 완료 안내가 표시됩니다.<br />
+          중복 제출을 방지하기 위해 한 번만 눌러주세요.
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">전송되었습니다.</div>
+
   <script>
     const WEDDING_DATE = new Date("2026-09-12T13:30:00+09:00");
     const FIRST_MET_DATE = new Date("2018-10-06T00:00:00+09:00");
 
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxk728vDWGUxjJtoEGOexwgIuX8V5YLw8brnpXCp8Slwe7AY70oGKxKsXWLjbmaBATO/exec";
-    const ATTENDANCE_FORM_URL = GOOGLE_SCRIPT_URL;
 
     window.addEventListener("load", () => {
       const hero = document.getElementById("hero");
@@ -1452,18 +1792,11 @@
         const value = btn.dataset.copy;
         try {
           await navigator.clipboard.writeText(value);
-          alert("계좌번호가 복사되었습니다.");
+          showToast("계좌번호가 복사되었습니다.");
         } catch (e) {
-          alert("복사에 실패했습니다. 직접 복사해 주세요.");
+          showToast("복사에 실패했습니다.");
         }
       });
-    });
-
-    document.getElementById("attendanceBtn").addEventListener("click", (e) => {
-      if (!ATTENDANCE_FORM_URL || ATTENDANCE_FORM_URL === "#") {
-        e.preventDefault();
-        alert("참석 여부 링크를 연결해 주세요.");
-      }
     });
 
     const lightbox = document.getElementById("lightbox");
@@ -1490,6 +1823,77 @@
 
     document.getElementById("topBtn").addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 1800);
+    }
+
+    const rsvpModal = document.getElementById("rsvpModal");
+    const openRsvpBtn = document.getElementById("openRsvpBtn");
+    const closeRsvpBtn = document.getElementById("closeRsvpBtn");
+    const rsvpForm = document.getElementById("rsvpForm");
+    const rsvpSubmitBtn = document.getElementById("rsvpSubmitBtn");
+
+    function openRsvpModal() {
+      rsvpModal.classList.add("open");
+      document.body.classList.add("modal-open");
+    }
+
+    function closeRsvpModal() {
+      rsvpModal.classList.remove("open");
+      document.body.classList.remove("modal-open");
+    }
+
+    openRsvpBtn.addEventListener("click", openRsvpModal);
+    closeRsvpBtn.addEventListener("click", closeRsvpModal);
+
+    rsvpModal.addEventListener("click", (event) => {
+      if (event.target === rsvpModal) {
+        closeRsvpModal();
+      }
+    });
+
+    rsvpForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!rsvpForm.checkValidity()) {
+        rsvpForm.reportValidity();
+        return;
+      }
+
+      rsvpSubmitBtn.disabled = true;
+      rsvpSubmitBtn.textContent = "전송 중...";
+
+      const formData = new FormData(rsvpForm);
+
+      formData.append("submittedAt", new Date().toLocaleString("ko-KR"));
+      formData.append("wedding", "영은 & 이든");
+      formData.append("source", "mobile-invitation");
+
+      try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          body: formData
+        });
+
+        showToast("참석 여부가 전달되었습니다.");
+        rsvpForm.reset();
+        closeRsvpModal();
+      } catch (error) {
+        showToast("전송에 실패했습니다. 다시 시도해 주세요.");
+      } finally {
+        rsvpSubmitBtn.disabled = false;
+        rsvpSubmitBtn.textContent = "전달하기";
+      }
     });
   </script>
 </body>
