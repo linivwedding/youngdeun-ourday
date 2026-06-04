@@ -2,10 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>영은 & 이든 모바일 청첩장</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,21 +14,19 @@
 
   <style>
     :root {
-      --bg: #c3b7ac;
+      --bg: #bdb2a7;
       --paper: #f7f3ee;
       --paper-2: #fcfaf7;
-      --line: #e6ddd3;
-      --line-strong: #d2c6b9;
-      --text: #2d2824;
-      --sub: #a49689;
-      --muted: #b9aea3;
-      --point: #e5d9cc;
-      --point-deep: #c7b6a4;
+      --line: #e4dbd1;
+      --line-strong: #cfc2b5;
+      --text: #2b2622;
+      --sub: #a99b8f;
+      --muted: #b8aca1;
+      --point: #e8dcd1;
+      --point-deep: #c9b8a9;
       --white: #ffffff;
-      --shadow: 0 14px 40px rgba(83, 68, 55, 0.12);
-      --shadow-soft: 0 8px 22px rgba(83, 68, 55, 0.08);
-      --radius: 30px;
-      --inner-radius: 22px;
+      --shadow: 0 10px 28px rgba(88, 70, 55, 0.12);
+      --shadow-soft: 0 6px 18px rgba(88, 70, 55, 0.08);
       --content-width: 480px;
     }
 
@@ -49,8 +44,8 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
       word-break: keep-all;
+      -webkit-font-smoothing: antialiased;
     }
 
     img {
@@ -65,86 +60,84 @@
       font: inherit;
     }
 
-.page {
-  width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 0;
-}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: 100%;
+      max-width: var(--content-width);
+      margin: 0 auto;
+      padding: 0;
+      background: var(--paper);
+      min-height: 100vh;
+      overflow: hidden;
+    }
 
     .paper {
       background: var(--paper);
-      border-radius: var(--radius);
+      min-height: 100vh;
       overflow: hidden;
-      box-shadow: var(--shadow);
+      box-shadow: none;
+      border-radius: 0;
     }
 
     .section {
-      padding: 72px 24px;
-      border-top: 1px solid rgba(210, 198, 185, 0.45);
+      padding: 64px 22px;
       background: var(--paper);
-    }
-
-    .section:first-of-type {
-      border-top: none;
+      border-top: 1px solid rgba(210, 198, 185, 0.35);
+      text-align: center;
     }
 
     .section-title {
-      margin: 0 0 26px;
+      margin: 0 0 28px;
       text-align: center;
-      font-size: 1.05rem;
-      font-weight: 400;
+      font-size: 1.35rem;
+      font-weight: 300;
       color: var(--sub);
-      letter-spacing: 0.06em;
-    }
-
-    .section-subtitle {
-      margin: 0 0 14px;
-      text-align: center;
-      font-size: 1.85rem;
-      font-weight: 500;
-      color: var(--text);
-      line-height: 1.35;
+      letter-spacing: -0.02em;
     }
 
     .section-desc {
-      max-width: 640px;
+      max-width: 360px;
       margin: 0 auto;
       text-align: center;
-      font-size: 1.04rem;
+      font-size: 0.98rem;
+      line-height: 2;
       color: var(--text);
     }
 
-    .center {
-      text-align: center;
-    }
-
-    /* ========== HERO ========== */
+    /* ===================== HERO ===================== */
     .hero {
       position: relative;
       min-height: 100svh;
-      background: var(--paper);
+      background: var(--bg);
       overflow: hidden;
     }
 
     .hero-inner {
       position: relative;
       min-height: 100svh;
-      background: transparent;
+      padding: 18px 14px 120px;
+      background: var(--bg);
     }
 
     .hero-intro {
       position: absolute;
-      inset: 0;
+      top: 18px;
+      left: 14px;
+      right: 14px;
+      bottom: 120px;
       z-index: 5;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 40px 24px 110px;
-      text-align: center;
       background: var(--paper);
-      transition: opacity 1s ease, visibility 1s ease;
+      text-align: center;
+      padding: 40px 22px;
+      transition: opacity 0.9s ease, visibility 0.9s ease, transform 0.9s ease;
     }
 
     .hero.stage-2 .hero-intro,
@@ -152,45 +145,46 @@
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
+      transform: translateY(-10px);
     }
 
     .hero-kicker {
-      margin: 0 0 38px;
-      font-size: clamp(1.7rem, 4.5vw, 2.7rem);
+      margin: 0 0 92px;
+      font-size: 1.55rem;
       font-weight: 400;
-      line-height: 1.25;
-      letter-spacing: -0.02em;
-      color: #26211d;
+      line-height: 1.34;
+      letter-spacing: -0.04em;
+      color: #1f1b18;
     }
 
     .script-wrap {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
+      gap: 4px;
+      width: 100%;
     }
 
     .script-line {
       position: relative;
       display: inline-block;
       font-family: "Allura", cursive;
-      font-size: clamp(3.8rem, 10vw, 6rem);
-      line-height: 0.95;
-      letter-spacing: 0.01em;
+      font-size: 4.25rem;
+      line-height: 0.86;
       white-space: nowrap;
       color: transparent;
       background-image: linear-gradient(
         90deg,
-        #1d1916 0%,
-        #4e4137 36%,
-        #8a725d 68%,
-        #b59c85 100%
+        #1f1b18 0%,
+        #4a3d34 38%,
+        #9a806a 72%,
+        #b89d84 100%
       );
       background-size: 0% 100%;
       background-repeat: no-repeat;
       -webkit-background-clip: text;
       background-clip: text;
-      animation: writingText 2.2s ease forwards;
+      animation: writingText 2.15s ease forwards;
     }
 
     .script-line:nth-child(2) {
@@ -212,29 +206,27 @@
 
     .hero-photo-box {
       position: absolute;
+      top: 18px;
       left: 14px;
       right: 14px;
-      top: 14px;
-      bottom: 14px;
+      bottom: 120px;
+      z-index: 2;
       opacity: 0;
       transform: scale(1.04);
-      transition:
-        opacity 1.15s ease,
-        transform 1.15s ease,
-        top 1.15s ease,
-        left 1.15s ease,
-        right 1.15s ease,
-        bottom 1.15s ease,
-        padding 1.15s ease,
-        border-radius 1.15s ease,
-        background 1.15s ease,
-        box-shadow 1.15s ease;
-      z-index: 2;
       overflow: hidden;
-      border-radius: 0;
       background: transparent;
-      box-shadow: none;
       padding: 0;
+      box-shadow: none;
+      transition:
+        opacity 1.05s ease,
+        transform 1.05s ease,
+        top 1.05s ease,
+        left 1.05s ease,
+        right 1.05s ease,
+        bottom 1.05s ease,
+        padding 1.05s ease,
+        background 1.05s ease,
+        box-shadow 1.05s ease;
     }
 
     .hero.stage-2 .hero-photo-box,
@@ -244,14 +236,13 @@
     }
 
     .hero.stage-3 .hero-photo-box {
-      top: 76px;
-      left: 26px;
-      right: 26px;
-      bottom: 118px;
-      padding: 14px 14px 110px;
+      top: 92px;
+      left: 38px;
+      right: 38px;
+      bottom: 145px;
+      padding: 14px 14px 92px;
       background: #fbfbfb;
-      border-radius: 2px;
-      box-shadow: 0 12px 32px rgba(70, 57, 45, 0.16);
+      box-shadow: 0 8px 22px rgba(70, 57, 45, 0.14);
     }
 
     .hero-photo {
@@ -266,22 +257,18 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center center;
+      object-position: center;
     }
 
     .hero-polaroid-caption {
       position: absolute;
       left: 0;
       right: 0;
-      bottom: 22px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0 16px;
+      bottom: 18px;
       text-align: center;
       opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.9s ease 0.25s, transform 0.9s ease 0.25s;
+      transform: translateY(14px);
+      transition: opacity 0.8s ease 0.25s, transform 0.8s ease 0.25s;
     }
 
     .hero.stage-3 .hero-polaroid-caption {
@@ -291,15 +278,14 @@
 
     .hero-polaroid-script {
       font-family: "Allura", cursive;
-      font-size: clamp(3.2rem, 8.6vw, 4.8rem);
-      line-height: 0.9;
-      letter-spacing: 0.01em;
+      font-size: 3.15rem;
+      line-height: 0.82;
       color: transparent;
       background-image: linear-gradient(
         90deg,
-        #b19b88 0%,
-        #c2b09f 55%,
-        #d7ccbf 100%
+        #b8a18e 0%,
+        #c8b6a6 55%,
+        #d5c8ba 100%
       );
       background-size: 0% 100%;
       background-repeat: no-repeat;
@@ -308,28 +294,27 @@
     }
 
     .hero.stage-3 .hero-polaroid-script {
-      animation: writingText 1.8s ease 0.5s forwards;
+      animation: writingText 1.7s ease 0.45s forwards;
     }
 
-    /* ========== INFO ========== */
+    /* ===================== 예식 안내 ===================== */
     .info-lines {
       text-align: center;
-      font-size: 1.18rem;
-      line-height: 1.85;
+      font-size: 1rem;
+      line-height: 1.9;
       color: var(--text);
     }
 
     .month-title {
-      margin: 34px 0 22px;
+      margin: 42px 0 20px;
       text-align: center;
-      font-size: 1.85rem;
+      font-size: 1.55rem;
       font-weight: 300;
       color: var(--muted);
-      letter-spacing: 0.02em;
     }
 
     .calendar {
-      max-width: 620px;
+      max-width: 360px;
       margin: 0 auto;
     }
 
@@ -337,25 +322,24 @@
     .calendar-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 8px;
+      gap: 7px 4px;
     }
 
     .calendar-head div {
       text-align: center;
-      font-size: 1rem;
-      font-weight: 500;
+      font-size: 0.95rem;
+      font-weight: 400;
       color: #4b4540;
-      padding: 10px 0;
+      padding: 8px 0 12px;
     }
 
     .calendar-grid div {
-      min-height: 54px;
+      min-height: 42px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: #47403a;
-      position: relative;
     }
 
     .calendar-grid .empty {
@@ -364,21 +348,20 @@
     }
 
     .calendar-grid .today-badge {
-      width: 54px;
-      height: 54px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #e9ddd0;
-      box-shadow: 0 6px 14px rgba(146, 118, 94, 0.17);
+      background: #e8dcd1;
+      box-shadow: 0 6px 16px rgba(150, 120, 95, 0.18);
     }
 
     .d-day-wrap {
-      margin: 32px auto 0;
-      max-width: 640px;
+      margin: 38px auto 0;
+      max-width: 360px;
       overflow: hidden;
-      border-radius: 20px;
       background: var(--paper-2);
       box-shadow: var(--shadow-soft);
     }
@@ -395,96 +378,84 @@
     }
 
     .d-day-copy {
-      padding: 28px 18px 30px;
+      padding: 24px 16px 26px;
       text-align: center;
-      font-size: 1.15rem;
+      font-size: 1rem;
       color: var(--text);
       background: var(--paper-2);
     }
 
     .d-day-copy strong {
       display: block;
-      font-size: 3rem;
-      font-weight: 500;
-      margin: 8px 0 10px;
+      font-size: 2.5rem;
+      font-weight: 400;
+      margin: 6px 0 8px;
       line-height: 1;
     }
 
-    /* ========== INVITE TEXT ========== */
+    /* ===================== 초대글 ===================== */
     .intro-message {
-      max-width: 650px;
+      max-width: 360px;
       margin: 0 auto;
       text-align: center;
-      font-size: 1.18rem;
+      font-size: 1rem;
       line-height: 2.05;
       color: var(--text);
     }
 
-    /* ========== MAP ========== */
+    /* ===================== 오시는 길 ===================== */
     .venue-card {
-      max-width: 680px;
-      margin: 0 auto 30px;
+      max-width: 360px;
+      margin: 0 auto 28px;
       text-align: center;
     }
 
     .venue-name {
-      font-size: 1.65rem;
-      font-weight: 500;
-      margin: 0 0 10px;
+      margin: 0 0 8px;
+      font-size: 1.35rem;
+      font-weight: 400;
     }
 
     .venue-hall {
-      margin: 0 0 8px;
-      font-size: 1.05rem;
+      margin: 0 0 6px;
+      font-size: 0.98rem;
       color: var(--sub);
     }
 
     .venue-address {
       margin: 0;
-      font-size: 1.06rem;
+      font-size: 0.98rem;
     }
 
     .map-box {
-      max-width: 680px;
-      margin: 0 auto 20px;
-      padding: 28px 18px;
-      border-radius: 22px;
+      max-width: 360px;
+      margin: 0 auto 18px;
+      padding: 26px 18px;
+      border-radius: 16px;
       background:
         linear-gradient(0deg, rgba(255,255,255,0.82), rgba(255,255,255,0.82)),
-        repeating-linear-gradient(
-          0deg,
-          #ece3d8,
-          #ece3d8 1px,
-          #f6f1eb 1px,
-          #f6f1eb 48px
-        ),
-        repeating-linear-gradient(
-          90deg,
-          #ece3d8,
-          #ece3d8 1px,
-          #f6f1eb 1px,
-          #f6f1eb 48px
-        );
+        repeating-linear-gradient(0deg, #ece3d8, #ece3d8 1px, #f6f1eb 1px, #f6f1eb 42px),
+        repeating-linear-gradient(90deg, #ece3d8, #ece3d8 1px, #f6f1eb 1px, #f6f1eb 42px);
       border: 1px solid rgba(210, 198, 185, 0.7);
       box-shadow: var(--shadow-soft);
       text-align: center;
     }
 
     .map-pin {
-      font-size: 2rem;
+      font-size: 1.8rem;
       margin-bottom: 8px;
     }
 
     .map-note {
-      font-size: 1.02rem;
+      font-size: 0.9rem;
       color: #5b534d;
     }
 
     .map-buttons {
-      max-width: 680px;
-      margin: 0 auto 38px;
+      max-width: 360px;
+      margin: 0 auto 34px;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr;
       gap: 10px;
     }
 
@@ -492,63 +463,64 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 54px;
-      border-radius: 14px;
-      background: #eee5db;
-      color: #4b433c;
+      min-height: 50px;
+      border-radius: 12px;
+      background: #eee6dd;
+      color: #4c443d;
       text-decoration: none;
       box-shadow: 0 4px 10px rgba(96, 73, 55, 0.06);
-      font-size: 0.98rem;
-      font-weight: 500;
+      font-size: 0.95rem;
+      font-weight: 400;
     }
 
     .traffic-list {
-      max-width: 680px;
+      max-width: 360px;
       margin: 0 auto;
       display: grid;
-      gap: 20px;
+      gap: 16px;
+      text-align: left;
     }
 
     .traffic-item {
-      padding: 24px 20px;
-      border-radius: 18px;
+      padding: 20px 18px;
+      border-radius: 16px;
       background: rgba(255, 255, 255, 0.58);
       box-shadow: var(--shadow-soft);
     }
 
     .traffic-title {
       margin: 0 0 10px;
-      font-size: 1.25rem;
-      font-weight: 500;
+      font-size: 1.1rem;
+      font-weight: 400;
       color: var(--sub);
     }
 
     .traffic-item p {
       margin: 0;
-      font-size: 1rem;
-      line-height: 1.95;
+      font-size: 0.92rem;
+      line-height: 1.9;
     }
 
-    /* ========== COUPLE ========== */
+    /* ===================== 신랑 신부 ===================== */
     .couple-grid {
-      max-width: 700px;
+      max-width: 360px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
+      grid-template-columns: 1fr;
+      gap: 18px;
     }
 
     .person-card {
       background: rgba(255, 255, 255, 0.52);
-      border-radius: 22px;
+      border-radius: 20px;
       padding: 18px 16px 22px;
       box-shadow: var(--shadow-soft);
       text-align: center;
     }
 
     .person-photo {
-      aspect-ratio: 1 / 1.06;
-      border-radius: 18px;
+      aspect-ratio: 1 / 1.04;
+      border-radius: 16px;
       overflow: hidden;
       background: #e6ddd2;
       margin-bottom: 16px;
@@ -563,122 +535,102 @@
     .person-role {
       margin: 0 0 2px;
       color: var(--sub);
-      font-size: 0.97rem;
+      font-size: 0.92rem;
     }
 
     .person-name {
       margin: 0 0 10px;
-      font-size: 1.65rem;
-      font-weight: 500;
-      color: var(--text);
+      font-size: 1.45rem;
+      font-weight: 400;
     }
 
     .person-copy {
       margin: 0 0 16px;
-      font-size: 1rem;
+      font-size: 0.94rem;
       line-height: 1.8;
       color: #4f4740;
     }
 
     .person-family {
       margin: 0;
-      font-size: 0.98rem;
+      font-size: 0.92rem;
       color: #625951;
     }
 
-    /* ========== TOGETHER TIME + TIMELINE ========== */
+    /* ===================== 함께한 시간 ===================== */
     .together-counter {
+      max-width: 360px;
       margin: 0 auto 40px;
-      max-width: 680px;
       text-align: center;
       padding: 24px 18px;
-      border-radius: 22px;
+      border-radius: 18px;
       background: rgba(255, 255, 255, 0.5);
       box-shadow: var(--shadow-soft);
     }
 
     .together-counter .label {
-      margin: 0 0 14px;
-      font-size: 1.05rem;
+      margin: 0 0 12px;
+      font-size: 0.95rem;
       color: var(--sub);
     }
 
     .together-counter .count {
       margin: 0;
-      font-size: clamp(1.45rem, 4.8vw, 2.1rem);
+      font-size: 1.35rem;
       line-height: 1.6;
-      font-weight: 500;
+      font-weight: 400;
     }
 
     .timeline-title {
-      margin: 0 0 24px;
+      margin: 0 0 28px;
       text-align: center;
-      font-size: 1.9rem;
-      font-weight: 400;
+      font-size: 1.45rem;
+      font-weight: 300;
       color: var(--sub);
     }
 
     .timeline {
       position: relative;
-      max-width: 760px;
+      max-width: 360px;
       margin: 0 auto;
-      padding: 10px 0;
+      padding: 4px 0;
     }
 
     .timeline::before {
       content: "";
       position: absolute;
-      top: 20px;
-      bottom: 20px;
-      left: 50%;
-      width: 2px;
-      transform: translateX(-50%);
+      top: 18px;
+      bottom: 18px;
+      left: 18px;
+      width: 1px;
       background: #ddd2c7;
     }
 
     .timeline-item {
       position: relative;
-      width: 50%;
-      padding: 0 24px 42px;
-    }
-
-    .timeline-item:nth-child(odd) {
-      left: 0;
-      text-align: right;
-    }
-
-    .timeline-item:nth-child(even) {
-      left: 50%;
+      padding: 0 0 34px 46px;
       text-align: left;
     }
 
     .timeline-dot {
       position: absolute;
-      top: 96px;
-      width: 14px;
-      height: 14px;
+      top: 64px;
+      left: 12px;
+      width: 13px;
+      height: 13px;
       border-radius: 50%;
       background: #bca89a;
       box-shadow: 0 0 0 6px rgba(229, 217, 204, 0.95);
     }
 
-    .timeline-item:nth-child(odd) .timeline-dot {
-      right: -7px;
-    }
-
-    .timeline-item:nth-child(even) .timeline-dot {
-      left: -7px;
-    }
-
     .timeline-photo {
-      width: 190px;
+      width: 128px;
       aspect-ratio: 1 / 1;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       border-radius: 50%;
       overflow: hidden;
       background: #e6dbcf;
       box-shadow: var(--shadow-soft);
-      display: inline-block;
     }
 
     .timeline-photo img {
@@ -687,31 +639,30 @@
     }
 
     .timeline-heading {
-      margin: 0 0 8px;
-      font-size: 1.3rem;
-      font-weight: 500;
+      margin: 0 0 7px;
+      font-size: 1.08rem;
+      font-weight: 400;
     }
 
     .timeline-copy {
       margin: 0;
-      font-size: 1rem;
-      line-height: 1.9;
+      font-size: 0.93rem;
+      line-height: 1.8;
     }
 
-    /* ========== GALLERY ========== */
+    /* ===================== 갤러리 ===================== */
     .gallery-grid {
-      max-width: 760px;
+      max-width: 360px;
       margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
+      gap: 5px;
     }
 
     .gallery-item {
-      position: relative;
       aspect-ratio: 1 / 1;
       overflow: hidden;
-      border-radius: 8px;
+      border-radius: 6px;
       background: #e3d8cc;
       cursor: pointer;
     }
@@ -719,11 +670,6 @@
     .gallery-item img {
       height: 100%;
       object-fit: cover;
-      transition: transform 0.35s ease;
-    }
-
-    .gallery-item:hover img {
-      transform: scale(1.03);
     }
 
     .lightbox {
@@ -744,7 +690,7 @@
     .lightbox-inner {
       position: relative;
       width: 100%;
-      max-width: 820px;
+      max-width: 430px;
     }
 
     .lightbox img {
@@ -765,16 +711,16 @@
       border-radius: 50%;
       background: #fff;
       color: #222;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       cursor: pointer;
     }
 
-    /* ========== PARKING ========== */
+    /* ===================== 주차 ===================== */
     .parking-box {
-      max-width: 680px;
+      max-width: 360px;
       margin: 0 auto;
-      padding: 26px 20px;
-      border-radius: 22px;
+      padding: 24px 18px;
+      border-radius: 18px;
       background: rgba(255, 255, 255, 0.55);
       box-shadow: var(--shadow-soft);
       text-align: center;
@@ -782,8 +728,8 @@
 
     .parking-box p {
       margin: 0;
-      font-size: 1.06rem;
-      line-height: 1.95;
+      font-size: 0.95rem;
+      line-height: 1.9;
     }
 
     .shuttle-badge {
@@ -792,24 +738,24 @@
       justify-content: center;
       gap: 8px;
       margin-top: 18px;
-      background: #eadfd4;
-      padding: 10px 18px;
+      background: #eaded4;
+      padding: 10px 16px;
       border-radius: 999px;
-      font-size: 1rem;
+      font-size: 0.9rem;
       color: #5a5048;
     }
 
-    /* ========== ACCORDION ========== */
+    /* ===================== 마음 전할 곳 ===================== */
     .accordion-wrap {
-      max-width: 680px;
+      max-width: 360px;
       margin: 0 auto;
       display: grid;
-      gap: 14px;
+      gap: 12px;
     }
 
     .accordion-item {
       overflow: hidden;
-      border-radius: 16px;
+      border-radius: 14px;
       background: rgba(255, 255, 255, 0.62);
       box-shadow: var(--shadow-soft);
     }
@@ -823,9 +769,9 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 18px 18px;
-      font-size: 1.06rem;
-      font-weight: 500;
+      padding: 17px 16px;
+      font-size: 1rem;
+      font-weight: 400;
       text-align: left;
     }
 
@@ -845,15 +791,16 @@
     }
 
     .accordion-content {
-      padding: 18px;
+      padding: 16px;
     }
 
     .account-card {
-      padding: 16px;
-      border-radius: 14px;
+      padding: 15px;
+      border-radius: 12px;
       background: #fcfaf7;
       border: 1px solid rgba(210, 198, 185, 0.55);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
+      text-align: left;
     }
 
     .account-card:last-child {
@@ -862,75 +809,75 @@
 
     .account-title {
       margin: 0 0 6px;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: var(--sub);
     }
 
     .account-number {
       margin: 0 0 10px;
-      font-size: 1rem;
-      font-weight: 500;
+      font-size: 0.95rem;
+      font-weight: 400;
     }
 
     .copy-btn {
       border: none;
-      background: #eee5db;
+      background: #eee4db;
       color: #554c45;
-      padding: 10px 14px;
-      border-radius: 10px;
+      padding: 9px 13px;
+      border-radius: 9px;
       cursor: pointer;
-      font-size: 0.92rem;
+      font-size: 0.85rem;
     }
 
-    /* ========== RSVP ========== */
+    /* ===================== 참석 여부 ===================== */
     .rsvp-box {
-      max-width: 680px;
+      max-width: 360px;
       margin: 0 auto;
       text-align: center;
-      padding: 26px 20px;
-      border-radius: 22px;
+      padding: 26px 18px;
+      border-radius: 18px;
       background: rgba(255, 255, 255, 0.55);
       box-shadow: var(--shadow-soft);
     }
 
     .rsvp-box p {
       margin: 0 0 24px;
-      font-size: 1.1rem;
-      line-height: 1.95;
+      font-size: 0.97rem;
+      line-height: 1.9;
     }
 
     .btn-submit {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 240px;
-      min-height: 58px;
+      min-width: 220px;
+      min-height: 54px;
       border: none;
-      border-radius: 14px;
-      background: #e4d7ca;
+      border-radius: 13px;
+      background: #e4d6ca;
       color: #443b35;
       cursor: pointer;
       text-decoration: none;
-      font-size: 1.05rem;
-      font-weight: 500;
+      font-size: 0.98rem;
+      font-weight: 400;
       box-shadow: 0 8px 18px rgba(150, 120, 95, 0.18);
     }
 
-    /* ========== FINAL ========== */
+    /* ===================== 마무리 ===================== */
     .final-wrap {
-      max-width: 680px;
+      max-width: 360px;
       margin: 0 auto;
       text-align: center;
     }
 
     .final-copy {
       margin: 0 0 26px;
-      font-size: 1.35rem;
+      font-size: 1.15rem;
       line-height: 1.8;
     }
 
     .final-photo {
-      border-radius: 22px;
+      border-radius: 18px;
       overflow: hidden;
       background: #e8ddd2;
       box-shadow: var(--shadow-soft);
@@ -945,19 +892,19 @@
     .footer {
       padding: 28px 20px 40px;
       text-align: center;
-      font-size: 0.9rem;
+      font-size: 0.82rem;
+      line-height: 1.7;
       color: #7d7166;
       background: var(--paper);
       border-top: 1px solid rgba(210, 198, 185, 0.45);
     }
 
-    /* ========== FLOATING ========== */
     .top-btn {
       position: fixed;
-      right: 18px;
+      right: calc(50% - 224px);
       bottom: 20px;
-      width: 52px;
-      height: 52px;
+      width: 48px;
+      height: 48px;
       border: none;
       border-radius: 50%;
       background: rgba(235, 227, 218, 0.92);
@@ -965,110 +912,46 @@
       box-shadow: var(--shadow-soft);
       cursor: pointer;
       z-index: 50;
-      font-size: 1.15rem;
+      font-size: 1.1rem;
     }
 
-    /* ========== RESPONSIVE ========== */
-    @media (max-width: 760px) {
-      .page {
-        padding: 0;
+    @media (max-width: 480px) {
+      .top-btn {
+        right: 16px;
       }
+    }
 
-      .paper {
-        border-radius: 0;
-      }
-
+    @media (max-width: 390px) {
       .section {
-        padding: 62px 20px;
+        padding-left: 18px;
+        padding-right: 18px;
       }
 
-      .couple-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .timeline::before {
-        left: 18px;
-        transform: none;
-      }
-
-      .timeline-item,
-      .timeline-item:nth-child(odd),
-      .timeline-item:nth-child(even) {
-        width: 100%;
-        left: 0;
-        text-align: left;
-        padding: 0 0 34px 46px;
-      }
-
-      .timeline-dot,
-      .timeline-item:nth-child(odd) .timeline-dot,
-      .timeline-item:nth-child(even) .timeline-dot {
-        left: 11px;
-        right: auto;
-        top: 84px;
-      }
-
-      .timeline-photo {
-        width: 148px;
-      }
-
-      .gallery-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 6px;
-      }
-
-      .map-buttons {
-        grid-template-columns: 1fr;
-      }
-
-      .hero.stage-3 .hero-photo-box {
-        top: 80px;
-        left: 18px;
-        right: 18px;
-        bottom: 120px;
-        padding: 12px 12px 96px;
-      }
-    }
-
-    @media (max-width: 420px) {
       .hero-kicker {
-        font-size: 2rem;
+        font-size: 1.42rem;
+        margin-bottom: 84px;
       }
 
       .script-line {
-        font-size: 3.6rem;
+        font-size: 3.85rem;
+      }
+
+      .hero.stage-3 .hero-photo-box {
+        left: 30px;
+        right: 30px;
       }
 
       .hero-polaroid-script {
-        font-size: 3rem;
-      }
-
-      .section-subtitle {
-        font-size: 1.6rem;
-      }
-
-      .intro-message,
-      .section-desc,
-      .info-lines {
-        font-size: 1.02rem;
-      }
-
-      .calendar-grid div {
-        min-height: 44px;
-        font-size: 0.95rem;
-      }
-
-      .calendar-grid .today-badge {
-        width: 44px;
-        height: 44px;
+        font-size: 2.85rem;
       }
     }
   </style>
 </head>
+
 <body>
   <div class="page">
     <div class="paper">
-      <!-- ===================== HERO ===================== -->
+      <!-- 메인 -->
       <section class="hero" id="hero">
         <div class="hero-inner">
           <div class="hero-intro">
@@ -1082,7 +965,6 @@
 
           <div class="hero-photo-box">
             <div class="hero-photo">
-              <!-- 메인 사진 -->
               <img src="images/main-hero.jpg" alt="영은과 이든의 메인 웨딩 사진" />
             </div>
 
@@ -1094,7 +976,7 @@
         </div>
       </section>
 
-      <!-- ===================== 예식 안내 ===================== -->
+      <!-- 예식 안내 + 달력 -->
       <section class="section" id="wedding-info">
         <h2 class="section-title">예식 안내</h2>
 
@@ -1120,7 +1002,6 @@
 
         <div class="d-day-wrap">
           <div class="d-day-photo">
-            <!-- D-day 사진 -->
             <img src="images/dday-photo.jpg" alt="이든과 한영은 웨딩 사진" />
           </div>
           <div class="d-day-copy">
@@ -1131,7 +1012,7 @@
         </div>
       </section>
 
-      <!-- ===================== 초대글 ===================== -->
+      <!-- 초대글 -->
       <section class="section" id="invite-message">
         <h2 class="section-title">저희의 시작에 초대합니다</h2>
         <div class="intro-message">
@@ -1146,7 +1027,7 @@
         </div>
       </section>
 
-      <!-- ===================== 오시는 길 ===================== -->
+      <!-- 오시는 길 -->
       <section class="section" id="location">
         <h2 class="section-title">오시는 길</h2>
 
@@ -1164,28 +1045,13 @@
         </div>
 
         <div class="map-buttons">
-          <a
-            class="map-btn"
-            href="https://map.naver.com/v5/search/서울%20중구%20을지로%2030%20롯데호텔서울"
-            target="_blank"
-            rel="noopener"
-          >
+          <a class="map-btn" href="https://map.naver.com/v5/search/서울%20중구%20을지로%2030%20롯데호텔서울" target="_blank" rel="noopener">
             네이버지도
           </a>
-          <a
-            class="map-btn"
-            href="https://map.kakao.com/link/search/서울%20중구%20을지로%2030%20롯데호텔서울"
-            target="_blank"
-            rel="noopener"
-          >
+          <a class="map-btn" href="https://map.kakao.com/link/search/서울%20중구%20을지로%2030%20롯데호텔서울" target="_blank" rel="noopener">
             카카오맵
           </a>
-          <a
-            class="map-btn"
-            href="https://apis.openapi.sk.com/tmap/app/routes?goalname=롯데호텔서울&goalx=126.98226&goaly=37.56568"
-            target="_blank"
-            rel="noopener"
-          >
+          <a class="map-btn" href="https://www.tmap.co.kr/search?searchKeyword=서울%20중구%20을지로%2030%20롯데호텔서울" target="_blank" rel="noopener">
             T맵
           </a>
         </div>
@@ -1217,7 +1083,7 @@
         </div>
       </section>
 
-      <!-- ===================== 신랑 신부 정보 ===================== -->
+      <!-- 신랑 신부 정보 -->
       <section class="section" id="couple">
         <h2 class="section-title">신랑 신부</h2>
 
@@ -1250,7 +1116,7 @@
         </div>
       </section>
 
-      <!-- ===================== 함께한 시간 / 우리의 시간 ===================== -->
+      <!-- 함께한 시간 / 우리의 시간 -->
       <section class="section" id="story">
         <h2 class="section-title">함께한 시간</h2>
 
@@ -1313,7 +1179,7 @@
         </div>
       </section>
 
-      <!-- ===================== 갤러리 ===================== -->
+      <!-- 갤러리 -->
       <section class="section" id="gallery">
         <h2 class="section-title">갤러리</h2>
 
@@ -1330,7 +1196,7 @@
         </div>
       </section>
 
-      <!-- ===================== 주차 안내 ===================== -->
+      <!-- 주차 안내 -->
       <section class="section" id="parking">
         <h2 class="section-title">주차 안내</h2>
 
@@ -1345,7 +1211,7 @@
         </div>
       </section>
 
-      <!-- ===================== 마음 전할 곳 ===================== -->
+      <!-- 마음 전할 곳 -->
       <section class="section" id="account">
         <h2 class="section-title">마음 전하실 곳</h2>
         <p class="section-desc" style="margin-bottom: 28px;">
@@ -1364,16 +1230,12 @@
                 <div class="account-card">
                   <p class="account-title">신랑 이든</p>
                   <p class="account-number">국민은행 000000-00-000000</p>
-                  <button class="copy-btn" type="button" data-copy="국민은행 000000-00-000000">
-                    계좌번호 복사
-                  </button>
+                  <button class="copy-btn" type="button" data-copy="국민은행 000000-00-000000">계좌번호 복사</button>
                 </div>
                 <div class="account-card">
                   <p class="account-title">혼주 이도혁</p>
                   <p class="account-number">신한은행 000-000-000000</p>
-                  <button class="copy-btn" type="button" data-copy="신한은행 000-000-000000">
-                    계좌번호 복사
-                  </button>
+                  <button class="copy-btn" type="button" data-copy="신한은행 000-000-000000">계좌번호 복사</button>
                 </div>
               </div>
             </div>
@@ -1389,16 +1251,12 @@
                 <div class="account-card">
                   <p class="account-title">신부 한영은</p>
                   <p class="account-number">카카오뱅크 3333-00-0000000</p>
-                  <button class="copy-btn" type="button" data-copy="카카오뱅크 3333-00-0000000">
-                    계좌번호 복사
-                  </button>
+                  <button class="copy-btn" type="button" data-copy="카카오뱅크 3333-00-0000000">계좌번호 복사</button>
                 </div>
                 <div class="account-card">
                   <p class="account-title">혼주 한영철</p>
                   <p class="account-number">농협 000-00-000000</p>
-                  <button class="copy-btn" type="button" data-copy="농협 000-00-000000">
-                    계좌번호 복사
-                  </button>
+                  <button class="copy-btn" type="button" data-copy="농협 000-00-000000">계좌번호 복사</button>
                 </div>
               </div>
             </div>
@@ -1406,7 +1264,7 @@
         </div>
       </section>
 
-      <!-- ===================== 참석 여부 ===================== -->
+      <!-- 참석 여부 -->
       <section class="section" id="rsvp">
         <h2 class="section-title">참석 여부 전달</h2>
 
@@ -1417,18 +1275,11 @@
             참석 여부 전달을 부탁드립니다.
           </p>
 
-          <!-- 참석 폼 링크로 교체 -->
-          <a
-            class="btn-submit"
-            href="#"
-            id="attendanceBtn"
-          >
-            참석 여부 전달
-          </a>
+          <a class="btn-submit" href="#" id="attendanceBtn">참석 여부 전달</a>
         </div>
       </section>
 
-      <!-- ===================== 마무리 ===================== -->
+      <!-- 마무리 -->
       <section class="section" id="final">
         <div class="final-wrap">
           <p class="final-copy">행복하게 잘 살겠습니다.</p>
@@ -1448,7 +1299,6 @@
 
   <button class="top-btn" id="topBtn" type="button" aria-label="맨 위로 이동">↑</button>
 
-  <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
     <div class="lightbox-inner">
       <button class="lightbox-close" id="lightboxClose" type="button" aria-label="닫기">✕</button>
@@ -1457,20 +1307,11 @@
   </div>
 
   <script>
-    /* ===============================
-       기본 설정값
-    =============================== */
     const WEDDING_DATE = new Date("2026-09-12T13:30:00+09:00");
     const FIRST_MET_DATE = new Date("2018-10-06T00:00:00+09:00");
 
-    /* 참석 폼 링크가 있으면 아래 값으로 바꾸기
-       예: const ATTENDANCE_FORM_URL = "https://forms.gle/xxxxx";
-    */
     const ATTENDANCE_FORM_URL = "#";
 
-    /* ===============================
-       HERO 애니메이션
-    =============================== */
     window.addEventListener("load", () => {
       const hero = document.getElementById("hero");
 
@@ -1483,9 +1324,6 @@
       }, 5200);
     });
 
-    /* ===============================
-       달력 생성
-    =============================== */
     function buildCalendar(year, month, targetDay) {
       const grid = document.getElementById("calendarGrid");
       grid.innerHTML = "";
@@ -1496,7 +1334,6 @@
       for (let i = 0; i < firstDay; i++) {
         const empty = document.createElement("div");
         empty.className = "empty";
-        empty.textContent = "";
         grid.appendChild(empty);
       }
 
@@ -1518,9 +1355,6 @@
 
     buildCalendar(2026, 9, 12);
 
-    /* ===============================
-       D-day 계산
-    =============================== */
     function updateDday() {
       const target = new Date(WEDDING_DATE);
       target.setHours(0, 0, 0, 0);
@@ -1543,12 +1377,9 @@
 
     updateDday();
 
-    /* ===============================
-       함께한 시간 계산
-    =============================== */
     function getDateDiff(fromDate, toDate) {
-      let from = new Date(fromDate);
-      let to = new Date(toDate);
+      const from = new Date(fromDate);
+      const to = new Date(toDate);
 
       let years = to.getFullYear() - from.getFullYear();
       let months = to.getMonth() - from.getMonth();
@@ -1556,11 +1387,7 @@
 
       if (days < 0) {
         months -= 1;
-        const prevMonthLastDay = new Date(
-          to.getFullYear(),
-          to.getMonth(),
-          0
-        ).getDate();
+        const prevMonthLastDay = new Date(to.getFullYear(), to.getMonth(), 0).getDate();
         days += prevMonthLastDay;
       }
 
@@ -1595,9 +1422,6 @@
     updateTogetherTime();
     setInterval(updateTogetherTime, 60000);
 
-    /* ===============================
-       아코디언
-    =============================== */
     document.querySelectorAll(".accordion-item").forEach((item) => {
       const btn = item.querySelector(".accordion-button");
       const panel = item.querySelector(".accordion-panel");
@@ -1617,9 +1441,6 @@
       });
     });
 
-    /* ===============================
-       계좌 복사
-    =============================== */
     document.querySelectorAll(".copy-btn").forEach((btn) => {
       btn.addEventListener("click", async () => {
         const value = btn.dataset.copy;
@@ -1632,9 +1453,6 @@
       });
     });
 
-    /* ===============================
-       참석 버튼
-    =============================== */
     document.getElementById("attendanceBtn").addEventListener("click", (e) => {
       if (ATTENDANCE_FORM_URL === "#") {
         e.preventDefault();
@@ -1644,9 +1462,6 @@
       }
     });
 
-    /* ===============================
-       갤러리 라이트박스
-    =============================== */
     const lightbox = document.getElementById("lightbox");
     const lightboxImg = document.getElementById("lightboxImg");
     const lightboxClose = document.getElementById("lightboxClose");
@@ -1669,9 +1484,6 @@
       if (e.target === lightbox) closeLightbox();
     });
 
-    /* ===============================
-       맨 위로 버튼
-    =============================== */
     document.getElementById("topBtn").addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
