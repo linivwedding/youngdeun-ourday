@@ -162,7 +162,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
+      gap: 4px;
       width: 100%;
     }
 
@@ -170,18 +170,17 @@
       position: relative;
       display: inline-block;
       font-family: var(--script-font);
-      font-weight: 500;
-      font-size: 4.08rem;
-      line-height: 0.9;
+      font-size: 4.25rem;
+      font-weight: 400;
+      line-height: 0.86;
       white-space: nowrap;
-      letter-spacing: -0.03em;
       color: transparent;
       background-image: linear-gradient(
         90deg,
         #1f1b18 0%,
-        #463930 34%,
-        #967a64 68%,
-        #b99e86 100%
+        #4a3d34 38%,
+        #9a806a 72%,
+        #b89d84 100%
       );
       background-size: 0% 100%;
       background-repeat: no-repeat;
@@ -191,8 +190,6 @@
     }
 
     .script-line:nth-child(2) {
-      margin-top: -5px;
-      font-size: 3.82rem;
       animation-delay: 0.65s;
     }
 
@@ -269,7 +266,7 @@
       position: absolute;
       left: 0;
       right: 0;
-      bottom: 15px;
+      bottom: 18px;
       text-align: center;
       opacity: 0;
       transform: translateY(14px);
@@ -283,16 +280,15 @@
 
     .hero-polaroid-script {
       font-family: var(--script-font);
-      font-weight: 500;
-      font-size: 3.05rem;
-      line-height: 0.88;
-      letter-spacing: -0.035em;
+      font-size: 3.15rem;
+      font-weight: 400;
+      line-height: 0.82;
       color: transparent;
       background-image: linear-gradient(
         90deg,
-        #a98e7f 0%,
-        #b9a191 45%,
-        #cdbdae 100%
+        #b8a18e 0%,
+        #c8b6a6 55%,
+        #d5c8ba 100%
       );
       background-size: 0% 100%;
       background-repeat: no-repeat;
@@ -300,17 +296,8 @@
       background-clip: text;
     }
 
-    .hero-polaroid-script:nth-child(2) {
-      margin-top: -4px;
-      font-size: 3.18rem;
-    }
-
     .hero.stage-3 .hero-polaroid-script {
       animation: writingText 1.7s ease 0.45s forwards;
-    }
-
-    .hero.stage-3 .hero-polaroid-script:nth-child(2) {
-      animation-delay: 0.78s;
     }
 
     /* ===================== 예식 안내 ===================== */
@@ -483,6 +470,7 @@
       border-radius: 12px;
       background: #eee6dd;
       color: #4c443d;
+      text-decoration: none;
       box-shadow: 0 4px 10px rgba(96, 73, 55, 0.06);
       font-size: 0.95rem;
       font-weight: 400;
@@ -948,11 +936,7 @@
       }
 
       .script-line {
-        font-size: 3.72rem;
-      }
-
-      .script-line:nth-child(2) {
-        font-size: 3.52rem;
+        font-size: 3.85rem;
       }
 
       .hero.stage-3 .hero-photo-box {
@@ -961,11 +945,7 @@
       }
 
       .hero-polaroid-script {
-        font-size: 2.76rem;
-      }
-
-      .hero-polaroid-script:nth-child(2) {
-        font-size: 2.9rem;
+        font-size: 2.85rem;
       }
     }
   </style>
