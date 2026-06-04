@@ -12,7 +12,7 @@
   <meta property="og:url" content="https://urimchoi96.github.io/youngdeun-ourday/" />
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Allura&family=Noto+Sans+KR:wght@300;400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR:wght@300;400;500&family=Parisienne&display=swap');
 
     * {
       box-sizing: border-box;
@@ -22,7 +22,7 @@
       --bg: #c9bcc2;
       --paper: #f7eeee;
       --paper-light: #fbf5f3;
-      --text: #2f2a28;
+      --text: #252222;
       --soft-text: #b4a0a4;
       --accent: #ddb8c0;
       --shadow: rgba(74, 53, 53, 0.15);
@@ -35,10 +35,11 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: "Gowun Dodum", "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
       color: var(--text);
       word-break: keep-all;
+      letter-spacing: -0.3px;
     }
 
     body.modal-open {
@@ -78,26 +79,24 @@
       background: var(--paper);
     }
 
-    .section.no-padding {
-      padding: 0;
-    }
-
     .section-title {
       margin: 0 0 36px;
+      font-family: "Gowun Dodum", "Noto Sans KR", sans-serif;
       font-size: 24px;
       font-weight: 300;
       color: var(--soft-text);
-      letter-spacing: -0.4px;
+      letter-spacing: -0.5px;
       line-height: 1.45;
     }
 
     .text {
       margin: 0;
+      font-family: "Gowun Dodum", "Noto Sans KR", sans-serif;
       font-size: 17px;
       line-height: 2.05;
       font-weight: 300;
       color: var(--text);
-      letter-spacing: -0.4px;
+      letter-spacing: -0.3px;
     }
 
     .reveal {
@@ -131,6 +130,7 @@
     /* =========================
        MAIN 3-STEP HERO
     ========================= */
+
     .hero-sequence {
       position: relative;
       width: 100%;
@@ -186,11 +186,12 @@
     }
 
     .hero-intro-copy {
-      font-size: 32px;
-      line-height: 1.28;
-      letter-spacing: -1.2px;
-      font-weight: 400;
-      color: #151515;
+      font-family: "Gowun Dodum", "Noto Sans KR", sans-serif;
+      font-size: 30px;
+      line-height: 1.35;
+      letter-spacing: -0.8px;
+      font-weight: 300;
+      color: #1b1919;
       margin-bottom: 150px;
     }
 
@@ -221,7 +222,7 @@
       width: 0;
       overflow: hidden;
       white-space: nowrap;
-      font-family: "Allura", cursive;
+      font-family: "Parisienne", cursive;
       font-weight: 400;
       line-height: 0.9;
       opacity: 0;
@@ -233,28 +234,28 @@
     }
 
     .hero-script-intro .write-line:nth-child(1) {
-      font-size: 92px;
-      color: #131313;
+      font-size: 86px;
+      color: #1d1a1a;
     }
 
     .hero-script-intro .write-line:nth-child(2) {
       margin-top: 18px;
       margin-left: -4px;
-      font-size: 82px;
-      background: linear-gradient(90deg, #171717 0%, #2a2525 25%, #a98f88 68%, #9a8079 100%);
+      font-size: 76px;
+      background: linear-gradient(90deg, #1d1a1a 0%, #2f2929 35%, #a88f89 72%, #8f7872 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
 
     .hero-script-polaroid .write-line:nth-child(1) {
-      font-size: 74px;
+      font-size: 68px;
       color: #b79ca2;
     }
 
     .hero-script-polaroid .write-line:nth-child(2) {
       margin-top: 12px;
-      font-size: 78px;
+      font-size: 72px;
       color: #c1a5ab;
     }
 
@@ -321,8 +322,9 @@
     }
 
     /* =========================
-       CONTENT SECTIONS
+       CONTENT
     ========================= */
+
     .invitation {
       padding-top: 92px;
       padding-bottom: 92px;
@@ -432,7 +434,6 @@
       font-size: 28px;
       font-weight: 300;
       margin-bottom: 22px;
-      letter-spacing: -0.4px;
     }
 
     .dday-big {
@@ -1132,25 +1133,25 @@
       }
 
       .hero-intro-copy {
-        font-size: 27px;
+        font-size: 26px;
         margin-bottom: 130px;
       }
 
       .hero-script-intro .write-line:nth-child(1) {
-        font-size: 74px;
+        font-size: 72px;
       }
 
       .hero-script-intro .write-line:nth-child(2) {
-        font-size: 66px;
+        font-size: 62px;
         margin-top: 16px;
       }
 
       .hero-script-polaroid .write-line:nth-child(1) {
-        font-size: 60px;
+        font-size: 58px;
       }
 
       .hero-script-polaroid .write-line:nth-child(2) {
-        font-size: 64px;
+        font-size: 62px;
       }
 
       .hero-polaroid-card {
@@ -1188,7 +1189,6 @@
 <body>
   <main class="page">
 
-    <!-- 1. Main Sequence -->
     <section class="hero-sequence" id="top">
       <div class="hero-step hero-step-intro is-active" id="heroIntro">
         <div class="hero-inner hero-intro-panel">
@@ -1226,7 +1226,6 @@
       </div>
     </section>
 
-    <!-- 2. Invitation Text -->
     <section class="section invitation" id="invitation">
       <div class="reveal">
         <h2 class="section-title draw-text">저희의 시작에 초대합니다</h2>
@@ -1245,7 +1244,6 @@
       </div>
     </section>
 
-    <!-- 3. Wedding Info -->
     <section class="section wedding-info" id="info">
       <div class="reveal">
         <h2 class="section-title draw-text">예식 안내</h2>
@@ -1260,7 +1258,6 @@
       </div>
     </section>
 
-    <!-- 4. Calendar -->
     <section class="section calendar-section">
       <div class="reveal">
         <div class="calendar-month">10월</div>
@@ -1283,7 +1280,6 @@
       </div>
     </section>
 
-    <!-- 5. D-Day -->
     <section class="dday-section">
       <div class="dday-content reveal">
         <div class="dday-small">wedding day</div>
@@ -1292,7 +1288,6 @@
       </div>
     </section>
 
-    <!-- 6. Location -->
     <section class="section location-section" id="location">
       <div class="reveal">
         <h2 class="location-title draw-text">오시는 길</h2>
@@ -1318,7 +1313,6 @@
       </div>
     </section>
 
-    <!-- 7. Traffic -->
     <section class="section traffic-section">
       <div class="reveal">
         <div class="traffic-item">
@@ -1349,7 +1343,6 @@
       </div>
     </section>
 
-    <!-- 8. Couple Profile -->
     <section class="section profile-section">
       <div class="reveal">
         <div class="profile-grid">
@@ -1390,7 +1383,6 @@
       </div>
     </section>
 
-    <!-- 9. Gallery -->
     <section class="section gallery-section" id="gallery">
       <div class="reveal">
         <h2 class="section-title draw-text">갤러리</h2>
@@ -1411,7 +1403,6 @@
       </div>
     </section>
 
-    <!-- 10. Together Timeline -->
     <section class="section together-section" id="together">
       <div class="reveal">
         <p class="together-subtitle">함께한 시간</p>
@@ -1468,7 +1459,6 @@
       </div>
     </section>
 
-    <!-- 11. Parking -->
     <section class="section parking-section" id="parking">
       <div class="reveal">
         <div class="simple-tabs">
@@ -1490,7 +1480,6 @@
       </div>
     </section>
 
-    <!-- 12. Account -->
     <section class="section account-section" id="account">
       <div class="reveal">
         <h2 class="section-title draw-text">마음 전하실 곳</h2>
@@ -1542,7 +1531,6 @@
       </div>
     </section>
 
-    <!-- 13. RSVP -->
     <section class="section rsvp-section" id="rsvp">
       <div class="reveal">
         <h2 class="section-title draw-text">참석 여부 전달</h2>
@@ -1559,7 +1547,6 @@
       </div>
     </section>
 
-    <!-- 14. Closing -->
     <section class="closing-photo-section">
       <div class="closing-message reveal">
         행복하게 잘 살겠습니다.
