@@ -7,24 +7,18 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Pinyon+Script&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Pinyon+Script&display=swap" rel="stylesheet" />
 
   <style>
     :root {
       --bg: #bdb2a7;
       --paper: #f7f3ee;
-      --paper-2: #fcfaf7;
-      --line: #e4dbd1;
-      --line-strong: #cfc2b5;
+      --paper-light: #fcfaf7;
       --text: #2b2622;
       --sub: #a99b8f;
       --muted: #b8aca1;
       --point: #e8dcd1;
       --point-deep: #c9b8a9;
-      --white: #ffffff;
       --shadow: 0 10px 28px rgba(88, 70, 55, 0.12);
       --shadow-soft: 0 6px 18px rgba(88, 70, 55, 0.08);
       --content-width: 480px;
@@ -61,8 +55,7 @@
 
     button,
     input,
-    textarea,
-    select {
+    textarea {
       font: inherit;
     }
 
@@ -74,19 +67,16 @@
     .page {
       width: 100%;
       max-width: var(--content-width);
-      margin: 0 auto;
-      padding: 0;
-      background: var(--paper);
       min-height: 100vh;
+      margin: 0 auto;
+      background: var(--paper);
       overflow: hidden;
     }
 
     .paper {
-      background: var(--paper);
       min-height: 100vh;
+      background: var(--paper);
       overflow: hidden;
-      box-shadow: none;
-      border-radius: 0;
     }
 
     .section {
@@ -98,23 +88,23 @@
 
     .section-title {
       margin: 0 0 28px;
-      text-align: center;
       font-size: 1.35rem;
       font-weight: 300;
       color: var(--sub);
       letter-spacing: -0.02em;
+      text-align: center;
     }
 
     .section-desc {
       max-width: 360px;
       margin: 0 auto;
-      text-align: center;
       font-size: 0.98rem;
       line-height: 2;
+      text-align: center;
       color: var(--text);
     }
 
-    /* ===================== HERO / 영상형 인트로 ===================== */
+    /* ===================== HERO ===================== */
     .hero {
       position: relative;
       min-height: 100svh;
@@ -150,11 +140,11 @@
       content: "";
       position: absolute;
       inset: 0;
+      z-index: 20;
       background:
         linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0)),
         radial-gradient(circle at center, rgba(255,255,255,0), rgba(82, 66, 55, 0.08));
       pointer-events: none;
-      z-index: 20;
     }
 
     @keyframes softMove {
@@ -174,13 +164,12 @@
       bottom: 120px;
       z-index: 5;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
+      padding: 40px 22px;
       background:
         radial-gradient(circle at 50% 45%, rgba(255,255,255,0.55) 0%, rgba(247,243,238,0.95) 48%, rgba(247,243,238,1) 100%);
       text-align: center;
-      padding: 40px 22px;
       opacity: 1;
       transform: scale(1);
       transition:
@@ -200,17 +189,15 @@
     }
 
     .script-wrap {
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       gap: 6px;
-      width: 100%;
       transform: translateY(-10px);
     }
 
     .script-line {
-      position: relative;
       display: inline-block;
       font-family: var(--script-font);
       font-size: 3.95rem;
@@ -295,7 +282,7 @@
       left: 38px;
       right: 38px;
       bottom: 145px;
-      padding: 14px 14px 92px;
+      padding: 14px 14px 62px;
       background: #fbfbfb;
       box-shadow:
         0 14px 32px rgba(70, 57, 45, 0.15),
@@ -351,33 +338,36 @@
 
     .hero-polaroid-caption {
       position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 16px;
+      left: 50%;
+      bottom: 10px;
+      z-index: 3;
+      width: 112%;
       text-align: center;
       opacity: 0;
-      transform: translateY(18px);
+      transform: translate(-50%, 16px);
+      pointer-events: none;
       transition: opacity 0.8s ease 0.25s, transform 0.8s ease 0.25s;
     }
 
     .hero.stage-3 .hero-polaroid-caption {
       opacity: 1;
-      transform: translateY(0);
+      transform: translate(-50%, 0);
     }
 
     .hero-polaroid-script {
       display: block;
       font-family: var(--script-font);
-      font-size: 2.55rem;
+      font-size: 2.28rem;
       font-weight: 400;
-      line-height: 0.76;
-      letter-spacing: -0.03em;
+      line-height: 0.9;
+      letter-spacing: -0.035em;
       color: transparent;
+      text-shadow: 0 2px 10px rgba(255, 255, 255, 0.55);
       background-image: linear-gradient(
         90deg,
-        #a88f80 0%,
-        #bda99c 55%,
-        #d5c8ba 100%
+        #9e8577 0%,
+        #b7a093 55%,
+        #d2c4b7 100%
       );
       background-size: 0% 100%;
       background-repeat: no-repeat;
@@ -404,10 +394,10 @@
 
     .month-title {
       margin: 42px 0 20px;
-      text-align: center;
       font-size: 1.55rem;
       font-weight: 300;
       color: var(--muted);
+      text-align: center;
     }
 
     .calendar {
@@ -423,11 +413,11 @@
     }
 
     .calendar-head div {
+      padding: 8px 0 12px;
       text-align: center;
       font-size: 0.95rem;
       font-weight: 400;
       color: #4b4540;
-      padding: 8px 0 12px;
     }
 
     .calendar-grid div {
@@ -456,10 +446,10 @@
     }
 
     .d-day-wrap {
-      margin: 38px auto 0;
       max-width: 360px;
+      margin: 38px auto 0;
       overflow: hidden;
-      background: var(--paper-2);
+      background: var(--paper-light);
       box-shadow: var(--shadow-soft);
     }
 
@@ -479,18 +469,17 @@
       text-align: center;
       font-size: 1rem;
       color: var(--text);
-      background: var(--paper-2);
+      background: var(--paper-light);
     }
 
     .d-day-copy strong {
       display: block;
+      margin: 6px 0 8px;
       font-size: 2.5rem;
       font-weight: 400;
-      margin: 6px 0 8px;
       line-height: 1;
     }
 
-    /* ===================== 초대글 ===================== */
     .intro-message {
       max-width: 360px;
       margin: 0 auto;
@@ -539,8 +528,8 @@
     }
 
     .map-pin {
-      font-size: 1.8rem;
       margin-bottom: 8px;
+      font-size: 1.8rem;
     }
 
     .map-note {
@@ -557,14 +546,13 @@
     }
 
     .map-btn {
+      min-height: 50px;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 50px;
       border-radius: 12px;
       background: #eee6dd;
       color: #4c443d;
-      text-decoration: none;
       box-shadow: 0 4px 10px rgba(96, 73, 55, 0.06);
       font-size: 0.95rem;
       font-weight: 400;
@@ -608,19 +596,19 @@
     }
 
     .person-card {
-      background: rgba(255, 255, 255, 0.52);
-      border-radius: 20px;
       padding: 18px 16px 22px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.52);
       box-shadow: var(--shadow-soft);
       text-align: center;
     }
 
     .person-photo {
       aspect-ratio: 1 / 1.04;
+      margin-bottom: 16px;
       border-radius: 16px;
       overflow: hidden;
       background: #e6ddd2;
-      margin-bottom: 16px;
     }
 
     .person-photo img {
@@ -658,11 +646,11 @@
     .together-counter {
       max-width: 360px;
       margin: 0 auto 40px;
-      text-align: center;
       padding: 24px 18px;
       border-radius: 18px;
       background: rgba(255, 255, 255, 0.5);
       box-shadow: var(--shadow-soft);
+      text-align: center;
     }
 
     .together-counter .label {
@@ -680,10 +668,10 @@
 
     .timeline-title {
       margin: 0 0 28px;
-      text-align: center;
       font-size: 1.45rem;
       font-weight: 300;
       color: var(--sub);
+      text-align: center;
     }
 
     .timeline {
@@ -772,12 +760,12 @@
     .lightbox {
       position: fixed;
       inset: 0;
-      background: rgba(20, 18, 16, 0.78);
       z-index: 100;
       display: none;
       align-items: center;
       justify-content: center;
       padding: 20px;
+      background: rgba(20, 18, 16, 0.78);
     }
 
     .lightbox.open {
@@ -812,21 +800,27 @@
       cursor: pointer;
     }
 
-    /* ===================== 주차 ===================== */
-    .parking-box {
+    /* ===================== 안내 박스 ===================== */
+    .parking-box,
+    .rsvp-box {
       max-width: 360px;
       margin: 0 auto;
-      padding: 24px 18px;
+      padding: 26px 18px;
       border-radius: 18px;
       background: rgba(255, 255, 255, 0.55);
       box-shadow: var(--shadow-soft);
       text-align: center;
     }
 
-    .parking-box p {
+    .parking-box p,
+    .rsvp-box p {
       margin: 0;
       font-size: 0.95rem;
       line-height: 1.9;
+    }
+
+    .rsvp-box p {
+      margin-bottom: 24px;
     }
 
     .shuttle-badge {
@@ -835,11 +829,27 @@
       justify-content: center;
       gap: 8px;
       margin-top: 18px;
-      background: #eaded4;
       padding: 10px 16px;
       border-radius: 999px;
-      font-size: 0.9rem;
+      background: #eaded4;
       color: #5a5048;
+      font-size: 0.9rem;
+    }
+
+    .btn-submit {
+      min-width: 220px;
+      min-height: 54px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 13px;
+      background: #e4d6ca;
+      color: #443b35;
+      cursor: pointer;
+      font-size: 0.98rem;
+      font-weight: 400;
+      box-shadow: 0 8px 18px rgba(150, 120, 95, 0.18);
     }
 
     /* ===================== 마음 전할 곳 ===================== */
@@ -859,14 +869,14 @@
 
     .accordion-button {
       width: 100%;
+      padding: 17px 16px;
       border: none;
       background: transparent;
-      cursor: pointer;
       color: var(--text);
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 17px 16px;
       font-size: 1rem;
       font-weight: 400;
       text-align: left;
@@ -893,10 +903,10 @@
 
     .account-card {
       padding: 15px;
+      margin-bottom: 10px;
       border-radius: 12px;
       background: #fcfaf7;
       border: 1px solid rgba(210, 198, 185, 0.55);
-      margin-bottom: 10px;
       text-align: left;
     }
 
@@ -917,59 +927,25 @@
     }
 
     .copy-btn {
+      padding: 9px 13px;
       border: none;
+      border-radius: 9px;
       background: #eee4db;
       color: #554c45;
-      padding: 9px 13px;
-      border-radius: 9px;
       cursor: pointer;
       font-size: 0.85rem;
     }
 
-    /* ===================== 참석 여부 ===================== */
-    .rsvp-box {
-      max-width: 360px;
-      margin: 0 auto;
-      text-align: center;
-      padding: 26px 18px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.55);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .rsvp-box p {
-      margin: 0 0 24px;
-      font-size: 0.97rem;
-      line-height: 1.9;
-    }
-
-    .btn-submit {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 220px;
-      min-height: 54px;
-      border: none;
-      border-radius: 13px;
-      background: #e4d6ca;
-      color: #443b35;
-      cursor: pointer;
-      text-decoration: none;
-      font-size: 0.98rem;
-      font-weight: 400;
-      box-shadow: 0 8px 18px rgba(150, 120, 95, 0.18);
-    }
-
-    /* ===================== 참석 모달 폼 ===================== */
+    /* ===================== RSVP Modal ===================== */
     .rsvp-modal {
       position: fixed;
       inset: 0;
       z-index: 200;
       display: none;
-      background: rgba(255, 255, 255, 0.86);
       align-items: center;
       justify-content: center;
       padding: 0;
+      background: rgba(255, 255, 255, 0.86);
     }
 
     .rsvp-modal.open {
@@ -1045,8 +1021,8 @@
       border: 1px solid #e6e6e6;
       border-radius: 5px;
       overflow: hidden;
-      box-shadow: 0 2px 7px rgba(0, 0, 0, 0.05);
       background: #fff;
+      box-shadow: 0 2px 7px rgba(0, 0, 0, 0.05);
     }
 
     .segmented.three {
@@ -1076,7 +1052,6 @@
 
     .segmented label span {
       width: 100%;
-      height: 100%;
       min-height: 40px;
       display: flex;
       align-items: center;
@@ -1093,13 +1068,13 @@
     .form-textarea {
       width: 100%;
       min-height: 42px;
+      padding: 10px 12px;
       border: 1px solid #e6e6e6;
       border-radius: 5px;
       background: #fff;
       box-shadow: 0 2px 7px rgba(0, 0, 0, 0.05);
-      padding: 10px 12px;
-      font-size: 15px;
       color: #333;
+      font-size: 15px;
       outline: none;
     }
 
@@ -1117,6 +1092,7 @@
     .rsvp-send {
       width: 100%;
       height: 48px;
+      margin-top: 6px;
       border: 0;
       border-radius: 6px;
       background: #d8c8bb;
@@ -1124,7 +1100,6 @@
       font-size: 15px;
       font-weight: 500;
       cursor: pointer;
-      margin-top: 6px;
       box-shadow: 0 4px 12px rgba(120, 100, 84, 0.16);
     }
 
@@ -1135,9 +1110,9 @@
 
     .rsvp-notice {
       margin: 18px 0 0;
+      color: #999;
       font-size: 12px;
       line-height: 1.7;
-      color: #999;
       text-align: center;
     }
 
@@ -1149,13 +1124,13 @@
       transform: translateX(-50%) translateY(20px);
       opacity: 0;
       pointer-events: none;
-      background: rgba(45, 40, 36, 0.92);
-      color: #fff;
       padding: 11px 16px;
       border-radius: 999px;
+      background: rgba(45, 40, 36, 0.92);
+      color: #fff;
       font-size: 13px;
-      transition: all 0.25s ease;
       white-space: nowrap;
+      transition: all 0.25s ease;
     }
 
     .toast.show {
@@ -1163,7 +1138,7 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* ===================== 마무리 ===================== */
+    /* ===================== Footer / Buttons ===================== */
     .final-wrap {
       max-width: 360px;
       margin: 0 auto;
@@ -1191,18 +1166,19 @@
 
     .footer {
       padding: 28px 20px 40px;
-      text-align: center;
+      border-top: 1px solid rgba(210, 198, 185, 0.45);
+      background: var(--paper);
+      color: #7d7166;
       font-size: 0.82rem;
       line-height: 1.7;
-      color: #7d7166;
-      background: var(--paper);
-      border-top: 1px solid rgba(210, 198, 185, 0.45);
+      text-align: center;
     }
 
     .top-btn,
     .music-btn {
       position: fixed;
       bottom: 20px;
+      z-index: 60;
       width: 48px;
       height: 48px;
       border: none;
@@ -1211,7 +1187,6 @@
       color: #6b6159;
       box-shadow: var(--shadow-soft);
       cursor: pointer;
-      z-index: 60;
       font-size: 1.1rem;
       display: flex;
       align-items: center;
@@ -1241,12 +1216,8 @@
     }
 
     @keyframes musicSpin {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     @media (max-width: 480px) {
@@ -1283,7 +1254,7 @@
       }
 
       .hero-polaroid-script {
-        font-size: 2.28rem;
+        font-size: 2.08rem;
       }
 
       .rsvp-form {
@@ -1320,17 +1291,6 @@
       </section>
 
       <section class="section" id="wedding-info">
-        <div class="d-day-wrap">
-          <div class="d-day-photo">
-            <img src="images/dday-photo.jpg" alt="이든과 한영은 웨딩 사진" />
-          </div>
-          <div class="d-day-copy">
-            wedding day
-            <strong id="ddayText">D-000</strong>
-            <div>2026년 9월 12일</div>
-          </div>
-        </div>
-        
         <h2 class="section-title">예식 안내</h2>
 
         <div class="info-lines">
@@ -1351,6 +1311,17 @@
             <div>토</div>
           </div>
           <div class="calendar-grid" id="calendarGrid"></div>
+        </div>
+
+        <div class="d-day-wrap">
+          <div class="d-day-photo">
+            <img src="images/dday-photo.jpg" alt="이든과 한영은 웨딩 사진" />
+          </div>
+          <div class="d-day-copy">
+            wedding day
+            <strong id="ddayText">D-000</strong>
+            <div>2026년 9월 12일</div>
+          </div>
         </div>
       </section>
 
@@ -1385,15 +1356,9 @@
         </div>
 
         <div class="map-buttons">
-          <a class="map-btn" href="https://map.naver.com/v5/search/서울%20중구%20을지로%2030%20롯데호텔서울" target="_blank" rel="noopener">
-            네이버지도
-          </a>
-          <a class="map-btn" href="https://map.kakao.com/link/search/서울%20중구%20을지로%2030%20롯데호텔서울" target="_blank" rel="noopener">
-            카카오맵
-          </a>
-          <a class="map-btn" href="https://www.tmap.co.kr/search?searchKeyword=서울%20중구%20을지로%2030%20롯데호텔서울" target="_blank" rel="noopener">
-            T맵
-          </a>
+          <a class="map-btn" href="https://map.naver.com/v5/search/서울%20중구%20을지로%2030%20롯데호텔서울" target="_blank" rel="noopener">네이버지도</a>
+          <a class="map-btn" href="https://map.kakao.com/link/search/서울%20중구%20을지로%2030%20롯데호텔서울" target="_blank" rel="noopener">카카오맵</a>
+          <a class="map-btn" href="https://www.tmap.co.kr/search?searchKeyword=서울%20중구%20을지로%2030%20롯데호텔서울" target="_blank" rel="noopener">T맵</a>
         </div>
 
         <div class="traffic-list">
@@ -1433,6 +1398,10 @@
             </div>
             <p class="person-role">신랑</p>
             <h3 class="person-name">이든</h3>
+            <p class="person-copy">
+              차분하고 든든한 마음으로<br />
+              함께할 내일을 준비하는 사람
+            </p>
             <p class="person-family">이도혁 · 권수경의 아들</p>
           </div>
 
@@ -1442,7 +1411,11 @@
             </div>
             <p class="person-role">신부</p>
             <h3 class="person-name">한영은</h3>
-            <p class="person-family">한경철 · 전경숙의 딸</p>
+            <p class="person-copy">
+              다정하고 따뜻한 미소로<br />
+              일상을 환하게 채워주는 사람
+            </p>
+            <p class="person-family">한영철 · 전경숙의 딸</p>
           </div>
         </div>
       </section>
@@ -1767,7 +1740,6 @@
   <script>
     const WEDDING_DATE = new Date("2026-09-12T13:30:00+09:00");
     const FIRST_MET_DATE = new Date("2018-10-06T00:00:00+09:00");
-
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxOQ-z01MHKXccYYkYqD6jH3D7eZV4VcL_GPE6BFKku2mljWYBmbiaZVQNdUvJNnbs1/exec";
 
     window.addEventListener("load", () => {
@@ -1780,6 +1752,10 @@
       setTimeout(() => {
         hero.classList.add("stage-3");
       }, 6100);
+
+      setTimeout(() => {
+        startMusic(false);
+      }, 500);
     });
 
     function buildCalendar(year, month, targetDay) {
@@ -1902,6 +1878,7 @@
     document.querySelectorAll(".copy-btn").forEach((btn) => {
       btn.addEventListener("click", async () => {
         const value = btn.dataset.copy;
+
         try {
           await navigator.clipboard.writeText(value);
           showToast("계좌번호가 복사되었습니다.");
@@ -1992,12 +1969,6 @@
         showToast("음악이 정지되었습니다.");
       }
     }
-
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        startMusic(false);
-      }, 500);
-    });
 
     function unlockMusicOnce(event) {
       if (event.target.closest && event.target.closest("#musicBtn")) return;
