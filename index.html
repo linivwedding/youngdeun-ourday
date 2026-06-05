@@ -37,12 +37,13 @@
 
     html {
       scroll-behavior: smooth;
+      background: #ffffff;
     }
 
     body {
       margin: 0;
       font-family: "Noto Sans KR", sans-serif;
-      background: var(--bg);
+      background: #ffffff;
       color: var(--text);
       line-height: 1.7;
       word-break: keep-all;
@@ -1294,7 +1295,6 @@
 <body>
   <div class="page">
     <div class="paper">
-      <!-- 메인 -->
       <section class="hero" id="hero">
         <div class="hero-inner">
           <div class="hero-intro">
@@ -1317,7 +1317,6 @@
         </div>
       </section>
 
-      <!-- 예식 안내 + 달력 -->
       <section class="section" id="wedding-info">
         <h2 class="section-title">예식 안내</h2>
 
@@ -1353,7 +1352,6 @@
         </div>
       </section>
 
-      <!-- 초대글 -->
       <section class="section" id="invite-message">
         <h2 class="section-title">저희의 시작에 초대합니다</h2>
         <div class="intro-message">
@@ -1368,7 +1366,6 @@
         </div>
       </section>
 
-      <!-- 오시는 길 -->
       <section class="section" id="location">
         <h2 class="section-title">오시는 길</h2>
 
@@ -1424,7 +1421,6 @@
         </div>
       </section>
 
-      <!-- 신랑 신부 정보 -->
       <section class="section" id="couple">
         <h2 class="section-title">신랑 신부</h2>
 
@@ -1457,7 +1453,6 @@
         </div>
       </section>
 
-      <!-- 함께한 시간 / 우리의 시간 -->
       <section class="section" id="story">
         <h2 class="section-title">함께한 시간</h2>
 
@@ -1520,7 +1515,6 @@
         </div>
       </section>
 
-      <!-- 갤러리 -->
       <section class="section" id="gallery">
         <h2 class="section-title">갤러리</h2>
 
@@ -1537,7 +1531,6 @@
         </div>
       </section>
 
-      <!-- 주차 안내 -->
       <section class="section" id="parking">
         <h2 class="section-title">주차 안내</h2>
 
@@ -1552,7 +1545,6 @@
         </div>
       </section>
 
-      <!-- 마음 전할 곳 -->
       <section class="section" id="account">
         <h2 class="section-title">마음 전하실 곳</h2>
         <p class="section-desc" style="margin-bottom: 28px;">
@@ -1605,7 +1597,6 @@
         </div>
       </section>
 
-      <!-- 참석 여부 -->
       <section class="section" id="rsvp">
         <h2 class="section-title">참석 여부 전달</h2>
 
@@ -1622,7 +1613,6 @@
         </div>
       </section>
 
-      <!-- 마무리 -->
       <section class="section" id="final">
         <div class="final-wrap">
           <p class="final-copy">행복하게 잘 살겠습니다.</p>
@@ -1640,17 +1630,16 @@
     </div>
   </div>
 
-  <audio id="bgMusic" loop preload="auto">
+  <audio id="bgMusic" loop autoplay playsinline preload="auto">
     <source src="wedding-song.mp3" type="audio/mpeg" />
   </audio>
 
-  <button class="music-btn" id="musicBtn" type="button" aria-label="음악 재생">
+  <button class="music-btn" id="musicBtn" type="button" aria-label="음악 재생/정지">
     <span class="music-icon">♪</span>
   </button>
 
   <button class="top-btn" id="topBtn" type="button" aria-label="맨 위로 이동">↑</button>
 
-  <!-- 갤러리 확대 -->
   <div class="lightbox" id="lightbox">
     <div class="lightbox-inner">
       <button class="lightbox-close" id="lightboxClose" type="button" aria-label="닫기">✕</button>
@@ -1658,7 +1647,6 @@
     </div>
   </div>
 
-  <!-- 참석 여부 모달 -->
   <div class="rsvp-modal" id="rsvpModal">
     <div class="rsvp-panel">
       <div class="rsvp-head">
@@ -1972,24 +1960,74 @@
 
     let isMusicPlaying = false;
 
-    musicBtn.addEventListener("click", async () => {
+    function setMusicButtonPlaying() {
+      isMusicPlaying = true;
+      musicBtn.classList.add("playing");
+      musicIcon.textContent = "♪";
+    }
+
+    function setMusicButtonStopped() {
+      isMusicPlaying = false;
+      musicBtn.classList.remove("playing");
+      musicIcon.textContent = "♪";
+    }
+
+    async function startMusic(showMessage = false) {
       try {
-        if (!isMusicPlaying) {
-          bgMusic.volume = 0.55;
-          await bgMusic.play();
-          isMusicPlaying = true;
-          musicBtn.classList.add("playing");
-          musicIcon.textContent = "♪";
+        bgMusic.volume = 0.55;
+        await bgMusic.play();
+        setMusicButtonPlaying();
+
+        if (showMessage) {
           showToast("음악이 재생됩니다.");
-        } else {
-          bgMusic.pause();
-          isMusicPlaying = false;
-          musicBtn.classList.remove("playing");
-          musicIcon.textContent = "♪";
-          showToast("음악이 정지되었습니다.");
         }
       } catch (error) {
-        showToast("음악 버튼을 다시 눌러주세요.");
+        setMusicButtonStopped();
+
+        if (showMessage) {
+          showToast("음악 버튼을 눌러 재생해 주세요.");
+        }
+      }
+    }
+
+    function stopMusic(showMessage = false) {
+      bgMusic.pause();
+      setMusicButtonStopped();
+
+      if (showMessage) {
+        showToast("음악이 정지되었습니다.");
+      }
+    }
+
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        startMusic(false);
+      }, 500);
+    });
+
+    function unlockMusicOnce(event) {
+      if (event.target.closest && event.target.closest("#musicBtn")) return;
+
+      if (!isMusicPlaying) {
+        startMusic(false);
+      }
+
+      document.removeEventListener("click", unlockMusicOnce);
+      document.removeEventListener("touchstart", unlockMusicOnce);
+      document.removeEventListener("pointerdown", unlockMusicOnce);
+    }
+
+    document.addEventListener("click", unlockMusicOnce, { passive: true });
+    document.addEventListener("touchstart", unlockMusicOnce, { passive: true });
+    document.addEventListener("pointerdown", unlockMusicOnce, { passive: true });
+
+    musicBtn.addEventListener("click", async (event) => {
+      event.stopPropagation();
+
+      if (isMusicPlaying) {
+        stopMusic(true);
+      } else {
+        await startMusic(true);
       }
     });
 
