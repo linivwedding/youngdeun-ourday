@@ -1196,9 +1196,9 @@
       border-top: 1px solid rgba(210, 198, 185, 0.45);
     }
 
-    .top-btn {
+    .top-btn,
+    .music-btn {
       position: fixed;
-      right: calc(50% - 224px);
       bottom: 20px;
       width: 48px;
       height: 48px;
@@ -1208,13 +1208,51 @@
       color: #6b6159;
       box-shadow: var(--shadow-soft);
       cursor: pointer;
-      z-index: 50;
+      z-index: 60;
       font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .top-btn {
+      right: calc(50% - 224px);
+    }
+
+    .music-btn {
+      left: calc(50% - 224px);
+    }
+
+    .music-btn.playing {
+      background: #d8c8bb;
+      color: #3f3832;
+    }
+
+    .music-btn .music-icon {
+      display: inline-block;
+      line-height: 1;
+    }
+
+    .music-btn.playing .music-icon {
+      animation: musicSpin 2.4s linear infinite;
+    }
+
+    @keyframes musicSpin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
     @media (max-width: 480px) {
       .top-btn {
         right: 16px;
+      }
+
+      .music-btn {
+        left: 16px;
       }
 
       .rsvp-panel {
@@ -1602,6 +1640,14 @@
     </div>
   </div>
 
+  <audio id="bgMusic" loop preload="auto">
+    <source src="wedding-song.mp3" type="audio/mpeg" />
+  </audio>
+
+  <button class="music-btn" id="musicBtn" type="button" aria-label="음악 재생">
+    <span class="music-icon">♪</span>
+  </button>
+
   <button class="top-btn" id="topBtn" type="button" aria-label="맨 위로 이동">↑</button>
 
   <!-- 갤러리 확대 -->
@@ -1919,6 +1965,33 @@
         toast.classList.remove("show");
       }, 1800);
     }
+
+    const bgMusic = document.getElementById("bgMusic");
+    const musicBtn = document.getElementById("musicBtn");
+    const musicIcon = musicBtn.querySelector(".music-icon");
+
+    let isMusicPlaying = false;
+
+    musicBtn.addEventListener("click", async () => {
+      try {
+        if (!isMusicPlaying) {
+          bgMusic.volume = 0.55;
+          await bgMusic.play();
+          isMusicPlaying = true;
+          musicBtn.classList.add("playing");
+          musicIcon.textContent = "♪";
+          showToast("음악이 재생됩니다.");
+        } else {
+          bgMusic.pause();
+          isMusicPlaying = false;
+          musicBtn.classList.remove("playing");
+          musicIcon.textContent = "♪";
+          showToast("음악이 정지되었습니다.");
+        }
+      } catch (error) {
+        showToast("음악 버튼을 다시 눌러주세요.");
+      }
+    });
 
     const rsvpModal = document.getElementById("rsvpModal");
     const openRsvpBtn = document.getElementById("openRsvpBtn");
