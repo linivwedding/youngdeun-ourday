@@ -1528,6 +1528,38 @@
       border-radius: 0 !important;
     }
 
+  
+    /* ===== 파이널 카피라이트 이미지 오버레이 ===== */
+    #final .final-footer {
+      position: absolute !important;
+      left: 50% !important;
+      bottom: 18px !important;
+      z-index: 4 !important;
+      width: calc(100% - 120px) !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      transform: translateX(-50%) !important;
+      color: rgba(77, 68, 61, .92) !important;
+      font-size: .76rem !important;
+      font-weight: 400 !important;
+      line-height: 1.5 !important;
+      text-align: center !important;
+      text-shadow: 0 1px 5px rgba(255,255,255,.85) !important;
+      pointer-events: none !important;
+    }
+
+    #final + .footer {
+      display: none !important;
+    }
+
+    @media (max-width: 390px) {
+      #final .final-footer {
+        bottom: 16px !important;
+        width: calc(100% - 112px) !important;
+        font-size: .7rem !important;
+      }
+    }
+
   </style>
 </head>
 
@@ -1881,20 +1913,16 @@
         <button class="btn-primary js-open-rsvp" type="button">참석 여부 전달</button>
       </div>
     </section>
-
-    <!-- 13페이지 -->
+<!-- 13페이지 -->
     <section class="section" id="final">
       <div class="final-wrap">
         <div class="final-photo">
           <img src="images/final-photo.jpg" alt="영은과 이든의 마지막 인사 사진" />
           <p class="final-copy">항상 행복하게 함께하겠습니다.</p>
+          <p class="final-footer">© 2026 Youngeun &amp; Deun Wedding Invitation.</p>
         </div>
       </div>
     </section>
-
-    <footer class="footer">
-      © 2026 Youngeun & Deun Wedding Invitation.
-    </footer>
   </div>
 
   <audio id="bgMusic" src="wedding-song.mp3" preload="auto" loop></audio>
@@ -2326,7 +2354,7 @@
     });
 
     window.addEventListener("load", () => {
-      setTimeout(openAttendanceIntro, 900);
+      setTimeout(openAttendanceIntro, 12000);
     });
 
     /* 위로 이동 */
