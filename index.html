@@ -1108,6 +1108,116 @@
       margin-top: 0 !important;
     }
 
+  
+    /* ===== 주차안내 · 답례품 탭형 섹션 ===== */
+    .info-tab-wrap {
+      width: 100%;
+      max-width: 360px;
+      margin: 0 auto;
+    }
+
+    .info-tab-menu {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      margin-bottom: 22px;
+      border-bottom: 1px solid rgba(174, 156, 141, 0.35);
+    }
+
+    .info-tab-btn {
+      position: relative;
+      min-height: 48px;
+      padding: 0 8px 14px;
+      border: 0;
+      background: transparent;
+      color: #b3a497;
+      font-size: 1rem;
+      font-weight: 400;
+      cursor: pointer;
+    }
+
+    .info-tab-btn::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -1px;
+      width: 0;
+      height: 2px;
+      background: #9c8777;
+      transform: translateX(-50%);
+      transition: width .28s ease;
+    }
+
+    .info-tab-btn.active {
+      color: #5d5148;
+    }
+
+    .info-tab-btn.active::after {
+      width: 100%;
+    }
+
+    .info-tab-panel {
+      display: none;
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    .info-tab-panel.active {
+      display: block;
+      animation: infoTabFade .45s ease forwards;
+    }
+
+    @keyframes infoTabFade {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .info-tab-image {
+      width: 100%;
+      margin: 0 0 24px;
+      overflow: hidden;
+      background: #e8dfd6;
+    }
+
+    .info-tab-image img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .info-tab-content {
+      padding: 0 8px;
+      text-align: center;
+    }
+
+    .info-tab-title {
+      margin: 0 0 16px;
+      color: #5d5148;
+      font-size: 1.18rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+
+    .info-tab-text {
+      margin: 0;
+      color: #504740;
+      font-size: .94rem;
+      line-height: 2;
+    }
+
+    .info-tab-note {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 8px 13px;
+      border-radius: 999px;
+      background: rgba(231, 220, 210, .75);
+      color: #75665b;
+      font-size: .84rem;
+    }
+
   </style>
 </head>
 
@@ -1331,32 +1441,64 @@
       <h3 class="gallery-title">Gallery</h3>
       <div class="gallery-grid" id="galleryGrid"></div>
     </section>
-
-    <!-- 10페이지 -->
+<!-- 10페이지 -->
     <section class="section" id="parking">
-      <h2 class="section-title">주차 안내</h2>
+      <h2 class="section-title">안내사항</h2>
 
-      <div class="parking-photo">
-        <img src="images/parking.png" alt="롯데호텔 서울 주차장" />
-      </div>
+      <div class="info-tab-wrap">
+        <div class="info-tab-menu" role="tablist" aria-label="주차 및 답례품 안내">
+          <button
+            class="info-tab-btn active"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="parkingPanel"
+            data-tab="parkingPanel">
+            주차안내
+          </button>
 
-      <p class="notice-copy">
-        호텔 주차는 6시간 가능합니다.<br />
-        백화점과 호텔은 주차장을 함께 이용하오니<br />
-        주차 안내 요원의 안내를 받아 주차해 주세요.
-      </p>
-
-      <div class="gift-block">
-        <h3 class="sub-title">답례품 안내</h3>
-        <div class="gift-photo">
-          <img src="images/gift-flower.jpg" alt="꽃다발 답례품" />
+          <button
+            class="info-tab-btn"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="giftPanel"
+            data-tab="giftPanel">
+            답례품
+          </button>
         </div>
-        <p class="notice-copy">
-          계절에 맞는 꽃으로 꽃다발을 만들어<br />
-          예식을 마친 후 하객분들께 감사의 마음을 담아<br />
-          나누어 드릴 예정입니다.<br />
-          저희가 준비한 싱그러움을 품어가세요.
-        </p>
+
+        <div class="info-tab-panel active" id="parkingPanel" role="tabpanel">
+          <div class="info-tab-image">
+            <img src="images/parking.png" alt="롯데호텔 서울 주차장" />
+          </div>
+
+          <div class="info-tab-content">
+            <h3 class="info-tab-title">주차안내</h3>
+            <p class="info-tab-text">
+              호텔 주차는 6시간 가능합니다.<br />
+              백화점과 호텔은 주차장을 함께 이용하오니<br />
+              주차 안내 요원의 안내를 받아 주차해 주세요.
+            </p>
+            <span class="info-tab-note">무료 주차 6시간</span>
+          </div>
+        </div>
+
+        <div class="info-tab-panel" id="giftPanel" role="tabpanel">
+          <div class="info-tab-image">
+            <img src="images/gift-flower.jpg" alt="꽃다발 답례품" />
+          </div>
+
+          <div class="info-tab-content">
+            <h3 class="info-tab-title">답례품</h3>
+            <p class="info-tab-text">
+              계절에 맞는 꽃으로 꽃다발을 만들어<br />
+              예식을 마친 후 하객분들께 감사의 마음을 담아<br />
+              나누어 드릴 예정입니다.<br />
+              저희가 준비한 싱그러움을 품어가세요.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1772,6 +1914,24 @@
     }
 
     document.addEventListener("pointerdown", unlockMusic, { passive: true });
+
+
+    /* 주차안내 · 답례품 탭 */
+    document.querySelectorAll(".info-tab-btn").forEach((button) => {
+      button.addEventListener("click", () => {
+        const targetId = button.dataset.tab;
+
+        document.querySelectorAll(".info-tab-btn").forEach((item) => {
+          const isActive = item === button;
+          item.classList.toggle("active", isActive);
+          item.setAttribute("aria-selected", String(isActive));
+        });
+
+        document.querySelectorAll(".info-tab-panel").forEach((panel) => {
+          panel.classList.toggle("active", panel.id === targetId);
+        });
+      });
+    });
 
     /* 위로 이동 */
     document.getElementById("topBtn").addEventListener("click", () => {
