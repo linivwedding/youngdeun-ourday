@@ -1683,6 +1683,85 @@
       }
     }
 
+  
+    /* ===== 영문 필기체 크기·컬러·폴라로이드 최종 보정 ===== */
+    .script-line {
+      font-size: 5.15rem !important;
+      line-height: .78 !important;
+      color: transparent !important;
+      background: linear-gradient(90deg,#1f1b18 0%,#4a3d34 38%,#8d7461 72%,#aa8e76 100%) !important;
+      background-size: 0 100% !important;
+      background-repeat: no-repeat !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      text-shadow: none !important;
+    }
+
+    .script-line:nth-child(2) {
+      font-size: 4.85rem !important;
+      margin-top: 2px !important;
+    }
+
+    .hero.stage-3 .hero-photo-box {
+      padding: 14px 14px 96px !important;
+      background: #fff !important;
+    }
+
+    .hero-caption {
+      left: 50% !important;
+      bottom: 18px !important;
+      width: calc(100% - 28px) !important;
+      padding: 0 8px !important;
+      transform: translateX(-50%) !important;
+      text-align: center !important;
+    }
+
+    .hero-caption span {
+      display: block !important;
+      font-size: 3.7rem !important;
+      line-height: .7 !important;
+      color: #9e8577 !important;
+      text-transform: none !important;
+      text-shadow: none !important;
+      transform: none !important;
+    }
+
+    .hero-caption span + span {
+      margin-top: 2px !important;
+    }
+
+    .second-script {
+      color: #806f63 !important;
+      font-size: 3.35rem !important;
+    }
+
+    .couple-en {
+      color: #8d7869 !important;
+      font-size: 2.75rem !important;
+    }
+
+    .dday-copy .eng {
+      color: #9d8778 !important;
+      font-size: 2.75rem !important;
+    }
+
+    @media (max-width: 390px) {
+      .script-line { font-size: 4.55rem !important; }
+      .script-line:nth-child(2) { font-size: 4.2rem !important; }
+
+      .hero.stage-3 .hero-photo-box {
+        left: 30px !important;
+        right: 30px !important;
+        padding-bottom: 88px !important;
+      }
+
+      .hero-caption { bottom: 16px !important; }
+      .hero-caption span { font-size: 3.2rem !important; }
+      .second-script { font-size: 3rem !important; }
+      .couple-en,
+      .dday-copy .eng { font-size: 2.45rem !important; }
+    }
+
   </style>
 </head>
 
@@ -1752,7 +1831,7 @@
       <div class="couple-grid">
         <article class="person-card">
           <div class="person-photo">
-            <img src="images/groom.jpg" alt="신랑 이든 사진" />
+            <img src="images/DEUN.jpg" alt="신랑 이든 사진" />
           </div>
           <p class="person-role">신랑</p>
           <h3 class="person-name">이든</h3>
