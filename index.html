@@ -718,43 +718,38 @@
 
     .accordion-icon {
       position: relative;
-      flex: 0 0 28px;
-      width: 28px;
-      height: 28px;
-      border: 1px solid rgba(139, 119, 104, .32);
+      flex: 0 0 32px;
+      width: 32px;
+      height: 32px;
+      border: 1px solid rgba(193, 178, 166, .9);
       border-radius: 50%;
-      background: rgba(255, 255, 255, .52);
-      transition: transform .35s ease, border-color .35s ease, background .35s ease;
-    }
-
-    .accordion-icon::before,
-    .accordion-icon::after {
-      content: "";
-      position: absolute;
-      top: 13px;
-      width: 8px;
-      height: 1.5px;
-      border-radius: 999px;
-      background: #826f61;
-      transition: transform .35s ease;
+      background: linear-gradient(180deg, rgba(255,255,255,.96) 0%, rgba(244,236,230,.96) 100%);
+      box-shadow: 0 2px 8px rgba(110, 90, 75, .08), inset 0 1px 0 rgba(255,255,255,.9);
+      transition: transform .35s ease, border-color .35s ease, background .35s ease, box-shadow .35s ease;
     }
 
     .accordion-icon::before {
-      left: 7px;
-      transform: rotate(42deg);
-      transform-origin: right center;
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 8px;
+      height: 8px;
+      border-right: 1.8px solid #8b7666;
+      border-bottom: 1.8px solid #8b7666;
+      transform: translate(-50%, -62%) rotate(45deg);
+      transition: border-color .35s ease;
     }
 
     .accordion-icon::after {
-      right: 7px;
-      transform: rotate(-42deg);
-      transform-origin: left center;
+      display: none;
     }
 
     .accordion-item.open .accordion-icon {
       transform: rotate(180deg);
-      border-color: rgba(139, 119, 104, .52);
-      background: rgba(232, 220, 209, .62);
+      border-color: rgba(171, 148, 129, .95);
+      background: linear-gradient(180deg, rgba(239,229,221,.98) 0%, rgba(229,216,206,.98) 100%);
+      box-shadow: 0 4px 12px rgba(110, 90, 75, .12), inset 0 1px 0 rgba(255,255,255,.75);
     }
 
     .accordion-panel {
