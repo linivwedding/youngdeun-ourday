@@ -1019,6 +1019,76 @@
       .hero.stage-3 .hero-photo-box { inset-left: 30px; inset-right: 30px; }
       .map-buttons { grid-template-columns: 1fr; }
     }
+  
+    /* ===== 파이널 영역 최종 보정 ===== */
+    #final {
+      position: relative !important;
+      width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: 0 !important;
+      background: transparent !important;
+      overflow: hidden !important;
+    }
+
+    #final .final-wrap {
+      position: relative !important;
+      width: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    #final .final-photo {
+      position: relative !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: 0 !important;
+      aspect-ratio: 4 / 5 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+
+    #final .final-photo img {
+      position: absolute !important;
+      inset: 0 !important;
+      display: block !important;
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      aspect-ratio: auto !important;
+      object-fit: cover !important;
+      object-position: center 58% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    #final .final-copy {
+      position: absolute !important;
+      top: 17% !important;
+      left: 50% !important;
+      z-index: 3 !important;
+      width: 82% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      transform: translateX(-50%) !important;
+      color: #4d443d !important;
+      font-size: 1.18rem !important;
+      font-weight: 400 !important;
+      line-height: 1.8 !important;
+      text-align: center !important;
+      text-shadow: 0 1px 6px rgba(255,255,255,.72) !important;
+    }
+
+    #final + .footer {
+      margin-top: 0 !important;
+    }
+
   </style>
 </head>
 
