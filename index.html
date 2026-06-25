@@ -318,6 +318,7 @@
 
     .person-card {
       padding: 16px 16px 22px;
+      border-radius: 20px;
       background: rgba(255,255,255,.62);
       box-shadow: var(--shadow-soft);
     }
@@ -325,6 +326,7 @@
     .person-photo {
       aspect-ratio: 1 / 1.04;
       margin-bottom: 17px;
+      border-radius: 16px;
       overflow: hidden;
       background: #e6ddd2;
     }
@@ -336,7 +338,7 @@
 
     .person-role { margin: 0 0 2px; color: var(--sub); font-size: .9rem; }
     .person-name { margin: 0 0 12px; font-size: 1.45rem; font-weight: 400; }
-    .person-copy { margin: 0 0 12px; font-size: .93rem; line-height: 1.7; }
+    .person-copy { margin: 0 0 16px; font-size: .93rem; line-height: 1.9; }
     .person-family { margin: 0; font-size: .91rem; color: #625951; }
 
     /* 5. 예식 안내 */
@@ -840,27 +842,53 @@
     }
 
     /* 13. 마지막 */
-    .final-wrap {
-      max-width: 360px;
-      margin: 0 auto;
+    #final {
+      position: relative;
+      padding: 0;
+      border-top: 0;
+      background: #eee7df;
     }
 
-    .final-copy {
-      margin: 0 0 26px;
-      font-size: 1.16rem;
-      line-height: 1.9;
+    .final-wrap {
+      position: relative;
+      width: 100%;
+      max-width: none;
+      margin: 0;
     }
 
     .final-photo {
+      position: relative;
+      width: 100%;
+      min-height: 100svh;
       overflow: hidden;
-      border-radius: 18px;
+      border-radius: 0;
       background: #e8ddd2;
-      box-shadow: var(--shadow-soft);
+      box-shadow: none;
     }
 
     .final-photo img {
-      aspect-ratio: 4 / 5;
+      width: 100%;
+      height: 100svh;
+      min-height: 100svh;
       object-fit: cover;
+      object-position: center;
+    }
+
+    .final-copy {
+      position: absolute;
+      top: 16%;
+      left: 50%;
+      z-index: 2;
+      width: 88%;
+      margin: 0;
+      transform: translateX(-50%);
+      color: #4d443d;
+      font-size: 1.18rem;
+      font-weight: 400;
+      line-height: 1.8;
+      letter-spacing: -0.02em;
+      text-align: center;
+      text-shadow: 0 1px 8px rgba(255,255,255,.8);
     }
 
     .footer {
@@ -1180,7 +1208,7 @@
       <h2 class="section-title">주차 안내</h2>
 
       <div class="parking-photo">
-        <img src="images/parking.jpg" alt="롯데호텔 서울 주차장" />
+        <img src="images/parking.png" alt="롯데호텔 서울 주차장" />
       </div>
 
       <p class="notice-copy">
@@ -1276,9 +1304,9 @@
     <!-- 13페이지 -->
     <section class="section" id="final">
       <div class="final-wrap">
-        <p class="final-copy">항상 행복하게 함께하겠습니다.</p>
         <div class="final-photo">
           <img src="images/final-photo.jpg" alt="영은과 이든의 마지막 인사 사진" />
+          <p class="final-copy">항상 행복하게 함께하겠습니다.</p>
         </div>
       </div>
     </section>
