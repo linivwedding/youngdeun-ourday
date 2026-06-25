@@ -453,6 +453,25 @@
       object-fit: cover;
     }
 
+    /* ===== 구글 지도 ===== */
+    .map-image.google-map {
+      width: 100%;
+      max-width: 360px;
+      height: 300px;
+      margin: 0 auto 18px;
+      overflow: hidden;
+      background: #e6ded5;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .map-image.google-map iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+
     .map-buttons {
       max-width: 360px;
       margin: 0 auto 34px;
@@ -1225,9 +1244,14 @@
         <p class="venue-hall">2층 크리스탈볼룸</p>
         <p class="venue-address">서울 중구 을지로 30 명동 롯데호텔</p>
       </div>
-
-      <div class="map-image">
-        <img src="images/location-map.jpg" alt="롯데호텔 서울 위치 지도" />
+      <div class="map-image google-map">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1581.2799779057339!2d126.9814828543924!3d37.565430095696044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca2edff4360f7%3A0x3b5a131fe5e3d759!2z66Gv642w7Zi47YWUIOyEnOyauA!5e0!3m2!1sko!2skr!4v1782359477827!5m2!1sko!2skr"
+          title="롯데호텔 서울 위치 지도"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
       </div>
 
       <div class="map-buttons">
