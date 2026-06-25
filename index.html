@@ -698,13 +698,63 @@
 
     .accordion-button {
       width: 100%;
-      padding: 17px 16px;
+      min-height: 62px;
+      padding: 17px 18px;
       border: 0;
       background: transparent;
       color: var(--text);
       display: flex;
+      align-items: center;
       justify-content: space-between;
+      gap: 18px;
       cursor: pointer;
+      text-align: left;
+    }
+
+    .accordion-button > span:first-child {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .accordion-icon {
+      position: relative;
+      flex: 0 0 28px;
+      width: 28px;
+      height: 28px;
+      border: 1px solid rgba(139, 119, 104, .32);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .52);
+      transition: transform .35s ease, border-color .35s ease, background .35s ease;
+    }
+
+    .accordion-icon::before,
+    .accordion-icon::after {
+      content: "";
+      position: absolute;
+      top: 13px;
+      width: 8px;
+      height: 1.5px;
+      border-radius: 999px;
+      background: #826f61;
+      transition: transform .35s ease;
+    }
+
+    .accordion-icon::before {
+      left: 7px;
+      transform: rotate(42deg);
+      transform-origin: right center;
+    }
+
+    .accordion-icon::after {
+      right: 7px;
+      transform: rotate(-42deg);
+      transform-origin: left center;
+    }
+
+    .accordion-item.open .accordion-icon {
+      transform: rotate(180deg);
+      border-color: rgba(139, 119, 104, .52);
+      background: rgba(232, 220, 209, .62);
     }
 
     .accordion-panel {
@@ -1850,7 +1900,7 @@
       <div class="accordion-wrap">
         <div class="accordion-item">
           <button class="accordion-button" type="button">
-            <span>신랑 측 계좌번호</span><span>⌄</span>
+            <span>신랑 측 계좌번호</span><span class="accordion-icon" aria-hidden="true"></span>
           </button>
           <div class="accordion-panel">
             <div class="accordion-content">
@@ -1875,7 +1925,7 @@
 
         <div class="accordion-item">
           <button class="accordion-button" type="button">
-            <span>신부 측 계좌번호</span><span>⌄</span>
+            <span>신부 측 계좌번호</span><span class="accordion-icon" aria-hidden="true"></span>
           </button>
           <div class="accordion-panel">
             <div class="accordion-content">
