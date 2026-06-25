@@ -29,7 +29,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Sans+KR:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -1560,6 +1560,41 @@
       }
     }
 
+  
+    /* ===== 메인 이미지 하단 문구 에디토리얼 세리프 스타일 ===== */
+    .hero-caption {
+      bottom: 8px !important;
+      width: 100% !important;
+      padding: 0 14px 4px !important;
+    }
+
+    .hero-caption span {
+      display: block !important;
+      font-family: "Cormorant Garamond", Georgia, serif !important;
+      font-size: 2.55rem !important;
+      font-style: normal !important;
+      font-weight: 500 !important;
+      line-height: .72 !important;
+      letter-spacing: -0.055em !important;
+      color: #efe3d1 !important;
+      text-transform: lowercase !important;
+      text-shadow: 0 1px 8px rgba(84, 68, 55, .18) !important;
+    }
+
+    .hero-caption span:first-child {
+      transform: translateX(-8px);
+    }
+
+    .hero-caption span:last-child {
+      transform: translateX(14px);
+    }
+
+    @media (max-width: 390px) {
+      .hero-caption span {
+        font-size: 2.2rem !important;
+      }
+    }
+
   </style>
 </head>
 
@@ -1581,8 +1616,8 @@
             <img src="images/main-hero01.jpg" alt="영은과 이든의 메인 웨딩 사진" />
           </div>
           <div class="hero-caption">
-            <span>We’re getting</span>
-            <span>Married!</span>
+            <span>we’re getting</span>
+            <span>married!</span>
           </div>
         </div>
       </div>
