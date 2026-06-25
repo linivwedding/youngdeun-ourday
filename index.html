@@ -143,7 +143,10 @@
       align-items: center;
       justify-content: center;
       background:
-        radial-gradient(circle at 50% 45%, rgba(255,255,255,.55), rgba(247,243,238,.96) 48%, #f7f3ee 100%);
+        linear-gradient(180deg, rgba(247,243,238,.72) 0%, rgba(247,243,238,.66) 45%, rgba(247,243,238,.76) 100%),
+        radial-gradient(circle at 50% 42%, rgba(255,255,255,.36), rgba(247,243,238,.20) 55%, rgba(247,243,238,.34) 100%);
+      -webkit-backdrop-filter: blur(1px);
+      backdrop-filter: blur(1px);
       transition: opacity 1.1s ease, visibility 1.1s ease, transform 1.1s ease, filter 1.1s ease;
     }
 
@@ -194,14 +197,16 @@
       inset: 18px 14px 120px;
       z-index: 2;
       overflow: hidden;
-      opacity: 0;
-      transform: scale(1.1);
-      transition: all 1.3s cubic-bezier(.22,.61,.36,1);
+      opacity: 1;
+      transform: scale(1.035);
+      filter: brightness(1.08) saturate(.62) contrast(.88);
+      transition: transform 1.3s cubic-bezier(.22,.61,.36,1), filter 1.3s ease, opacity 1.3s ease, inset 1.3s cubic-bezier(.22,.61,.36,1), padding 1.3s cubic-bezier(.22,.61,.36,1), background 1.3s ease, box-shadow 1.3s ease;
     }
 
     .hero.stage-2 .hero-photo-box {
       opacity: 1;
       transform: scale(1);
+      filter: brightness(1) saturate(1) contrast(1);
     }
 
     .hero.stage-3 .hero-photo-box {
