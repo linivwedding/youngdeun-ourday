@@ -164,16 +164,19 @@
       flex-direction: column;
       align-items: center;
       gap: 4px;
+      width: 100%;
+      padding: 0 18px;
       transform: translateY(-10px);
     }
 
     .script-line {
       position: relative;
       display: inline-block;
+      max-width: 100%;
       font-family: var(--script-font);
-      font-size: 3.92rem;
-      line-height: .9;
-      letter-spacing: -0.01em;
+      font-size: clamp(2.95rem, 15.2vw, 3.72rem);
+      line-height: .92;
+      letter-spacing: -0.012em;
       white-space: nowrap;
     }
 
@@ -212,7 +215,7 @@
     }
 
     .script-line:nth-child(2) {
-      font-size: 3.58rem;
+      font-size: clamp(2.7rem, 13.9vw, 3.34rem);
     }
 
     .script-line:nth-child(2)::before,
@@ -1174,8 +1177,9 @@
 
     @media (max-width: 390px) {
       .section { padding-left: 18px; padding-right: 18px; }
-      .script-line { font-size: 3.35rem; }
-      .script-line:nth-child(2) { font-size: 3rem; }
+      .script-wrap { padding: 0 12px; }
+      .script-line { font-size: clamp(2.72rem, 14.6vw, 3.28rem); }
+      .script-line:nth-child(2) { font-size: clamp(2.48rem, 13.1vw, 2.94rem); }
       .hero.stage-3 .hero-photo-box { inset-left: 30px; inset-right: 30px; }
       .map-buttons { grid-template-columns: 1fr; }
     }
