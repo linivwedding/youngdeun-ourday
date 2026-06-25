@@ -874,12 +874,45 @@
       object-position: center;
     }
 
+    #final {
+      position: relative;
+      padding: 0;
+      border-top: 0;
+      background: #eee7df;
+    }
+
+    .final-wrap {
+      position: relative;
+      width: 100%;
+      max-width: none;
+      margin: 0;
+    }
+
+    .final-photo {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 0;
+      background: #e8ddd2;
+      box-shadow: none;
+    }
+
+    .final-photo img {
+      display: block;
+      width: 100%;
+      height: auto;
+      min-height: 0;
+      aspect-ratio: auto;
+      object-fit: contain;
+      object-position: center;
+    }
+
     .final-copy {
       position: absolute;
-      top: 16%;
+      top: 14%;
       left: 50%;
       z-index: 2;
-      width: 88%;
+      width: 78%;
       margin: 0;
       transform: translateX(-50%);
       color: #4d443d;
@@ -888,8 +921,10 @@
       line-height: 1.8;
       letter-spacing: -0.02em;
       text-align: center;
-      text-shadow: 0 1px 8px rgba(255,255,255,.8);
+      text-shadow: 0 1px 6px rgba(255,255,255,.72);
     }
+
+
 
     .footer {
       padding: 28px 20px 40px;
