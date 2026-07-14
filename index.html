@@ -10,7 +10,7 @@
 
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ko_KR" />
-  <meta property="og:site_name" content="영은 & 이든 모바일 청첩장" />
+  <meta property="og:site_name" content="영은 & 든 모바일 청첩장" />
   <meta property="og:title" content="영은 🖤 든 결혼합니다." />
   <meta property="og:description" content="2026년 9월 12일 (토) 오후 5시 30분 · 롯데호텔 서울 2층 크리스탈볼룸" />
   <meta property="og:url" content="https://linivwedding.github.io/youngdeun-ourday/" />
@@ -1266,18 +1266,53 @@
 
     .lightbox-close {
       position: fixed;
-      top: max(18px, env(safe-area-inset-top));
-      right: max(18px, env(safe-area-inset-right));
+      top: calc(18px + env(safe-area-inset-top));
+      right: calc(18px + env(safe-area-inset-right));
       z-index: 2;
       width: 44px;
       height: 44px;
-      border: 0;
+      border: 1px solid rgba(255, 255, 255, 0.28);
       border-radius: 50%;
-      background: rgba(255,255,255,.92);
-      color: #333;
-      font-size: 20px;
-      line-height: 1;
+      background: rgba(247, 243, 238, 0.12);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
       cursor: pointer;
+      font-size: 0;
+      color: transparent;
+      line-height: 1;
+      transition: background .25s ease, border-color .25s ease, transform .2s ease, box-shadow .25s ease;
+    }
+
+    .lightbox-close::before,
+    .lightbox-close::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 16px;
+      height: 1.5px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.92);
+      transform-origin: center;
+    }
+
+    .lightbox-close::before {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .lightbox-close::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    .lightbox-close:hover {
+      background: rgba(247, 243, 238, 0.18);
+      border-color: rgba(255, 255, 255, 0.38);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+    }
+
+    .lightbox-close:active {
+      transform: scale(0.96);
     }
 
     @media (max-width: 600px) {
@@ -1301,12 +1336,15 @@
       }
 
       .lightbox-close {
-        top: calc(14px + env(safe-area-inset-top));
-        right: calc(14px + env(safe-area-inset-right));
-        width: 46px;
-        height: 46px;
-        background: rgba(255,255,255,.9);
-        font-size: 22px;
+        top: calc(16px + env(safe-area-inset-top));
+        right: calc(16px + env(safe-area-inset-right));
+        width: 44px;
+        height: 44px;
+      }
+
+      .lightbox-close::before,
+      .lightbox-close::after {
+        width: 15px;
       }
     }
 
@@ -1804,7 +1842,6 @@
     .rsvp-send,
     .final-photo,
     .lightbox img,
-    .lightbox-close,
     .floating-btn,
     .toast,
     .info-tab-image,
