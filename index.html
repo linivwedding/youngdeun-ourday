@@ -699,24 +699,77 @@
     }
 
     .gallery-grid {
-      max-width: 360px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 5px;
+      width: calc(100% + 44px);
+      max-width: none;
+      margin: 0 -22px;
+      padding: 0 22px 14px;
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      cursor: grab;
+    }
+
+    .gallery-grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .gallery-grid.dragging {
+      cursor: grabbing;
+      scroll-snap-type: none;
+      user-select: none;
     }
 
     .gallery-item {
-      aspect-ratio: 1;
+      flex: 0 0 76%;
+      max-width: 300px;
+      aspect-ratio: 4 / 5;
       overflow: hidden;
       border-radius: 6px;
       background: #e3d8cc;
       cursor: pointer;
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+    }
+
+    .gallery-item:first-child {
+      margin-left: 0;
+    }
+
+    .gallery-item:last-child {
+      margin-right: 22px;
     }
 
     .gallery-item img {
+      width: 100%;
       height: 100%;
       object-fit: cover;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    @media (max-width: 390px) {
+      .gallery-grid {
+        width: calc(100% + 36px);
+        margin-left: -18px;
+        margin-right: -18px;
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .gallery-item {
+        flex-basis: 82%;
+        max-width: none;
+      }
+
+      .gallery-item:last-child {
+        margin-right: 18px;
+      }
     }
 
     /* 10. 주차 및 답례품 */
@@ -1106,7 +1159,7 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-      background: rgba(20,18,16,.8);
+      background: rgba(20,18,16,.94);
     }
 
     .lightbox.open { display: flex; }
@@ -1115,25 +1168,64 @@
       position: relative;
       width: 100%;
       max-width: 430px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .lightbox img {
-      max-height: 82svh;
+      display: block;
+      width: 100%;
+      max-height: 88svh;
       object-fit: contain;
       border-radius: 10px;
-      background: #fff;
+      background: transparent;
     }
 
     .lightbox-close {
-      position: absolute;
-      top: -44px;
-      right: 0;
-      width: 36px;
-      height: 36px;
+      position: fixed;
+      top: max(18px, env(safe-area-inset-top));
+      right: max(18px, env(safe-area-inset-right));
+      z-index: 2;
+      width: 44px;
+      height: 44px;
       border: 0;
       border-radius: 50%;
-      background: #fff;
+      background: rgba(255,255,255,.92);
+      color: #333;
+      font-size: 20px;
+      line-height: 1;
       cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      .lightbox {
+        padding: 0;
+        background: #111;
+      }
+
+      .lightbox-inner {
+        width: 100vw;
+        max-width: none;
+        height: 100svh;
+      }
+
+      .lightbox img {
+        width: 100vw;
+        height: 100svh;
+        max-height: none;
+        object-fit: contain;
+        border-radius: 0;
+      }
+
+      .lightbox-close {
+        top: calc(14px + env(safe-area-inset-top));
+        right: calc(14px + env(safe-area-inset-right));
+        width: 46px;
+        height: 46px;
+        background: rgba(255,255,255,.9);
+        font-size: 22px;
+      }
     }
 
     .floating-btn {
@@ -2224,44 +2316,115 @@
     updateTogetherTime();
     setInterval(updateTogetherTime, 60000);
 
-    /* 갤러리 60장 자동 생성 */
+    /* 갤러리 67장 자동 생성 - jpg / jpeg / png 확장자 자동 대응 */
     const galleryGrid = document.getElementById("galleryGrid");
-    for (let i = 1; i <= 60; i++) {
+    const galleryExtensions = ["jpg", "jpeg", "png"];
+
+    for (let i = 1; i <= 67; i++) {
       const no = String(i).padStart(2, "0");
       const item = document.createElement("div");
+      const img = document.createElement("img");
+
       item.className = "gallery-item";
-      item.innerHTML = `<img src="images/gallery-${no}.jpg" alt="웨딩 갤러리 ${i}" loading="lazy" />`;
+      img.src = `images/gallery-${no}.${galleryExtensions[0]}`;
+      img.alt = `웨딩 갤러리 ${i}`;
+      img.loading = "lazy";
+      img.dataset.galleryNo = no;
+      img.dataset.extIndex = "0";
+
+      img.addEventListener("error", () => {
+        const nextIndex = Number(img.dataset.extIndex) + 1;
+
+        if (nextIndex < galleryExtensions.length) {
+          img.dataset.extIndex = String(nextIndex);
+          img.src = `images/gallery-${no}.${galleryExtensions[nextIndex]}`;
+        } else {
+          item.style.display = "none";
+        }
+      });
+
+      item.appendChild(img);
       galleryGrid.appendChild(item);
     }
 
-    /* 이미지 로드 실패 시 해당 칸 숨김 */
-    document.querySelectorAll("img").forEach((img) => {
-      img.addEventListener("error", () => {
-        const galleryItem = img.closest(".gallery-item");
-        if (galleryItem) galleryItem.style.display = "none";
-      });
+    /* 데스크톱에서도 마우스로 가로 드래그 가능 */
+    let galleryDragging = false;
+    let galleryDragMoved = false;
+    let galleryStartX = 0;
+    let galleryStartScrollLeft = 0;
+
+    galleryGrid.addEventListener("pointerdown", (e) => {
+      if (e.pointerType === "touch") return;
+
+      galleryDragging = true;
+      galleryDragMoved = false;
+      galleryStartX = e.clientX;
+      galleryStartScrollLeft = galleryGrid.scrollLeft;
+      galleryGrid.classList.add("dragging");
+      galleryGrid.setPointerCapture(e.pointerId);
     });
+
+    galleryGrid.addEventListener("pointermove", (e) => {
+      if (!galleryDragging) return;
+
+      const deltaX = e.clientX - galleryStartX;
+      if (Math.abs(deltaX) > 5) galleryDragMoved = true;
+      galleryGrid.scrollLeft = galleryStartScrollLeft - deltaX;
+    });
+
+    function stopGalleryDrag(e) {
+      if (!galleryDragging) return;
+      galleryDragging = false;
+      galleryGrid.classList.remove("dragging");
+
+      if (e && galleryGrid.hasPointerCapture?.(e.pointerId)) {
+        galleryGrid.releasePointerCapture(e.pointerId);
+      }
+    }
+
+    galleryGrid.addEventListener("pointerup", stopGalleryDrag);
+    galleryGrid.addEventListener("pointercancel", stopGalleryDrag);
 
     /* 갤러리 확대 */
     const lightbox = document.getElementById("lightbox");
     const lightboxImg = document.getElementById("lightboxImg");
 
     galleryGrid.addEventListener("click", (e) => {
-      const img = e.target.closest("img");
-      if (!img) return;
-      lightboxImg.src = img.src;
+      if (galleryDragMoved) {
+        galleryDragMoved = false;
+        return;
+      }
+
+      const item = e.target.closest(".gallery-item");
+      if (!item) return;
+
+      const img = item.querySelector("img");
+      if (!img || item.style.display === "none") return;
+
+      lightboxImg.src = img.currentSrc || img.src;
+      lightboxImg.alt = img.alt;
       lightbox.classList.add("open");
       document.body.classList.add("modal-open");
     });
 
     function closeLightbox() {
       lightbox.classList.remove("open");
+      lightboxImg.src = "";
       document.body.classList.remove("modal-open");
     }
 
     document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
+
     lightbox.addEventListener("click", (e) => {
-      if (e.target === lightbox) closeLightbox();
+      if (e.target === lightbox || e.target === lightbox.querySelector(".lightbox-inner")) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && lightbox.classList.contains("open")) {
+        closeLightbox();
+      }
     });
 
     /* 계좌 아코디언 */
@@ -2454,9 +2617,25 @@
       if (e.target === attendanceIntroModal) closeAttendanceIntro();
     });
 
-    window.addEventListener("load", () => {
-      setTimeout(openAttendanceIntro, 12000);
-    });
+    /* 초대 문구 영역에 스크롤 도착 시 참석 여부 안내 팝업 1회 노출 */
+    const inviteMessageTarget = document.querySelector("#invite-message .invite-message");
+    let attendanceIntroTriggered = false;
+
+    if (inviteMessageTarget) {
+      const attendanceIntroObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !attendanceIntroTriggered) {
+            attendanceIntroTriggered = true;
+            openAttendanceIntro();
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.35
+      });
+
+      attendanceIntroObserver.observe(inviteMessageTarget);
+    }
 
     /* 위로 이동 */
     document.getElementById("topBtn").addEventListener("click", () => {
