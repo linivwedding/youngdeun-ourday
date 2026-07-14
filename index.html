@@ -1315,6 +1315,100 @@
       transform: scale(0.96);
     }
 
+    .lightbox-nav {
+      position: fixed;
+      top: 50%;
+      z-index: 2;
+      width: 46px;
+      height: 46px;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 50%;
+      background: rgba(247, 243, 238, 0.10);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.16);
+      color: rgba(255, 255, 255, 0.94);
+      cursor: pointer;
+      transform: translateY(-50%);
+      transition: background .25s ease, border-color .25s ease, opacity .25s ease, transform .2s ease;
+    }
+
+    .lightbox-nav::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 10px;
+      height: 10px;
+      border-top: 1.5px solid currentColor;
+      border-left: 1.5px solid currentColor;
+    }
+
+    .lightbox-prev {
+      left: max(16px, calc(50% - 252px));
+    }
+
+    .lightbox-prev::before {
+      transform: translate(-38%, -50%) rotate(-45deg);
+    }
+
+    .lightbox-next {
+      right: max(16px, calc(50% - 252px));
+    }
+
+    .lightbox-next::before {
+      transform: translate(-62%, -50%) rotate(135deg);
+    }
+
+    .lightbox-nav:hover {
+      background: rgba(247, 243, 238, 0.18);
+      border-color: rgba(255, 255, 255, 0.36);
+    }
+
+    .lightbox-nav:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+
+    .lightbox-counter {
+      position: fixed;
+      left: 50%;
+      bottom: calc(18px + env(safe-area-inset-bottom));
+      z-index: 2;
+      min-width: 66px;
+      padding: 7px 12px;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 999px;
+      background: rgba(20,18,16,.28);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      color: rgba(255,255,255,.88);
+      font-size: .76rem;
+      letter-spacing: .08em;
+      text-align: center;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .lightbox-img-wrap {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: pan-y;
+      user-select: none;
+      overflow: hidden;
+    }
+
+    .lightbox-img-wrap.is-changing img {
+      opacity: .24;
+      transform: scale(.985);
+    }
+
+    .lightbox-img-wrap img {
+      transition: opacity .18s ease, transform .18s ease;
+    }
+
     @media (max-width: 600px) {
       .lightbox {
         padding: 0;
@@ -1345,6 +1439,24 @@
       .lightbox-close::before,
       .lightbox-close::after {
         width: 15px;
+      }
+
+      .lightbox-nav {
+        width: 42px;
+        height: 42px;
+        background: rgba(247, 243, 238, 0.08);
+      }
+
+      .lightbox-prev {
+        left: 12px;
+      }
+
+      .lightbox-next {
+        right: 12px;
+      }
+
+      .lightbox-counter {
+        bottom: calc(14px + env(safe-area-inset-bottom));
       }
     }
 
@@ -2245,10 +2357,17 @@
   <button class="floating-btn" id="musicBtn" type="button" aria-label="배경음악 재생 또는 정지">♪</button>
   <button class="floating-btn" id="topBtn" type="button" aria-label="맨 위로 이동">↑</button>
 
-  <div class="lightbox" id="lightbox">
+  <div class="lightbox" id="lightbox" aria-hidden="true">
     <div class="lightbox-inner">
-      <button class="lightbox-close" id="lightboxClose" type="button">✕</button>
-      <img id="lightboxImg" src="" alt="갤러리 확대 이미지" />
+      <button class="lightbox-close" id="lightboxClose" type="button" aria-label="확대 이미지 닫기">✕</button>
+      <button class="lightbox-nav lightbox-prev" id="lightboxPrev" type="button" aria-label="이전 사진"></button>
+
+      <div class="lightbox-img-wrap" id="lightboxImgWrap">
+        <img id="lightboxImg" src="" alt="갤러리 확대 이미지" />
+      </div>
+
+      <button class="lightbox-nav lightbox-next" id="lightboxNext" type="button" aria-label="다음 사진"></button>
+      <div class="lightbox-counter" id="lightboxCounter" aria-live="polite">1 / 68</div>
     </div>
   </div>
 
@@ -2440,9 +2559,10 @@
     updateTogetherTime();
     setInterval(updateTogetherTime, 60000);
 
-    /* 갤러리 68장 자동 생성 - 루트 경로 우선, images 폴더까지 자동 대응 */
+    /* 갤러리 68장 - 파일명 숫자 순서(01 → 68) 고정 */
     const GALLERY_TOTAL = 68;
     const GALLERY_PREVIEW_COUNT = 12;
+    const GALLERY_ORDER = Array.from({ length: GALLERY_TOTAL }, (_, i) => i + 1);
     const galleryExtensions = ["jpg", "jpeg", "png", "webp"];
     const galleryFolders = ["", "images/"];
 
@@ -2453,6 +2573,14 @@
     const galleryModalClose = document.getElementById("galleryModalClose");
     const lightbox = document.getElementById("lightbox");
     const lightboxImg = document.getElementById("lightboxImg");
+    const lightboxImgWrap = document.getElementById("lightboxImgWrap");
+    const lightboxPrev = document.getElementById("lightboxPrev");
+    const lightboxNext = document.getElementById("lightboxNext");
+    const lightboxCounter = document.getElementById("lightboxCounter");
+
+    let currentLightboxIndex = 1;
+    let lightboxTouchStartX = 0;
+    let lightboxTouchStartY = 0;
 
     function galleryCandidates(no) {
       const list = [];
@@ -2492,18 +2620,21 @@
       return item;
     }
 
-    for (let i = 1; i <= GALLERY_PREVIEW_COUNT; i++) {
-      galleryGrid.appendChild(createGalleryImage(i, "gallery-item", true));
-    }
+    GALLERY_ORDER.slice(0, GALLERY_PREVIEW_COUNT).forEach((imageNumber) => {
+      galleryGrid.appendChild(createGalleryImage(imageNumber, "gallery-item", true));
+    });
 
     let fullGalleryBuilt = false;
 
     function buildFullGallery() {
       if (fullGalleryBuilt) return;
+
       const fragment = document.createDocumentFragment();
-      for (let i = 1; i <= GALLERY_TOTAL; i++) {
-        fragment.appendChild(createGalleryImage(i, "gallery-all-item"));
-      }
+
+      GALLERY_ORDER.forEach((imageNumber) => {
+        fragment.appendChild(createGalleryImage(imageNumber, "gallery-all-item"));
+      });
+
       galleryAllGrid.appendChild(fragment);
       fullGalleryBuilt = true;
     }
@@ -2527,14 +2658,64 @@
     galleryMoreBtn.addEventListener("click", openGalleryModal);
     galleryModalClose.addEventListener("click", closeGalleryModal);
 
-    /* 갤러리 확대 */
+    /* 갤러리 확대 · 좌우 버튼 · 모바일 스와이프 */
+    function resolveGalleryImage(index, onResolved) {
+      const no = String(index).padStart(2, "0");
+      const candidates = galleryCandidates(no);
+      let candidateIndex = 0;
+      const tester = new Image();
+
+      function tryNext() {
+        if (candidateIndex >= candidates.length) return;
+        tester.src = candidates[candidateIndex];
+      }
+
+      tester.onload = () => onResolved(tester.src);
+      tester.onerror = () => {
+        candidateIndex += 1;
+        tryNext();
+      };
+
+      tryNext();
+    }
+
+    function updateLightbox(index, animate = true) {
+      const normalizedPosition = ((index - 1 + GALLERY_TOTAL) % GALLERY_TOTAL);
+      currentLightboxIndex = GALLERY_ORDER[normalizedPosition];
+
+      lightboxCounter.textContent = `${String(currentLightboxIndex).padStart(2, "0")} / ${GALLERY_TOTAL}`;
+
+      if (animate) {
+        lightboxImgWrap.classList.add("is-changing");
+      }
+
+      resolveGalleryImage(currentLightboxIndex, (src) => {
+        lightboxImg.src = src;
+        lightboxImg.alt = `웨딩 갤러리 ${String(currentLightboxIndex).padStart(2, "0")}`;
+
+        requestAnimationFrame(() => {
+          lightboxImgWrap.classList.remove("is-changing");
+        });
+      });
+    }
+
     function openLightboxFromItem(item) {
-      const img = item?.querySelector("img");
-      if (!img) return;
-      lightboxImg.src = img.currentSrc || img.src;
-      lightboxImg.alt = img.alt;
+      if (!item) return;
+      const index = Number(item.dataset.galleryIndex);
+      if (!index) return;
+
       lightbox.classList.add("open");
+      lightbox.setAttribute("aria-hidden", "false");
       document.body.classList.add("modal-open");
+      updateLightbox(index, false);
+    }
+
+    function showPreviousImage() {
+      updateLightbox(currentLightboxIndex - 1);
+    }
+
+    function showNextImage() {
+      updateLightbox(currentLightboxIndex + 1);
     }
 
     galleryGrid.addEventListener("click", (e) => {
@@ -2547,13 +2728,23 @@
 
     function closeLightbox() {
       lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
       lightboxImg.src = "";
+
       if (!galleryModal.classList.contains("open")) {
         document.body.classList.remove("modal-open");
       }
     }
 
     document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
+    lightboxPrev.addEventListener("click", (e) => {
+      e.stopPropagation();
+      showPreviousImage();
+    });
+    lightboxNext.addEventListener("click", (e) => {
+      e.stopPropagation();
+      showNextImage();
+    });
 
     lightbox.addEventListener("click", (e) => {
       if (e.target === lightbox || e.target === lightbox.querySelector(".lightbox-inner")) {
@@ -2561,11 +2752,35 @@
       }
     });
 
+    lightboxImgWrap.addEventListener("touchstart", (e) => {
+      const touch = e.changedTouches[0];
+      lightboxTouchStartX = touch.clientX;
+      lightboxTouchStartY = touch.clientY;
+    }, { passive: true });
+
+    lightboxImgWrap.addEventListener("touchend", (e) => {
+      const touch = e.changedTouches[0];
+      const diffX = touch.clientX - lightboxTouchStartX;
+      const diffY = touch.clientY - lightboxTouchStartY;
+
+      if (Math.abs(diffX) < 45 || Math.abs(diffX) <= Math.abs(diffY)) return;
+
+      if (diffX < 0) {
+        showNextImage();
+      } else {
+        showPreviousImage();
+      }
+    }, { passive: true });
+
     document.addEventListener("keydown", (e) => {
-      if (e.key !== "Escape") return;
       if (lightbox.classList.contains("open")) {
-        closeLightbox();
-      } else if (galleryModal.classList.contains("open")) {
+        if (e.key === "Escape") closeLightbox();
+        if (e.key === "ArrowLeft") showPreviousImage();
+        if (e.key === "ArrowRight") showNextImage();
+        return;
+      }
+
+      if (e.key === "Escape" && galleryModal.classList.contains("open")) {
         closeGalleryModal();
       }
     });
