@@ -712,24 +712,16 @@
       margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
+      gap: 6px;
     }
 
     .gallery-item {
       position: relative;
       width: 100%;
+      aspect-ratio: 4 / 5;
       overflow: hidden;
       background: #e3d8cc;
       cursor: pointer;
-    }
-
-    .gallery-item:nth-child(5n + 1) {
-      grid-column: 1 / -1;
-      aspect-ratio: 16 / 11;
-    }
-
-    .gallery-item:not(:nth-child(5n + 1)) {
-      aspect-ratio: 4 / 5;
     }
 
     .gallery-item img {
@@ -836,14 +828,14 @@
 
     .gallery-all-grid {
       width: 100%;
-      columns: 2;
-      column-gap: 8px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
     }
 
     .gallery-all-item {
       width: 100%;
-      margin: 0 0 8px;
-      break-inside: avoid;
+      aspect-ratio: 4 / 5;
       overflow: hidden;
       background: #e3d8cc;
       cursor: pointer;
@@ -852,16 +844,14 @@
     .gallery-all-item img {
       display: block;
       width: 100%;
-      height: auto;
-      min-height: 120px;
+      height: 100%;
       object-fit: cover;
     }
 
     @media (max-width: 390px) {
-      .gallery-grid { gap: 6px; }
+      .gallery-grid { gap: 5px; }
       .gallery-modal-inner { padding-left: 10px; padding-right: 10px; }
-      .gallery-all-grid { column-gap: 6px; }
-      .gallery-all-item { margin-bottom: 6px; }
+      .gallery-all-grid { gap: 5px; }
     }
 
     /* 10. 주차 및 답례품 */
@@ -2063,35 +2053,6 @@
         <p class="count" id="togetherCount">계산 중</p>
       </div>
 
-      <div class="timeline">
-        <article class="timeline-item">
-          <span class="timeline-dot"></span>
-          <div class="timeline-photo"><img src="images/story-01.jpg" alt="첫 만남 사진" /></div>
-          <h3 class="timeline-heading">첫 만남</h3>
-          <p class="timeline-copy">2018년 10월 6일,<br />서로의 일상에 조용히 스며든 날.</p>
-        </article>
-
-        <article class="timeline-item">
-          <span class="timeline-dot"></span>
-          <div class="timeline-photo"><img src="images/story-02.jpg" alt="함께한 계절 사진" /></div>
-          <h3 class="timeline-heading">함께한 계절들</h3>
-          <p class="timeline-copy">수많은 계절을 지나며<br />서로에게 가장 편안한 사람이 되었습니다.</p>
-        </article>
-
-        <article class="timeline-item">
-          <span class="timeline-dot"></span>
-          <div class="timeline-photo"><img src="images/story-03.jpg" alt="약속 사진" /></div>
-          <h3 class="timeline-heading">우리의 약속</h3>
-          <p class="timeline-copy">함께하는 시간이 쌓일수록<br />평생을 함께하고 싶은 마음이 단단해졌습니다.</p>
-        </article>
-
-        <article class="timeline-item">
-          <span class="timeline-dot"></span>
-          <div class="timeline-photo"><img src="images/story-04.jpg" alt="결혼식 사진" /></div>
-          <h3 class="timeline-heading">Wedding day</h3>
-          <p class="timeline-copy">2026년 9월 12일,<br />저희 결혼합니다.</p>
-        </article>
-      </div>
 
       <h3 class="gallery-title">Gallery</h3>
       <p class="gallery-subtitle">Our moments</p>
@@ -2444,7 +2405,7 @@
 
     /* 갤러리 68장 자동 생성 - 루트 경로 우선, images 폴더까지 자동 대응 */
     const GALLERY_TOTAL = 68;
-    const GALLERY_PREVIEW_COUNT = 15;
+    const GALLERY_PREVIEW_COUNT = 12;
     const galleryExtensions = ["jpg", "jpeg", "png", "webp"];
     const galleryFolders = ["", "images/"];
 
