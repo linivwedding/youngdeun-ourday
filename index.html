@@ -1701,16 +1701,31 @@
       position: fixed;
       inset: 0;
       z-index: 190;
-      display: none;
+      display: flex;
       align-items: center;
       justify-content: center;
       padding: 24px;
-      background: rgba(0, 0, 0, .42);
-      backdrop-filter: blur(1.5px);
+      background: rgba(0, 0, 0, 0);
+      -webkit-backdrop-filter: blur(0);
+      backdrop-filter: blur(0);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity .55s cubic-bezier(.22,.61,.36,1),
+        visibility .55s ease,
+        background .55s ease,
+        backdrop-filter .55s ease,
+        -webkit-backdrop-filter .55s ease;
     }
 
     .attendance-intro-modal.open {
-      display: flex;
+      background: rgba(0, 0, 0, .42);
+      -webkit-backdrop-filter: blur(2px);
+      backdrop-filter: blur(2px);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
     }
 
     .attendance-intro-card {
@@ -1722,8 +1737,20 @@
       padding: 34px 20px 24px;
       border-radius: 12px;
       background: #fff;
-      box-shadow: 0 18px 42px rgba(0, 0, 0, .22);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0);
       text-align: center;
+      opacity: 0;
+      transform: translateY(24px) scale(.97);
+      transition:
+        opacity .55s cubic-bezier(.22,.61,.36,1),
+        transform .62s cubic-bezier(.22,.61,.36,1),
+        box-shadow .62s ease;
+    }
+
+    .attendance-intro-modal.open .attendance-intro-card {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, .22);
     }
 
     .attendance-intro-close {
@@ -3014,6 +3041,11 @@
     function closeAttendanceIntro() {
       if (!attendanceIntroModal) return;
 
+      if (attendanceIntroOpenTimer) {
+        window.clearTimeout(attendanceIntroOpenTimer);
+        attendanceIntroOpenTimer = null;
+      }
+
       if (attendanceIntroHideToday && attendanceIntroHideToday.checked) {
         const until = new Date();
         until.setHours(24, 0, 0, 0);
@@ -3039,24 +3071,30 @@
       if (e.target === attendanceIntroModal) closeAttendanceIntro();
     });
 
-    /* 초대 문구 영역에 스크롤 도착 시 참석 여부 안내 팝업 1회 노출 */
-    const inviteMessageTarget = document.querySelector("#invite-message .invite-message");
+    /* 초대 이미지 영역에 도착했을 때 참석 여부 안내 팝업을 부드럽게 1회 노출 */
+    const invitePhotoTarget = document.querySelector("#invite-message .invite-photo");
     let attendanceIntroTriggered = false;
+    let attendanceIntroOpenTimer = null;
 
-    if (inviteMessageTarget) {
+    if (invitePhotoTarget) {
       const attendanceIntroObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && !attendanceIntroTriggered) {
-            attendanceIntroTriggered = true;
+          if (!entry.isIntersecting || attendanceIntroTriggered) return;
+
+          attendanceIntroTriggered = true;
+          observer.unobserve(entry.target);
+
+          /* 이미지가 화면에 자리 잡은 뒤 자연스럽게 팝업 노출 */
+          attendanceIntroOpenTimer = window.setTimeout(() => {
             openAttendanceIntro();
-            observer.unobserve(entry.target);
-          }
+          }, 420);
         });
       }, {
-        threshold: 0.35
+        threshold: 0.58,
+        rootMargin: "0px 0px -8% 0px"
       });
 
-      attendanceIntroObserver.observe(inviteMessageTarget);
+      attendanceIntroObserver.observe(invitePhotoTarget);
     }
 
     /* 위로 이동 */
