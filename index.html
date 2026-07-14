@@ -1242,6 +1242,8 @@
       justify-content: center;
       padding: 20px;
       background: rgba(20,18,16,.94);
+      touch-action: pan-y;
+      overscroll-behavior: none;
     }
 
     .lightbox.open { display: flex; }
@@ -1318,7 +1320,7 @@
     .lightbox-nav {
       position: fixed;
       top: 50%;
-      z-index: 2;
+      z-index: 20;
       width: 46px;
       height: 46px;
       padding: 0;
@@ -1374,7 +1376,7 @@
       position: fixed;
       left: 50%;
       bottom: calc(18px + env(safe-area-inset-bottom));
-      z-index: 2;
+      z-index: 20;
       min-width: 66px;
       padding: 7px 12px;
       border: 1px solid rgba(255,255,255,.16);
@@ -1392,12 +1394,18 @@
 
     .lightbox-img-wrap {
       width: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
       touch-action: pan-y;
       user-select: none;
       overflow: hidden;
+      cursor: grab;
+    }
+
+    .lightbox-img-wrap.is-dragging {
+      cursor: grabbing;
     }
 
     .lightbox-img-wrap.is-changing img {
@@ -2581,6 +2589,10 @@
     let currentLightboxIndex = 1;
     let lightboxTouchStartX = 0;
     let lightboxTouchStartY = 0;
+    let lightboxPointerStartX = 0;
+    let lightboxPointerStartY = 0;
+    let lightboxPointerId = null;
+    let lightboxDidSwipe = false;
 
     function galleryCandidates(no) {
       const list = [];
@@ -2747,30 +2759,82 @@
     });
 
     lightbox.addEventListener("click", (e) => {
+      if (lightboxDidSwipe) {
+        lightboxDidSwipe = false;
+        return;
+      }
+
       if (e.target === lightbox || e.target === lightbox.querySelector(".lightbox-inner")) {
         closeLightbox();
       }
     });
 
-    lightboxImgWrap.addEventListener("touchstart", (e) => {
-      const touch = e.changedTouches[0];
-      lightboxTouchStartX = touch.clientX;
-      lightboxTouchStartY = touch.clientY;
-    }, { passive: true });
+    function handleLightboxSwipe(diffX, diffY) {
+      if (Math.abs(diffX) < 38 || Math.abs(diffX) <= Math.abs(diffY)) return false;
 
-    lightboxImgWrap.addEventListener("touchend", (e) => {
-      const touch = e.changedTouches[0];
-      const diffX = touch.clientX - lightboxTouchStartX;
-      const diffY = touch.clientY - lightboxTouchStartY;
-
-      if (Math.abs(diffX) < 45 || Math.abs(diffX) <= Math.abs(diffY)) return;
+      lightboxDidSwipe = true;
 
       if (diffX < 0) {
         showNextImage();
       } else {
         showPreviousImage();
       }
+
+      return true;
+    }
+
+    /* 실제 모바일 터치 */
+    lightbox.addEventListener("touchstart", (e) => {
+      if (!lightbox.classList.contains("open")) return;
+      const touch = e.changedTouches[0];
+      lightboxTouchStartX = touch.clientX;
+      lightboxTouchStartY = touch.clientY;
+      lightboxDidSwipe = false;
     }, { passive: true });
+
+    lightbox.addEventListener("touchend", (e) => {
+      if (!lightbox.classList.contains("open")) return;
+      const touch = e.changedTouches[0];
+      const diffX = touch.clientX - lightboxTouchStartX;
+      const diffY = touch.clientY - lightboxTouchStartY;
+      handleLightboxSwipe(diffX, diffY);
+    }, { passive: true });
+
+    /* PC 마우스 드래그 + 크롬 모바일 미리보기 */
+    lightboxImgWrap.addEventListener("pointerdown", (e) => {
+      if (!lightbox.classList.contains("open")) return;
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+
+      lightboxPointerId = e.pointerId;
+      lightboxPointerStartX = e.clientX;
+      lightboxPointerStartY = e.clientY;
+      lightboxDidSwipe = false;
+      lightboxImgWrap.classList.add("is-dragging");
+
+      try {
+        lightboxImgWrap.setPointerCapture(e.pointerId);
+      } catch (_) {}
+    });
+
+    lightboxImgWrap.addEventListener("pointerup", (e) => {
+      if (lightboxPointerId !== e.pointerId) return;
+
+      const diffX = e.clientX - lightboxPointerStartX;
+      const diffY = e.clientY - lightboxPointerStartY;
+
+      handleLightboxSwipe(diffX, diffY);
+      lightboxImgWrap.classList.remove("is-dragging");
+      lightboxPointerId = null;
+
+      try {
+        lightboxImgWrap.releasePointerCapture(e.pointerId);
+      } catch (_) {}
+    });
+
+    lightboxImgWrap.addEventListener("pointercancel", () => {
+      lightboxImgWrap.classList.remove("is-dragging");
+      lightboxPointerId = null;
+    });
 
     document.addEventListener("keydown", (e) => {
       if (lightbox.classList.contains("open")) {
