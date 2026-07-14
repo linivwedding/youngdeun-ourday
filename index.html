@@ -1701,31 +1701,16 @@
       position: fixed;
       inset: 0;
       z-index: 190;
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: center;
       padding: 24px;
-      background: rgba(0, 0, 0, 0);
-      -webkit-backdrop-filter: blur(0);
-      backdrop-filter: blur(0);
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity .55s cubic-bezier(.22,.61,.36,1),
-        visibility .55s ease,
-        background .55s ease,
-        backdrop-filter .55s ease,
-        -webkit-backdrop-filter .55s ease;
+      background: rgba(0, 0, 0, .42);
+      backdrop-filter: blur(1.5px);
     }
 
     .attendance-intro-modal.open {
-      background: rgba(0, 0, 0, .42);
-      -webkit-backdrop-filter: blur(2px);
-      backdrop-filter: blur(2px);
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
+      display: flex;
     }
 
     .attendance-intro-card {
@@ -1737,20 +1722,8 @@
       padding: 34px 20px 24px;
       border-radius: 12px;
       background: #fff;
-      box-shadow: 0 18px 42px rgba(0, 0, 0, 0);
-      text-align: center;
-      opacity: 0;
-      transform: translateY(24px) scale(.97);
-      transition:
-        opacity .55s cubic-bezier(.22,.61,.36,1),
-        transform .62s cubic-bezier(.22,.61,.36,1),
-        box-shadow .62s ease;
-    }
-
-    .attendance-intro-modal.open .attendance-intro-card {
-      opacity: 1;
-      transform: translateY(0) scale(1);
       box-shadow: 0 18px 42px rgba(0, 0, 0, .22);
+      text-align: center;
     }
 
     .attendance-intro-close {
@@ -2520,7 +2493,7 @@
   <script>
     const WEDDING_DATE = new Date("2026-09-12T17:30:00+09:00");
     const FIRST_MET_DATE = new Date("2018-10-06T00:00:00+09:00");
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxOQ-z01MHKXccYYkYqD6jH3D7eZV4VcL_GPE6BFKku2mljWYBmbiaZVQNdUvJNnbs1/exec";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx0K7tt8DyAOb2hpexRAsG3_SldohTgLATAEeJoS22wzUcWTuY57P_swBays3oep7Nz/exec";
 
     window.addEventListener("load", () => {
       const hero = document.getElementById("hero");
@@ -2941,21 +2914,29 @@
       rsvpSubmitBtn.disabled = true;
       rsvpSubmitBtn.textContent = "전달 중...";
 
-      const data = Object.fromEntries(new FormData(rsvpForm).entries());
-      data.submittedAt = new Date().toISOString();
+      const formData = new FormData(rsvpForm);
+      formData.append("submittedAt", new Date().toISOString());
+      formData.append("wedding", "영은 & 이든");
+      formData.append("source", "mobile-invitation");
+
+      const requestBody = new URLSearchParams();
+
+      formData.forEach((value, key) => {
+        requestBody.append(key, String(value));
+      });
 
       try {
         await fetch(GOOGLE_SCRIPT_URL, {
           method: "POST",
           mode: "no-cors",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(data)
+          body: requestBody
         });
 
         showToast("참석 여부가 전달되었습니다.");
         rsvpForm.reset();
         setTimeout(closeRsvp, 700);
-      } catch {
+      } catch (error) {
+        console.error("RSVP 전송 오류:", error);
         showToast("전송 중 오류가 발생했습니다.");
       } finally {
         rsvpSubmitBtn.disabled = false;
@@ -3041,11 +3022,6 @@
     function closeAttendanceIntro() {
       if (!attendanceIntroModal) return;
 
-      if (attendanceIntroOpenTimer) {
-        window.clearTimeout(attendanceIntroOpenTimer);
-        attendanceIntroOpenTimer = null;
-      }
-
       if (attendanceIntroHideToday && attendanceIntroHideToday.checked) {
         const until = new Date();
         until.setHours(24, 0, 0, 0);
@@ -3071,30 +3047,24 @@
       if (e.target === attendanceIntroModal) closeAttendanceIntro();
     });
 
-    /* 초대 이미지 영역에 도착했을 때 참석 여부 안내 팝업을 부드럽게 1회 노출 */
-    const invitePhotoTarget = document.querySelector("#invite-message .invite-photo");
+    /* 초대 문구 영역에 스크롤 도착 시 참석 여부 안내 팝업 1회 노출 */
+    const inviteMessageTarget = document.querySelector("#invite-message .invite-message");
     let attendanceIntroTriggered = false;
-    let attendanceIntroOpenTimer = null;
 
-    if (invitePhotoTarget) {
+    if (inviteMessageTarget) {
       const attendanceIntroObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting || attendanceIntroTriggered) return;
-
-          attendanceIntroTriggered = true;
-          observer.unobserve(entry.target);
-
-          /* 이미지가 화면에 자리 잡은 뒤 자연스럽게 팝업 노출 */
-          attendanceIntroOpenTimer = window.setTimeout(() => {
+          if (entry.isIntersecting && !attendanceIntroTriggered) {
+            attendanceIntroTriggered = true;
             openAttendanceIntro();
-          }, 420);
+            observer.unobserve(entry.target);
+          }
         });
       }, {
-        threshold: 0.58,
-        rootMargin: "0px 0px -8% 0px"
+        threshold: 0.35
       });
 
-      attendanceIntroObserver.observe(invitePhotoTarget);
+      attendanceIntroObserver.observe(inviteMessageTarget);
     }
 
     /* 위로 이동 */
