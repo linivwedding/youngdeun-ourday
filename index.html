@@ -1414,7 +1414,14 @@
     }
 
     .lightbox-img-wrap img {
-      transition: opacity .18s ease, transform .18s ease;
+      will-change: transform, opacity;
+      transform: translate3d(0, 0, 0) scale(1);
+      transition: transform .34s cubic-bezier(.22,.61,.36,1), opacity .28s ease;
+      pointer-events: none;
+    }
+
+    .lightbox-img-wrap.is-dragging img {
+      transition: none;
     }
 
     @media (max-width: 600px) {
@@ -2215,7 +2222,7 @@
       <p class="gallery-subtitle">Our moments</p>
       <div class="gallery-grid" id="galleryGrid"></div>
       <div class="gallery-more-wrap">
-        <button class="gallery-more-btn" id="galleryMoreBtn" type="button">VIEW ALL <span>67 PHOTOS</span></button>
+        <button class="gallery-more-btn" id="galleryMoreBtn" type="button">VIEW ALL <span>66 PHOTOS</span></button>
       </div>
     </section>
 <!-- 10페이지 -->
@@ -2375,13 +2382,13 @@
       </div>
 
       <button class="lightbox-nav lightbox-next" id="lightboxNext" type="button" aria-label="다음 사진"></button>
-      <div class="lightbox-counter" id="lightboxCounter" aria-live="polite">1 / 67</div>
+      <div class="lightbox-counter" id="lightboxCounter" aria-live="polite">1 / 66</div>
     </div>
   </div>
 
   <div class="gallery-modal" id="galleryModal" aria-hidden="true">
     <div class="gallery-modal-head">
-      <h3 class="gallery-modal-title">Gallery <span class="gallery-modal-count">67 PHOTOS</span></h3>
+      <h3 class="gallery-modal-title">Gallery <span class="gallery-modal-count">66 PHOTOS</span></h3>
       <button class="gallery-modal-close" id="galleryModalClose" type="button" aria-label="전체 갤러리 닫기">✕</button>
     </div>
     <div class="gallery-modal-inner">
@@ -2567,8 +2574,8 @@
     updateTogetherTime();
     setInterval(updateTogetherTime, 60000);
 
-    /* 갤러리 67장 - 파일명 숫자 순서(01 → 67) 고정 */
-    const GALLERY_TOTAL = 67;
+    /* 갤러리 66장 - 파일명 숫자 순서(01 → 66) 고정 */
+    const GALLERY_TOTAL = 66;
     const GALLERY_PREVIEW_COUNT = 12;
     const GALLERY_ORDER = Array.from({ length: GALLERY_TOTAL }, (_, i) => i + 1);
     const galleryExtensions = ["jpg", "jpeg", "png", "webp"];
@@ -2589,10 +2596,14 @@
     let currentLightboxIndex = 1;
     let lightboxPointerStartX = 0;
     let lightboxPointerStartY = 0;
+    let lightboxPointerCurrentX = 0;
+    let lightboxPointerCurrentY = 0;
     let lightboxPointerId = null;
     let lightboxDidSwipe = false;
     let lightboxNavigationLocked = false;
     let lightboxRequestToken = 0;
+    let lightboxDragAxisLocked = false;
+    let lightboxIsHorizontalDrag = false;
 
     function galleryCandidates(no) {
       const list = [];
@@ -2730,23 +2741,58 @@
     }
 
     /* 한 번의 클릭/스와이프에는 반드시 한 장만 이동 */
-    function moveLightboxOne(direction) {
+    function resetLightboxImageMotion(animate = true) {
+      if (!animate) lightboxImg.style.transition = "none";
+      lightboxImg.style.transform = "translate3d(0, 0, 0) scale(1)";
+      lightboxImg.style.opacity = "1";
+
+      if (!animate) {
+        requestAnimationFrame(() => {
+          lightboxImg.style.transition = "";
+        });
+      }
+    }
+
+    function moveLightboxOne(direction, fromSwipe = false) {
       if (lightboxNavigationLocked || !lightbox.classList.contains("open")) return;
 
       lightboxNavigationLocked = true;
-      updateLightbox(currentLightboxIndex + direction, true);
+      const viewportWidth = Math.max(window.innerWidth, lightboxImgWrap.clientWidth, 320);
+      const exitX = direction > 0 ? -viewportWidth * 0.34 : viewportWidth * 0.34;
+      const enterX = direction > 0 ? viewportWidth * 0.22 : -viewportWidth * 0.22;
+
+      lightboxImgWrap.classList.remove("is-dragging");
+      lightboxImg.style.transition = "transform .22s cubic-bezier(.4,0,1,1), opacity .18s ease";
+      lightboxImg.style.transform = `translate3d(${exitX}px, 0, 0) scale(.985)`;
+      lightboxImg.style.opacity = "0";
 
       window.setTimeout(() => {
-        lightboxNavigationLocked = false;
-      }, 240);
+        updateLightbox(currentLightboxIndex + direction, false);
+        lightboxImg.style.transition = "none";
+        lightboxImg.style.transform = `translate3d(${enterX}px, 0, 0) scale(.99)`;
+        lightboxImg.style.opacity = "0";
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            lightboxImg.style.transition = "transform .34s cubic-bezier(.22,.61,.36,1), opacity .26s ease";
+            lightboxImg.style.transform = "translate3d(0, 0, 0) scale(1)";
+            lightboxImg.style.opacity = "1";
+          });
+        });
+
+        window.setTimeout(() => {
+          lightboxImg.style.transition = "";
+          lightboxNavigationLocked = false;
+        }, 360);
+      }, fromSwipe ? 150 : 180);
     }
 
     function showPreviousImage() {
-      moveLightboxOne(-1);
+      moveLightboxOne(-1, false);
     }
 
     function showNextImage() {
-      moveLightboxOne(1);
+      moveLightboxOne(1, false);
     }
 
     galleryGrid.addEventListener("click", (e) => {
@@ -2764,7 +2810,10 @@
       lightboxPointerId = null;
       lightboxDidSwipe = false;
       lightboxNavigationLocked = false;
+      lightboxDragAxisLocked = false;
+      lightboxIsHorizontalDrag = false;
       lightboxImgWrap.classList.remove("is-dragging", "is-changing");
+      resetLightboxImageMotion(false);
 
       if (!galleryModal.classList.contains("open")) {
         document.body.classList.remove("modal-open");
@@ -2796,29 +2845,23 @@
       }
     });
 
-    function handleLightboxSwipe(diffX, diffY) {
+    function finishLightboxDrag(diffX, diffY) {
       const absX = Math.abs(diffX);
       const absY = Math.abs(diffY);
+      const threshold = Math.min(74, Math.max(46, lightboxImgWrap.clientWidth * 0.12));
 
-      if (absX < 42 || absX <= absY) return false;
-
-      lightboxDidSwipe = true;
-
-      if (diffX < 0) {
-        showNextImage();
-      } else {
-        showPreviousImage();
+      if (lightboxIsHorizontalDrag && absX >= threshold && absX > absY) {
+        lightboxDidSwipe = true;
+        moveLightboxOne(diffX < 0 ? 1 : -1, true);
+        return;
       }
 
-      return true;
+      resetLightboxImageMotion(true);
     }
 
-    /*
-     * 모바일 터치와 PC 마우스를 Pointer Events 하나로 통합한다.
-     * touchend + pointerup 중복 실행으로 두 장씩 넘어가던 현상을 제거한다.
-     */
+    /* 모바일 터치와 PC 마우스를 Pointer Events 하나로 통합 */
     lightboxImgWrap.addEventListener("pointerdown", (e) => {
-      if (!lightbox.classList.contains("open")) return;
+      if (!lightbox.classList.contains("open") || lightboxNavigationLocked) return;
       if (e.pointerType === "mouse" && e.button !== 0) return;
       if (e.target.closest("button")) return;
       if (lightboxPointerId !== null) return;
@@ -2826,13 +2869,43 @@
       lightboxPointerId = e.pointerId;
       lightboxPointerStartX = e.clientX;
       lightboxPointerStartY = e.clientY;
+      lightboxPointerCurrentX = e.clientX;
+      lightboxPointerCurrentY = e.clientY;
       lightboxDidSwipe = false;
+      lightboxDragAxisLocked = false;
+      lightboxIsHorizontalDrag = false;
       lightboxImgWrap.classList.add("is-dragging");
 
-      try {
-        lightboxImgWrap.setPointerCapture(e.pointerId);
-      } catch (_) {}
+      try { lightboxImgWrap.setPointerCapture(e.pointerId); } catch (_) {}
     });
+
+    lightboxImgWrap.addEventListener("pointermove", (e) => {
+      if (lightboxPointerId !== e.pointerId || lightboxNavigationLocked) return;
+
+      lightboxPointerCurrentX = e.clientX;
+      lightboxPointerCurrentY = e.clientY;
+      const diffX = lightboxPointerCurrentX - lightboxPointerStartX;
+      const diffY = lightboxPointerCurrentY - lightboxPointerStartY;
+      const absX = Math.abs(diffX);
+      const absY = Math.abs(diffY);
+
+      if (!lightboxDragAxisLocked && (absX > 7 || absY > 7)) {
+        lightboxDragAxisLocked = true;
+        lightboxIsHorizontalDrag = absX > absY;
+      }
+
+      if (!lightboxIsHorizontalDrag) return;
+
+      e.preventDefault();
+      const resistance = 0.88;
+      const translateX = diffX * resistance;
+      const progress = Math.min(absX / Math.max(lightboxImgWrap.clientWidth, 320), 1);
+      const scale = 1 - progress * 0.025;
+      const opacity = 1 - progress * 0.18;
+
+      lightboxImg.style.transform = `translate3d(${translateX}px, 0, 0) scale(${scale})`;
+      lightboxImg.style.opacity = String(opacity);
+    }, { passive: false });
 
     lightboxImgWrap.addEventListener("pointerup", (e) => {
       if (lightboxPointerId !== e.pointerId) return;
@@ -2843,17 +2916,20 @@
       lightboxImgWrap.classList.remove("is-dragging");
       lightboxPointerId = null;
 
-      try {
-        lightboxImgWrap.releasePointerCapture(e.pointerId);
-      } catch (_) {}
+      try { lightboxImgWrap.releasePointerCapture(e.pointerId); } catch (_) {}
 
-      handleLightboxSwipe(diffX, diffY);
+      finishLightboxDrag(diffX, diffY);
+      lightboxDragAxisLocked = false;
+      lightboxIsHorizontalDrag = false;
     });
 
     lightboxImgWrap.addEventListener("pointercancel", (e) => {
       if (lightboxPointerId !== e.pointerId) return;
       lightboxImgWrap.classList.remove("is-dragging");
       lightboxPointerId = null;
+      lightboxDragAxisLocked = false;
+      lightboxIsHorizontalDrag = false;
+      resetLightboxImageMotion(true);
     });
 
     document.addEventListener("keydown", (e) => {
