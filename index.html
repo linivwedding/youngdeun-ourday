@@ -2587,12 +2587,12 @@
     const lightboxCounter = document.getElementById("lightboxCounter");
 
     let currentLightboxIndex = 1;
-    let lightboxTouchStartX = 0;
-    let lightboxTouchStartY = 0;
     let lightboxPointerStartX = 0;
     let lightboxPointerStartY = 0;
     let lightboxPointerId = null;
     let lightboxDidSwipe = false;
+    let lightboxNavigationLocked = false;
+    let lightboxRequestToken = 0;
 
     function galleryCandidates(no) {
       const list = [];
@@ -2693,17 +2693,22 @@
 
     function updateLightbox(index, animate = true) {
       const normalizedPosition = ((index - 1 + GALLERY_TOTAL) % GALLERY_TOTAL);
-      currentLightboxIndex = GALLERY_ORDER[normalizedPosition];
+      const nextImageIndex = GALLERY_ORDER[normalizedPosition];
+      const requestToken = ++lightboxRequestToken;
 
+      currentLightboxIndex = nextImageIndex;
       lightboxCounter.textContent = `${String(currentLightboxIndex).padStart(2, "0")} / ${GALLERY_TOTAL}`;
 
       if (animate) {
         lightboxImgWrap.classList.add("is-changing");
       }
 
-      resolveGalleryImage(currentLightboxIndex, (src) => {
+      resolveGalleryImage(nextImageIndex, (src) => {
+        /* 빠르게 조작했을 때 이전 이미지의 늦은 로딩 결과가 덮어쓰지 않도록 차단 */
+        if (requestToken !== lightboxRequestToken) return;
+
         lightboxImg.src = src;
-        lightboxImg.alt = `웨딩 갤러리 ${String(currentLightboxIndex).padStart(2, "0")}`;
+        lightboxImg.alt = `웨딩 갤러리 ${String(nextImageIndex).padStart(2, "0")}`;
 
         requestAnimationFrame(() => {
           lightboxImgWrap.classList.remove("is-changing");
@@ -2716,18 +2721,32 @@
       const index = Number(item.dataset.galleryIndex);
       if (!index) return;
 
+      lightboxNavigationLocked = false;
+      lightboxDidSwipe = false;
       lightbox.classList.add("open");
       lightbox.setAttribute("aria-hidden", "false");
       document.body.classList.add("modal-open");
       updateLightbox(index, false);
     }
 
+    /* 한 번의 클릭/스와이프에는 반드시 한 장만 이동 */
+    function moveLightboxOne(direction) {
+      if (lightboxNavigationLocked || !lightbox.classList.contains("open")) return;
+
+      lightboxNavigationLocked = true;
+      updateLightbox(currentLightboxIndex + direction, true);
+
+      window.setTimeout(() => {
+        lightboxNavigationLocked = false;
+      }, 240);
+    }
+
     function showPreviousImage() {
-      updateLightbox(currentLightboxIndex - 1);
+      moveLightboxOne(-1);
     }
 
     function showNextImage() {
-      updateLightbox(currentLightboxIndex + 1);
+      moveLightboxOne(1);
     }
 
     galleryGrid.addEventListener("click", (e) => {
@@ -2742,6 +2761,10 @@
       lightbox.classList.remove("open");
       lightbox.setAttribute("aria-hidden", "true");
       lightboxImg.src = "";
+      lightboxPointerId = null;
+      lightboxDidSwipe = false;
+      lightboxNavigationLocked = false;
+      lightboxImgWrap.classList.remove("is-dragging", "is-changing");
 
       if (!galleryModal.classList.contains("open")) {
         document.body.classList.remove("modal-open");
@@ -2749,11 +2772,15 @@
     }
 
     document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
+
     lightboxPrev.addEventListener("click", (e) => {
+      e.preventDefault();
       e.stopPropagation();
       showPreviousImage();
     });
+
     lightboxNext.addEventListener("click", (e) => {
+      e.preventDefault();
       e.stopPropagation();
       showNextImage();
     });
@@ -2770,7 +2797,10 @@
     });
 
     function handleLightboxSwipe(diffX, diffY) {
-      if (Math.abs(diffX) < 37 || Math.abs(diffX) <= Math.abs(diffY)) return false;
+      const absX = Math.abs(diffX);
+      const absY = Math.abs(diffY);
+
+      if (absX < 42 || absX <= absY) return false;
 
       lightboxDidSwipe = true;
 
@@ -2783,27 +2813,15 @@
       return true;
     }
 
-    /* 실제 모바일 터치 */
-    lightbox.addEventListener("touchstart", (e) => {
-      if (!lightbox.classList.contains("open")) return;
-      const touch = e.changedTouches[0];
-      lightboxTouchStartX = touch.clientX;
-      lightboxTouchStartY = touch.clientY;
-      lightboxDidSwipe = false;
-    }, { passive: true });
-
-    lightbox.addEventListener("touchend", (e) => {
-      if (!lightbox.classList.contains("open")) return;
-      const touch = e.changedTouches[0];
-      const diffX = touch.clientX - lightboxTouchStartX;
-      const diffY = touch.clientY - lightboxTouchStartY;
-      handleLightboxSwipe(diffX, diffY);
-    }, { passive: true });
-
-    /* PC 마우스 드래그 + 크롬 모바일 미리보기 */
+    /*
+     * 모바일 터치와 PC 마우스를 Pointer Events 하나로 통합한다.
+     * touchend + pointerup 중복 실행으로 두 장씩 넘어가던 현상을 제거한다.
+     */
     lightboxImgWrap.addEventListener("pointerdown", (e) => {
       if (!lightbox.classList.contains("open")) return;
       if (e.pointerType === "mouse" && e.button !== 0) return;
+      if (e.target.closest("button")) return;
+      if (lightboxPointerId !== null) return;
 
       lightboxPointerId = e.pointerId;
       lightboxPointerStartX = e.clientX;
@@ -2822,16 +2840,18 @@
       const diffX = e.clientX - lightboxPointerStartX;
       const diffY = e.clientY - lightboxPointerStartY;
 
-      handleLightboxSwipe(diffX, diffY);
       lightboxImgWrap.classList.remove("is-dragging");
       lightboxPointerId = null;
 
       try {
         lightboxImgWrap.releasePointerCapture(e.pointerId);
       } catch (_) {}
+
+      handleLightboxSwipe(diffX, diffY);
     });
 
-    lightboxImgWrap.addEventListener("pointercancel", () => {
+    lightboxImgWrap.addEventListener("pointercancel", (e) => {
+      if (lightboxPointerId !== e.pointerId) return;
       lightboxImgWrap.classList.remove("is-dragging");
       lightboxPointerId = null;
     });
