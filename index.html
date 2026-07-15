@@ -1250,8 +1250,9 @@
 
     .lightbox-inner {
       position: relative;
-      width: 100%;
-      max-width: 430px;
+      width: min(92vw, 1600px);
+      max-width: none;
+      height: 92svh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1259,10 +1260,12 @@
 
     .lightbox img {
       display: block;
-      width: 100%;
-      max-height: 88svh;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 92svh;
       object-fit: contain;
-      border-radius: 10px;
+      border-radius: 0;
       background: transparent;
     }
 
@@ -1437,11 +1440,29 @@
       }
 
       .lightbox img {
+        display: block;
+        border-radius: 0;
+      }
+
+      /* 세로 이미지는 모바일 화면 전체를 채움 */
+      .lightbox img.is-portrait,
+      .lightbox img.is-square {
         width: 100vw;
         height: 100svh;
+        max-width: none;
         max-height: none;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      /* 가로 이미지는 잘리지 않도록 가로폭만 꽉 채움 */
+      .lightbox img.is-landscape {
+        width: 100vw;
+        height: auto;
+        max-width: none;
+        max-height: 100svh;
         object-fit: contain;
-        border-radius: 0;
+        object-position: center;
       }
 
       .lightbox-close {
@@ -2693,7 +2714,7 @@
         tester.src = candidates[candidateIndex];
       }
 
-      tester.onload = () => onResolved(tester.src);
+      tester.onload = () => onResolved(tester.src, tester.naturalWidth, tester.naturalHeight);
       tester.onerror = () => {
         candidateIndex += 1;
         tryNext();
@@ -2714,9 +2735,20 @@
         lightboxImgWrap.classList.add("is-changing");
       }
 
-      resolveGalleryImage(nextImageIndex, (src) => {
+      resolveGalleryImage(nextImageIndex, (src, naturalWidth, naturalHeight) => {
         /* 빠르게 조작했을 때 이전 이미지의 늦은 로딩 결과가 덮어쓰지 않도록 차단 */
         if (requestToken !== lightboxRequestToken) return;
+
+        lightboxImg.classList.remove("is-portrait", "is-landscape", "is-square");
+
+        const ratio = naturalWidth / naturalHeight;
+        if (ratio > 1.05) {
+          lightboxImg.classList.add("is-landscape");
+        } else if (ratio < 0.95) {
+          lightboxImg.classList.add("is-portrait");
+        } else {
+          lightboxImg.classList.add("is-square");
+        }
 
         lightboxImg.src = src;
         lightboxImg.alt = `웨딩 갤러리 ${String(nextImageIndex).padStart(2, "0")}`;
@@ -2807,6 +2839,7 @@
       lightbox.classList.remove("open");
       lightbox.setAttribute("aria-hidden", "true");
       lightboxImg.src = "";
+      lightboxImg.classList.remove("is-portrait", "is-landscape", "is-square");
       lightboxPointerId = null;
       lightboxDidSwipe = false;
       lightboxNavigationLocked = false;
